@@ -19,6 +19,6 @@
 return array (
   'Simple translation manager.' => '',
   'Translation' => '',
-  'Translation Manager' => '',
   'Translation manager' => '',
+  'Translation Manager' => '@@@@',
 );

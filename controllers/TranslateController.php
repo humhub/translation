@@ -8,8 +8,30 @@ class TranslateController extends Controller {
     public $category;
 
     /**
-     * Shows the stundentab
+     * @return array action filters
      */
+    public function filters() {
+        return array(
+            'accessControl', // perform access control for CRUD operations
+        );
+    }
+
+    /**
+     * Specifies the access control rules.
+     * This method is used by the 'accessControl' filter.
+     * @return array access control rules
+     */
+    public function accessRules() {
+        return array(
+            array('allow',
+                'expression' => 'Yii::app()->user->isAdmin()'
+            ),
+            array('deny', // deny all users
+                'users' => array('*'),
+            ),
+        );
+    }
+
     public function actionIndex() {
 
         $modules = $this->getModules();
@@ -20,7 +42,7 @@ class TranslateController extends Controller {
             $this->moduleId = $modules[0];
             $moduleKey = 0;
         }
-        
+
         $languages = $this->getLanguages();
         $languageKey = Yii::app()->request->getParam('language', 0);
         if (isset($languages[$languageKey])) {
@@ -46,11 +68,9 @@ class TranslateController extends Controller {
             'language' => $this->language,
             'category' => $this->category,
             'moduleId' => $this->moduleId,
-
             'languageKey' => $languageKey,
             'categoryKey' => $categoryKey,
             'moduleKey' => $moduleKey,
-
             'modules' => $this->getModules(),
             'languages' => $this->getLanguages(),
             'categories' => $this->getCategories(),
@@ -59,27 +79,27 @@ class TranslateController extends Controller {
     }
 
     public function actionSave() {
-        
+
         $this->forcePostRequest();
-        
+
         $modules = $this->getModules();
         $moduleKey = (int) Yii::app()->request->getParam('moduleId', 0);
         if (isset($modules[$moduleKey])) {
             $this->moduleId = $modules[$moduleKey];
-        } 
-        
+        }
+
         $languages = $this->getLanguages();
         $languageKey = Yii::app()->request->getParam('language', 0);
         if (isset($languages[$languageKey])) {
             $this->language = $languages[$languageKey];
-        } 
+        }
 
         $categories = $this->getCategories();
         $categoryKey = Yii::app()->request->getParam('category', 0);
         if (isset($categories[$categoryKey])) {
             $this->category = $categories[$categoryKey];
-        }         
-        
+        }
+
         $messages = $this->getMessages();
         foreach ($messages as $orginal => $translated) {
             $newTranslation = Yii::app()->request->getParam('tid_' . md5($orginal));
@@ -89,12 +109,10 @@ class TranslateController extends Controller {
         }
 
         $this->getSaveMessages($messages);
-        
-        $this->redirect($this->createUrl('index', array('moduleId'=>$moduleKey, 'language'=>$languageKey, 'category'=>$categoryKey)));
-        
+
+        $this->redirect($this->createUrl('index', array('moduleId' => $moduleKey, 'language' => $languageKey, 'category' => $categoryKey)));
     }
 
-    
     /**
      * Returns all Messages
      * 
@@ -145,36 +163,40 @@ EOD;
 
         $modules = array();
         #$modules[] = 'Core';
-        
-        foreach (Yii::app()->modules as $module=>$def) {
+
+        foreach (Yii::app()->modules as $module => $def) {
             $class = explode(".", $def['class']);
-            $moduleClass = $class[count($class)-1];
+            $moduleClass = $class[count($class) - 1];
 
             try {
                 $class = new ReflectionClass($moduleClass);
                 $modules[] = $moduleClass;
-            } catch(Exception $e) {
+            } catch (Exception $e) {
                 ;
             }
-            
         }
+
         sort($modules);
-        
         array_unshift($modules, 'Core');
-        
+
+        // Remove Modules without messages directory
+        foreach ($modules as $i => $module) {
+            $this->moduleId = $module;
+            if (!is_dir($this->getBasePath())) {
+                unset($modules[$i]);
+            }
+        }
+
         return $modules;
-        
-        return array(
-            'Core',
-            'PollsModule',
-            'TranslationModule',
-        );
-        
     }
 
     private function getLanguages() {
 
         $languages = array();
+
+        if (!is_dir($this->getBasePath()))
+            return $languages;
+
         $files = scandir($this->getBasePath());
 
         foreach ($files as $file) {
@@ -213,8 +235,7 @@ EOD;
         try {
             $class = new ReflectionClass($this->moduleId);
             return dirname($class->getFileName()) . DIRECTORY_SEPARATOR . 'messages';
-            
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return "";
         }
     }

@@ -10,7 +10,7 @@ class TranslationModule extends CWebModule {
      * 
      * @param type $event
      */
-    public function onAdminMenuInit($event) {
+    public static function onAdminMenuInit($event) {
         $event->sender->addItem(array(
             'label' => Yii::t('TranslationModule.base', 'Translation'),
             'url' => Yii::app()->createUrl('//translation/translate'),
