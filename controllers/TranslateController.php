@@ -71,9 +71,9 @@ class TranslateController extends Controller {
             'languageKey' => $languageKey,
             'categoryKey' => $categoryKey,
             'moduleKey' => $moduleKey,
-            'modules' => $this->getModules(),
-            'languages' => $this->getLanguages(),
-            'categories' => $this->getCategories(),
+            'modules' => $modules,
+            'languages' => $languages,
+            'categories' => $categories,
             'messages' => $messages,
         ));
     }
@@ -158,8 +158,6 @@ EOD;
     }
 
     private function getModules() {
-        #print_r(Yii::app()->modules);
-        #die();
 
         $modules = array();
         #$modules[] = 'Core';
