@@ -1,6 +1,6 @@
 <?php
 
-class TranslationModule extends CWebModule {
+class TranslationModule extends HWebModule {
 
     /**
      * On AdminNavigationWidget init, this callback will be called

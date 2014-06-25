@@ -1,0 +1,10 @@
+{
+    "id": "translation",
+    "name": "Translation Manager",
+    "description": "Manage Translation Files via WebInterface.",
+    "keywords": ["translation", "i18n"],
+    "version": "0.1",
+    "humhub": {
+        "minVersion": "0.6"
+    }
+}
