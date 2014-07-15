@@ -17,8 +17,5 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  'Simple translation manager.' => '',
-  'Translation' => '',
-  'Translation manager' => '',
-  'Translation Manager' => '@@@@',
+  'Translation Manager' => '',
 );
