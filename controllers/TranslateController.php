@@ -2,7 +2,7 @@
 
 class TranslateController extends Controller {
 
-    public $subLayout = "application.modules_core.admin.views._layout";
+   # public $subLayout = "application.modules_core.admin.views._layout";
     public $language;
     public $moduleId;
     public $category;
@@ -21,10 +21,11 @@ class TranslateController extends Controller {
      * This method is used by the 'accessControl' filter.
      * @return array access control rules
      */
-    public function accessRules() {
+    public function accessRules()
+    {
         return array(
-            array('allow',
-                'expression' => 'Yii::app()->user->isAdmin()'
+            array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                'users' => array('@'),
             ),
             array('deny', // deny all users
                 'users' => array('*'),
