@@ -9,6 +9,7 @@ Yii::app()->moduleManager->register(array(
     // Events to Catch 
     'events' => array(
         array('class' => 'AdminMenuWidget', 'event' => 'onInit', 'callback' => array('TranslationModule', 'onAdminMenuInit')),
+        array('class' => 'TopMenuWidget', 'event' => 'onInit', 'callback' => array('TranslationModule', 'onTopMenuInit')),
     ),
 ));
 ?>

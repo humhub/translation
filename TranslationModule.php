@@ -24,4 +24,15 @@ class TranslationModule extends HWebModule
         ));
     }
 
+    public static function onTopMenuInit($event)
+    {
+        $event->sender->addItem(array(
+            'label' => Yii::t('TranslationModule.base', 'Translations'),
+            'url' => Yii::app()->createUrl('//translation/translate', array('uguid' => Yii::app()->user->guid)),
+            'icon' => '<i class="fa fa-align-left"></i>',
+            'isActive' => (Yii::app()->controller->module && Yii::app()->controller->module->id == 'translation'),
+            'sortOrder' => 700,
+        ));
+    }
+
 }
