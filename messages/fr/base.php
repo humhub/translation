@@ -18,4 +18,5 @@
  */
 return array (
   'Translation Manager' => '',
+  'Translations' => '',
 );
