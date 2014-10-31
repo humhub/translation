@@ -1,5 +1,5 @@
 <?php
 return array (
-  'Translation Manager' => 'Gestionale di traduzione',
-  'Translations' => 'traduzioni',
+  'Translation Manager' => 'Gestionale Traduzioni',
+  'Translations' => 'Traduzioni',
 );
