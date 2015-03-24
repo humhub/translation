@@ -1,9 +1,6 @@
 <div class="container">
-    <!-- Example row of columns -->
     <div class="row">
         <div class="col-md-12">
-
-
             <div class="panel panel-default">
                 <div class="panel-heading"><?php echo Yii::t('TranslationModule.views_translate_index', 'Translation Editor'); ?></div>
                 <div class="panel-body">
@@ -12,15 +9,15 @@
                     <div class="row">
                         <div class="form-group col-md-4">
                             <label for="">Module</label>
-                            <?php echo CHtml::dropDownList('moduleId', $moduleKey, $modules, array('class' => 'form-control', 'onChange' => 'this.form.submit();')); ?>
+                            <?php echo CHtml::dropDownList('moduleClass', $moduleClass, $moduleClasses, array('class' => 'form-control', 'onChange' => 'this.form.submit();')); ?>
                         </div>
                         <div class="form-group col-md-2">
                             <label for="">Language</label>
-                            <?php echo CHtml::dropDownList('language', $languageKey, $languages, array('class' => 'form-control', 'onChange' => 'this.form.submit();')); ?>
+                            <?php echo CHtml::dropDownList('language', $language, $languages, array('class' => 'form-control', 'onChange' => 'this.form.submit();')); ?>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="">File</label>
-                            <?php echo CHtml::dropDownList('category', $categoryKey, $categories, array('class' => 'form-control', 'onChange' => 'this.form.submit();')); ?>
+                            <?php echo CHtml::dropDownList('file', $file, $files, array('class' => 'form-control', 'onChange' => 'this.form.submit();')); ?>
                         </div>
 
                     </div>
@@ -34,9 +31,9 @@
                     <?php $i = 0; ?>
 
                     <?php echo CHtml::beginForm($this->createUrl('//translation/translate/save'), 'POST'); ?>
-                    <?php echo CHtml::hiddenField('language', $languageKey); ?>
-                    <?php echo CHtml::hiddenField('category', $categoryKey); ?>
-                    <?php echo CHtml::hiddenField('moduleId', $moduleKey); ?>
+                    <?php echo CHtml::hiddenField('language', $language); ?>
+                    <?php echo CHtml::hiddenField('file', $file); ?>
+                    <?php echo CHtml::hiddenField('moduleClass', $moduleClass); ?>
                     <p>
                         If the value is empty, the message is considered as not translated.
                         Messages that no longer need translation will have their translations enclosed between a pair of '@@' marks.

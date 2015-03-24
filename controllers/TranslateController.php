@@ -1,16 +1,48 @@
 <?php
 
-class TranslateController extends Controller {
+class TranslateController extends Controller
+{
 
-   # public $subLayout = "application.modules_core.admin.views._layout";
+    /**
+     * Current active language code e.g. en
+     * 
+     * @var string
+     */
     public $language;
-    public $moduleId;
-    public $category;
+
+    /**
+     * Current active module e.g. Core
+     * 
+     * @var string 
+     */
+    public $moduleClass;
+
+    /**
+     * Language file inside language / module 
+     * 
+     * @var string
+     */
+    public $file;
+
+    /**
+     * FileName of message file
+     * 
+     * @var string
+     */
+    public $messageFileName = "";
+
+    /**
+     * Current loaded message file for moduleClass/file/language combination
+     * 
+     * @var string
+     */
+    public $messages;
 
     /**
      * @return array action filters
      */
-    public function filters() {
+    public function filters()
+    {
         return array(
             'accessControl', // perform access control for CRUD operations
         );
@@ -33,210 +65,110 @@ class TranslateController extends Controller {
         );
     }
 
-    public function actionIndex() {
+    public function beforeAction($action)
+    {
 
-        $modules = $this->getModules();
-        $moduleKey = (int) Yii::app()->request->getParam('moduleId', 0);
-        if (isset($modules[$moduleKey])) {
-            $this->moduleId = $modules[$moduleKey];
-        } else {
-            $this->moduleId = $modules[0];
-            $moduleKey = 0;
+        /**
+         * Load language
+         */
+        $languages = $this->getModule()->getLanguages();
+        if (count($languages) == 0) {
+            $this->render('noLanguage');
+            return false;
+        }
+        $this->language = Yii::app()->request->getParam('language', array_values($languages)[0]);
+        if (!in_array($this->language, $languages)) {
+            throw new CHttpException(404, 'Language not found!');
         }
 
-        $languages = $this->getLanguages();
-        $languageKey = Yii::app()->request->getParam('language', 0);
-        if (isset($languages[$languageKey])) {
-            $this->language = $languages[$languageKey];
-        } else {
-            $this->language = $languages[0];
-            $languageKey = 0;
+        /**
+         * Load given Module Class
+         */
+        $this->moduleClass = Yii::app()->request->getParam('moduleClass', 'Core');
+        if (!in_array($this->moduleClass, array_keys($this->getModule()->getModuleClasses()))) {
+            throw new CHttpException(404, 'Module not found!');
         }
 
-        $categories = $this->getCategories();
-        $categoryKey = Yii::app()->request->getParam('category', 0);
-        if (isset($categories[$categoryKey])) {
-            $this->category = $categories[$categoryKey];
-        } else {
-            $this->category = $categories[0];
-            $categoryKey = 0;
+        /**
+         * Load given File 
+         */
+        $files = $this->getModule()->getFiles($this->moduleClass, $this->language);
+        if (count($files) == 0) {
+            throw new CHttpException(400, 'Files not found!');
+        }
+        $this->file = Yii::app()->request->getParam('file', '');
+        if (!in_array($this->file, $this->getModule()->getFiles($this->moduleClass, $this->language))) {
+            $this->file = array_values($files)[0];
         }
 
-        $messages = $this->getMessages();
+        /**
+         * Get Messages
+         */
+        $this->messages = array();
+        $this->messageFileName = $this->getModule()->getTranslationFile($this->moduleClass, $this->language, $this->file);
+        if (file_exists($this->messageFileName)) {
+            $this->messages = $this->getModule()->getTranslationMessages($this->messageFileName);
+        }
+        return parent::beforeAction($action);
+    }
+
+    /**
+     * Inits the Translate Controller
+     * 
+     * @param type $action
+     * @return type
+     */
+    public function actionIndex()
+    {
+
+        $moduleClasses = $this->getModule()->getModuleClasses();
+        array_walk($moduleClasses, function(&$value, $key) {
+            $value .= " (" . $this->getModule()->getModulePercentage($key, $this->language) . "%)";
+        });
+
+
+        $files = $this->getModule()->getFiles($this->moduleClass, $this->language);
+        array_walk($files, function(&$value, $key) {
+            $value .= " (" . $this->getModule()->getFilePercentage($key, $this->moduleClass, $this->language) . "%)";
+        });
+
+
+        $languages = $this->getModule()->getLanguages();
+        array_walk($languages, function(&$value, $key) {
+            if ($key == $this->language) {
+                $value .= " (" . $this->getModule()->getLanguagePercentage($key) . "%)";
+            }
+        });
 
         // Render Template
         $this->render('index', array(
-            'language' => $this->language,
-            'category' => $this->category,
-            'moduleId' => $this->moduleId,
-            'languageKey' => $languageKey,
-            'categoryKey' => $categoryKey,
-            'moduleKey' => $moduleKey,
-            'modules' => $modules,
+            // Available Options
+            'moduleClasses' => $moduleClasses,
             'languages' => $languages,
-            'categories' => $categories,
-            'messages' => $messages,
+            'files' => $files,
+            // Current selection
+            'language' => $this->language,
+            'moduleClass' => $this->moduleClass,
+            'file' => $this->file,
+            // Translation
+            'messages' => $this->messages,
         ));
     }
 
-    public function actionSave() {
+    public function actionSave()
+    {
 
         $this->forcePostRequest();
 
-        $modules = $this->getModules();
-        $moduleKey = (int) Yii::app()->request->getParam('moduleId', 0);
-        if (isset($modules[$moduleKey])) {
-            $this->moduleId = $modules[$moduleKey];
-        }
-
-        $languages = $this->getLanguages();
-        $languageKey = Yii::app()->request->getParam('language', 0);
-        if (isset($languages[$languageKey])) {
-            $this->language = $languages[$languageKey];
-        }
-
-        $categories = $this->getCategories();
-        $categoryKey = Yii::app()->request->getParam('category', 0);
-        if (isset($categories[$categoryKey])) {
-            $this->category = $categories[$categoryKey];
-        }
-
-        $messages = $this->getMessages();
-        foreach ($messages as $orginal => $translated) {
-            $newTranslation = Yii::app()->request->getParam('tid_' . md5($orginal));
-            if ($newTranslation != "") {
-                $messages[$orginal] = $newTranslation;
+        if (count($this->messages) != 0) {
+            foreach ($this->messages as $orginalMessage => $oldTranslation) {
+                $newTranslation = Yii::app()->request->getParam('tid_' . md5($orginalMessage));
+                $messages[$orginalMessage] = $newTranslation;
             }
+            $this->getModule()->saveTranslationMessages($this->messageFileName, $messages);
         }
 
-        $this->getSaveMessages($messages);
-
-        $this->redirect($this->createUrl('index', array('moduleId' => $moduleKey, 'language' => $languageKey, 'category' => $categoryKey)));
-    }
-
-    /**
-     * Returns all Messages
-     * 
-     * @param type $lang
-     * @param string $section
-     * @return type
-     */
-    private function getMessages() {
-        $file = $this->getBasePath() . DIRECTORY_SEPARATOR . $this->language . DIRECTORY_SEPARATOR . $this->category . ".php";
-        return require($file);
-    }
-
-    private function getSaveMessages($messages) {
-        $file = $this->getBasePath() . DIRECTORY_SEPARATOR . $this->language . DIRECTORY_SEPARATOR . $this->category . ".php";
-
-        $array = str_replace("\r", '', var_export($messages, true));
-        $content = <<<EOD
-<?php
-return $array;
-
-EOD;
-
-        file_put_contents($file, $content);
-    }
-
-    public function getSectionPercent() {
-        return 0;
-        /*
-          $messages = $this->getMessages($lang, $section);
-
-          $filled = 0;
-          foreach ($messages as $message) {
-          if ($message != "")
-          $filled++;
-          }
-
-          if ($filled == 0)
-          return 0;
-
-          return round(($filled * 100) / count($messages));
-         * 
-         */
-    }
-
-    private function getModules() {
-
-        $modules = array();
-        #$modules[] = 'Core';
-
-        foreach (Yii::app()->modules as $module => $def) {
-            $class = explode(".", $def['class']);
-            $moduleClass = $class[count($class) - 1];
-
-            try {
-                $class = new ReflectionClass($moduleClass);
-                $modules[] = $moduleClass;
-            } catch (Exception $e) {
-                ;
-            }
-        }
-
-        sort($modules);
-        array_unshift($modules, 'Core');
-
-        // Remove Modules without messages directory
-        foreach ($modules as $i => $module) {
-            $this->moduleId = $module;
-            if (!is_dir($this->getBasePath())) {
-                unset($modules[$i]);
-            }
-        }
-
-        return $modules;
-    }
-
-    private function getLanguages() {
-
-        $languages = array();
-
-        if (!is_dir($this->getBasePath()))
-            return $languages;
-
-        $files = scandir($this->getBasePath());
-
-        foreach ($files as $file) {
-            if ($file == '.' || $file == '..')
-                continue;
-            $languages[] = $file;
-        }
-
-        return $languages;
-    }
-
-    private function getCategories() {
-
-        $sections = array();
-        $files = scandir($this->getBasePath() . DIRECTORY_SEPARATOR . $this->language);
-
-        foreach ($files as $file) {
-            if ($file == '.' || $file == '..' || $file == 'Browser.php' || $file == 'yii.php' || $file == 'zii.php' || $file == 'ui.php')
-                continue;
-
-            $file = basename($file, '.php');
-
-            $sections[] = $file;
-        }
-        return $sections;
-    }
-
-    /**
-     * Returns base path for messages
-     */
-    private function getBasePath() {
-        if ($this->moduleId == 'Core') {
-            return Yii::app()->basePath . DIRECTORY_SEPARATOR . 'messages';
-        }
-
-        try {
-            $class = new ReflectionClass($this->moduleId);
-            return dirname($class->getFileName()) . DIRECTORY_SEPARATOR . 'messages';
-        } catch (Exception $e) {
-            return "";
-        }
+        $this->redirect($this->createUrl('index', array('moduleClass' => $this->moduleClass, 'language' => $this->language, 'file' => $this->file)));
     }
 
 }
