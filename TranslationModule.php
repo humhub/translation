@@ -193,6 +193,7 @@ class TranslationModule extends HWebModule
 
     public function saveTranslationMessages($file, $messages)
     {
+         ksort($messages);
         $array = str_replace("\r", '', var_export($messages, true));
         $content = <<<EOD
 <?php
