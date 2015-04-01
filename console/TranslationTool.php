@@ -98,6 +98,7 @@ class TranslationTool extends HConsoleCommand
                     $messageCount += count($messages);
 
                     foreach ($messages as $original => $translated) {
+                        $translated = str_replace("@@", "", $translated);
                         if ($translated != "") {
                             $allTranslatedMessages[$original] = $translated;
                         }
