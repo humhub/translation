@@ -11,6 +11,8 @@ class ApiController extends Controller
      */
     public function actionIndex()
     {
+        header('Content-type: application/json');
+        header('Access-Control-Allow-Origin: *');
 
         $res = Yii::app()->cache->get("translation_status");
         if ($res === false) {
@@ -23,6 +25,8 @@ class ApiController extends Controller
 
 
         echo CJSON::encode($res);
+
+        Yii::app()->end();
     }
 
 }
