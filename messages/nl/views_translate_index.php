@@ -1,5 +1,5 @@
 <?php
 return array (
   'Save' => 'Bewaar',
-  'Translation Editor' => '',
+  'Translation Editor' => 'Vertaal Editor',
 );
