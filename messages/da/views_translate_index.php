@@ -1,5 +1,5 @@
 <?php
 return array (
   'Save' => 'Gem',
-  'Translation Editor' => '',
+  'Translation Editor' => 'Oversættelses Editor',
 );
