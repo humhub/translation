@@ -1,5 +1,5 @@
 <?php
 return array (
-  'Translation Manager' => '',
-  'Translations' => '',
+  'Translation Manager' => 'Vertimų įrankis',
+  'Translations' => 'Vertimai',
 );

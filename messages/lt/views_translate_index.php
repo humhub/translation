@@ -1,5 +1,5 @@
 <?php
 return array (
-  'Save' => '',
-  'Translation Editor' => '',
+  'Save' => 'Išsaugoti',
+  'Translation Editor' => 'Vertimų įrankis',
 );
