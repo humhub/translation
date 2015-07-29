@@ -1,6 +1,10 @@
 <?php
 
-class ApiController extends Controller
+namespace humhub\modules\translation\controllers;
+
+use Yii;
+
+class ApiController extends \humhub\components\Controller
 {
 
     /**
@@ -11,22 +15,21 @@ class ApiController extends Controller
      */
     public function actionIndex()
     {
-        header('Content-type: application/json');
+        Yii::$app->response->format = 'json';
         header('Access-Control-Allow-Origin: *');
 
-        $res = Yii::app()->cache->get("translation_status");
+
+        $res = Yii::$app->cache->get("translation_status");
         if ($res === false) {
             $res = array();
-            foreach ($this->getModule()->getLanguages() as $lang) {
-                $res[] = array($lang, $this->getModule()->getLanguagePercentage($lang));
+            foreach ($this->module->getLanguages() as $lang) {
+                $res[] = array($lang, $this->module->getLanguagePercentage($lang));
             }
-            Yii::app()->cache->set("translation_status", $res);
+            Yii::$app->cache->set("translation_status", $res);
         }
 
 
-        echo CJSON::encode($res);
-
-        Yii::app()->end();
+        return $res;
     }
 
 }

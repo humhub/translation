@@ -1,43 +1,39 @@
 <?php
 
-class TranslationModule extends HWebModule
+namespace humhub\modules\translation;
+
+use Yii;
+use yii\helpers\Url;
+
+class Module extends \humhub\components\Module
 {
 
     /**
      * Returns a list of available modules
      */
-    public function getModuleClasses($language = '')
+    public function getModuleIds($language = '')
     {
 
         $modules = array();
 
-        $modules['Core'] = ' HumHub Core';
-        $modules['InstallerModule'] = 'InstallerModule';
+        $modules['core'] = 'core';
+        #$modules['InstallerModule'] = 'InstallerModule';
 
-        foreach (Yii::app()->modules as $module => $def) {
-            $class = explode(".", $def['class']);
-            $moduleClass = $class[count($class) - 1];
-
-            try {
-                $class = new ReflectionClass($moduleClass);
-                $modules[$moduleClass] = $moduleClass;
-            } catch (Exception $e) {
-                ;
-            }
+        foreach (Yii::$app->moduleManager->getModules(['includeCoreModules' => true]) as $moduleId => $def) {
+            $modules[$moduleId] = $moduleId;
         }
 
         asort($modules);
-
         return $modules;
     }
 
-    public function getModulePercentage($moduleClass, $language)
+    public function getModulePercentage($moduleId, $language)
     {
         $countTotal = 0;
         $countTranslated = 0;
 
-        foreach ($this->getFiles($moduleClass, $language) as $file) {
-            $fileName = $this->getTranslationFile($moduleClass, $language, $file);
+        foreach ($this->getFiles($moduleId, $language) as $file) {
+            $fileName = $this->getTranslationFile($moduleId, $language, $file);
             if ($fileName != "") {
                 $messages = $this->getTranslationMessages($fileName);
                 $countTranslated += count(array_filter($messages));
@@ -68,13 +64,13 @@ class TranslationModule extends HWebModule
             $languages[$file] = $file;
         }
 
-        if (Yii::app() instanceof CWebApplication) {
-            if (!Yii::app()->user->isAdmin()) {
+        if (!Yii::$app->request->isConsoleRequest) {
+            if (!Yii::$app->user->isAdmin()) {
                 $userLanguages = array();
 
                 $spaceLanguages = array_map(function($space) {
                     return strtolower($space->name);
-                }, SpaceMembership::GetUserSpaces());
+                }, \humhub\modules\space\models\Membership::GetUserSpaces());
 
                 foreach ($spaceLanguages as $sp) {
                     if (in_array($sp, $languages)) {
@@ -93,9 +89,9 @@ class TranslationModule extends HWebModule
         $countTotal = 0;
         $countTranslated = 0;
 
-        foreach ($this->getModuleClasses() as $moduleClass) {
-            foreach ($this->getFiles($moduleClass, $language) as $file) {
-                $fileName = $this->getTranslationFile($moduleClass, $language, $file);
+        foreach ($this->getModuleIds() as $moduleId) {
+            foreach ($this->getFiles($moduleId, $language) as $file) {
+                $fileName = $this->getTranslationFile($moduleId, $language, $file);
                 if ($fileName != "") {
                     $messages = $this->getTranslationMessages($fileName);
                     $countTranslated += count(array_filter($messages));
@@ -115,11 +111,11 @@ class TranslationModule extends HWebModule
      * 
      * @param type $module
      */
-    public function getFiles($moduleClass, $language)
+    public function getFiles($moduleId, $language)
     {
         $sections = array();
 
-        $directory = $this->getMessageBasePath($moduleClass) . DIRECTORY_SEPARATOR . $language;
+        $directory = $this->getMessageBasePath($moduleId) . DIRECTORY_SEPARATOR . $language;
         if (is_dir($directory)) {
             $files = scandir($directory);
 
@@ -134,12 +130,12 @@ class TranslationModule extends HWebModule
         return $sections;
     }
 
-    public function getFilePercentage($file, $moduleClass, $language)
+    public function getFilePercentage($file, $moduleId, $language)
     {
         $countTotal = 0;
         $countTranslated = 0;
 
-        $fileName = $this->getTranslationFile($moduleClass, $language, $file);
+        $fileName = $this->getTranslationFile($moduleId, $language, $file);
         if ($fileName != "") {
             $messages = $this->getTranslationMessages($fileName);
             $countTranslated += count(array_filter($messages));
@@ -155,28 +151,19 @@ class TranslationModule extends HWebModule
     /**
      * Returns base path for current module
      */
-    private function getMessageBasePath($moduleClass = "Core")
+    private function getMessageBasePath($moduleId = "core")
     {
-        if ($moduleClass == 'Core') {
-            return Yii::app()->basePath . DIRECTORY_SEPARATOR . 'messages';
+        if ($moduleId == 'core') {
+            return Yii::getAlias('@humhub/messages');
         }
 
-        // Fix to include normally disabled InstallerModule class
-        if ($moduleClass == 'InstallerModule') {
-            require_once(Yii::getPathOfAlias('application.modules_core.installer') . DIRECTORY_SEPARATOR . 'InstallerModule.php');
-        }
-
-        try {
-            $class = new ReflectionClass($moduleClass);
-            return dirname($class->getFileName()) . DIRECTORY_SEPARATOR . 'messages';
-        } catch (Exception $e) {
-            return "";
-        }
+        $module = Yii::$app->moduleManager->getModule($moduleId);
+        return $module->getBasePath() . '/messages';
     }
 
-    public function getTranslationFile($moduleClass, $language, $file)
+    public function getTranslationFile($moduleId, $language, $file)
     {
-        return $this->getMessageBasePath($moduleClass) . DIRECTORY_SEPARATOR . $language . DIRECTORY_SEPARATOR . $file . ".php";
+        return $this->getMessageBasePath($moduleId) . DIRECTORY_SEPARATOR . $language . DIRECTORY_SEPARATOR . $file . ".php";
     }
 
     /**
@@ -193,7 +180,7 @@ class TranslationModule extends HWebModule
 
     public function saveTranslationMessages($file, $messages)
     {
-         ksort($messages);
+        ksort($messages);
         $array = str_replace("\r", '', var_export($messages, true));
         $content = <<<EOD
 <?php
@@ -204,41 +191,21 @@ EOD;
         file_put_contents($file, $content);
     }
 
-    /**
-     * On AdminNavigationWidget init, this callback will be called
-     * to add some extra navigation items.
-     * 
-     * (The event is catched in example/autostart.php)
-     * 
-     * @param type $event
-     */
-    public static function onAdminMenuInit($event)
-    {
-        $event->sender->addItem(array(
-            'label' => Yii::t('TranslationModule.base', 'Translation Manager'),
-            'url' => Yii::app()->createUrl('//translation/translate'),
-            'icon' => '<i class="fa fa-align-left"></i>',
-            'group' => 'manage',
-            'sortOrder' => 1000,
-            'isActive' => (Yii::app()->controller->module && Yii::app()->controller->module->id == 'translation' && Yii::app()->controller->id == 'translate'),
-            'newItemCount' => 0
-        ));
-    }
-
     public static function onTopMenuInit($event)
     {
         $event->sender->addItem(array(
             'label' => Yii::t('TranslationModule.base', 'Translations'),
-            'url' => Yii::app()->createUrl('//translation/translate', array('uguid' => Yii::app()->user->guid)),
+            'url' => Url::to(['/translation/translate']),
             'icon' => '<i class="fa fa-align-left"></i>',
-            'isActive' => (Yii::app()->controller && Yii::app()->controller->module && Yii::app()->controller->module->id == 'translation'),
+            'isActive' => (Yii::$app->controller && Yii::$app->controller->module && Yii::$app->controller->module->id == 'translation'),
             'sortOrder' => 700,
         ));
     }
 
     public static function onConsoleApplicationInit($event)
     {
-        Yii::app()->addCommand('translation', 'application.modules.translation.console.TranslationTool');
+        $application = $event->sender;
+        $application->controllerMap['translation'] = commands\TranslationController::className();
     }
 
 }
