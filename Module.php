@@ -120,9 +120,13 @@ class Module extends \humhub\components\Module
             $files = scandir($directory);
 
             foreach ($files as $file) {
-                if ($file == '.' || $file == '..' || $file == 'Browser.php' || $file == 'yii.php' || $file == 'zii.php' || $file == 'ui.php')
+                if ($file == 'Browser.php' || $file == 'yii.php' || $file == 'zii.php' || $file == 'ui.php')
                     continue;
 
+                if (!preg_match('/\.php$/', $file)) {
+                    continue;
+                }
+                
                 $file = basename($file, '.php');
                 $sections[$file] = $file;
             }
