@@ -1,5 +1,5 @@
 <?php
 return array (
-  'Save' => 'Sauver',
+  'Save' => 'Enregistrer',
   'Translation Editor' => 'Éditeur de traductions',
 );
