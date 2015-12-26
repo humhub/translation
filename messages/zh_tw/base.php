@@ -18,5 +18,4 @@
  */
 return [
     'Translations' => '',
-    'Translation Manager' => '@@@@',
 ];
