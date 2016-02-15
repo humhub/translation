@@ -1,5 +1,5 @@
 <?php
 return array (
   'Save' => 'Uložit',
-  'Translation Editor' => '',
+  'Translation Editor' => 'Překladač',
 );
