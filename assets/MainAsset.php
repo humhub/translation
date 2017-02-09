@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\translation\assets;
+namespace humhub\modules\translation\assets;
 
 class MainAsset extends \yii\web\AssetBundle
 {
-    public $sourcePath = '@app/modules/translation/assets';
+    public $sourcePath = '@translation/assets';
     public $js = [
         'js/translation.js',
         'js/jquery.showLoading.js'

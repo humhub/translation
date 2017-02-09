@@ -4,7 +4,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 
-use app\modules\translation\assets\MainAsset;
+use humhub\modules\translation\assets\MainAsset;
 
 $bundle = MainAsset::register($this);
 ?>

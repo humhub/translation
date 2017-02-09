@@ -42,6 +42,19 @@ class TranslationController extends \yii\console\Controller
                     }
                 }
             }
+            
+            
+            // Load Message Archive
+            $archiveFile = Yii::getAlias('@humhub/messages/' . $language . '/archive.json');
+            if (is_file($archiveFile)) {
+                $archiveMessages = \yii\helpers\Json::decode(file_get_contents($archiveFile));
+                foreach ($archiveMessages as $key => $msg) {
+                    if (!isset($allTranslatedMessages[$key]) && !empty($msg[0])) {
+                        $allTranslatedMessages[$key] = $msg[0];
+                        #print "added: ".$key." - ".$msg[0]." from archive\n";
+                    }
+                }
+            }
 
             $autoTranslated = 0;
             foreach ($translationModule->getModuleIds() as $moduleClass => $title) {
