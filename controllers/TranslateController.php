@@ -11,35 +11,35 @@ class TranslateController extends \humhub\components\Controller
 
     /**
      * Current active language code e.g. en
-     * 
+     *
      * @var string
      */
     public $language;
 
     /**
      * Current active module e.g. Core
-     * 
-     * @var string 
+     *
+     * @var string
      */
     public $moduleId;
 
     /**
-     * Language file inside language / module 
-     * 
+     * Language file inside language / module
+     *
      * @var string
      */
     public $file;
 
     /**
      * FileName of message file
-     * 
+     *
      * @var string
      */
     public $messageFileName = "";
 
     /**
      * Current loaded message file for moduleId/file/language combination
-     * 
+     *
      * @var string
      */
     public $messages;
@@ -71,7 +71,7 @@ class TranslateController extends \humhub\components\Controller
             throw new HttpException(404, 'Module not found!');
         }
         /**
-         * Load given File 
+         * Load given File
          */
         $files = $this->module->getFiles($this->moduleId, $this->language);
         if (count($files) == 0) {
@@ -90,15 +90,35 @@ class TranslateController extends \humhub\components\Controller
         if (file_exists($this->messageFileName)) {
             $this->messages = $this->module->getTranslationMessages($this->messageFileName);
         }
+
+        /**
+         * Save Messages
+         */
+
+        if(Yii::$app->request->isPjax){
+            if (Yii::$app->request->post('saveForm') == 1) {
+                if (count($this->messages) != 0) {
+                    foreach ($this->messages as $orginalMessage => $oldTranslation) {
+                        $newTranslation = Yii::$app->request->post('tid_' . md5($orginalMessage));
+                        if (!empty($newTranslation)) {
+                            $this->messages[$orginalMessage] = $newTranslation;
+                        }
+                    }
+                    $this->module->saveTranslationMessages($this->messageFileName, $this->messages);
+                    Yii::$app->session->setFlash('success', 1);
+                }
+            }
+        }
         return parent::beforeAction($action);
     }
 
     /**
      * Inits the Translate Controller
-     * 
+     *
      * @param type $action
      * @return type
      */
+
     public function actionIndex()
     {
 
@@ -107,12 +127,10 @@ class TranslateController extends \humhub\components\Controller
             $value .= " (" . $this->module->getModulePercentage($key, $this->language) . "%)";
         });
 
-
         $files = $this->module->getFiles($this->moduleId, $this->language);
         array_walk($files, function(&$value, $key) {
             $value .= " (" . $this->module->getFilePercentage($key, $this->moduleId, $this->language) . "%)";
         });
-
 
         $languages = $this->module->getLanguages();
         array_walk($languages, function(&$value, $key) {
@@ -124,32 +142,15 @@ class TranslateController extends \humhub\components\Controller
 // Render Template
         return $this->render('index', array(
 // Available Options
-                    'moduleIds' => $moduleIds,
-                    'languages' => $languages,
-                    'files' => $files,
-                    // Current selection
-                    'language' => $this->language,
-                    'moduleId' => $this->moduleId,
-                    'file' => $this->file,
-                    // Translation
-                    'messages' => $this->messages,
+            'moduleIds' => $moduleIds,
+            'languages' => $languages,
+            'files' => $files,
+            // Current selection
+            'language' => $this->language,
+            'moduleId' => $this->moduleId,
+            'file' => $this->file,
+            // Translation
+            'messages' => $this->messages
         ));
     }
-
-    public function actionSave()
-    {
-
-        $this->forcePostRequest();
-
-        if (count($this->messages) != 0) {
-            foreach ($this->messages as $orginalMessage => $oldTranslation) {
-                $newTranslation = Yii::$app->request->post('tid_' . md5($orginalMessage));
-                $messages[$orginalMessage] = $newTranslation;
-            }
-            $this->module->saveTranslationMessages($this->messageFileName, $messages);
-        }
-
-        $this->redirect(Url::to(['index', 'moduleId' => $this->moduleId, 'language' => $this->language, 'file' => $this->file]));
-    }
-
 }
