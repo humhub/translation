@@ -14,7 +14,7 @@ class Module extends \humhub\components\Module
     public function getModuleIds($language = '')
     {
 
-        $modules = array();
+        $modules = [];
 
         $modules['core'] = 'core';
         #$modules['InstallerModule'] = 'InstallerModule';
@@ -24,6 +24,7 @@ class Module extends \humhub\components\Module
         }
 
         asort($modules);
+
         return $modules;
     }
 
@@ -34,7 +35,7 @@ class Module extends \humhub\components\Module
 
         foreach ($this->getFiles($moduleId, $language) as $file) {
             $fileName = $this->getTranslationFile($moduleId, $language, $file);
-            if ($fileName != "") {
+            if ($fileName != '') {
                 $messages = $this->getTranslationMessages($fileName);
                 $countTranslated += count(array_filter($messages));
                 $countTotal += count($messages);
@@ -43,6 +44,7 @@ class Module extends \humhub\components\Module
         if ($countTotal != 0) {
             return floor($countTranslated * 100 / $countTotal);
         }
+
         return 0;
     }
 
@@ -66,7 +68,7 @@ class Module extends \humhub\components\Module
 
         if (!Yii::$app->request->isConsoleRequest) {
             if (!Yii::$app->user->isAdmin()) {
-                $userLanguages = array();
+                $userLanguages = [];
 
                 $spaceLanguages = array_map(function($space) {
                     return strtolower($space->name);
@@ -77,10 +79,10 @@ class Module extends \humhub\components\Module
                         $userLanguages[$sp] = $sp;
                     }
                 }
-
                 return $userLanguages;
             }
         }
+
         return $languages;
     }
 
@@ -92,7 +94,7 @@ class Module extends \humhub\components\Module
         foreach ($this->getModuleIds() as $moduleId) {
             foreach ($this->getFiles($moduleId, $language) as $file) {
                 $fileName = $this->getTranslationFile($moduleId, $language, $file);
-                if ($fileName != "") {
+                if ($fileName != '') {
                     $messages = $this->getTranslationMessages($fileName);
                     $countTranslated += count(array_filter($messages));
                     $countTotal += count($messages);
@@ -103,6 +105,7 @@ class Module extends \humhub\components\Module
         if ($countTotal != 0) {
             return floor($countTranslated * 100 / $countTotal);
         }
+
         return 0;
     }
 
@@ -113,7 +116,7 @@ class Module extends \humhub\components\Module
      */
     public function getFiles($moduleId, $language)
     {
-        $sections = array();
+        $sections = [];
 
         $directory = $this->getMessageBasePath($moduleId) . DIRECTORY_SEPARATOR . $language;
         if (is_dir($directory)) {
@@ -131,6 +134,7 @@ class Module extends \humhub\components\Module
                 $sections[$file] = $file;
             }
         }
+
         return $sections;
     }
 
@@ -140,7 +144,7 @@ class Module extends \humhub\components\Module
         $countTranslated = 0;
 
         $fileName = $this->getTranslationFile($moduleId, $language, $file);
-        if ($fileName != "") {
+        if ($fileName != '') {
             $messages = $this->getTranslationMessages($fileName);
             $countTranslated += count(array_filter($messages));
             $countTotal += count($messages);
@@ -149,6 +153,7 @@ class Module extends \humhub\components\Module
         if ($countTotal != 0) {
             return floor($countTranslated * 100 / $countTotal);
         }
+
         return 0;
     }
 
@@ -162,6 +167,7 @@ class Module extends \humhub\components\Module
         }
 
         $module = Yii::$app->moduleManager->getModule($moduleId);
+
         return $module->getBasePath() . '/messages';
     }
 
@@ -197,13 +203,15 @@ EOD;
 
     public static function onTopMenuInit($event)
     {
-        $event->sender->addItem(array(
-            'label' => Yii::t('TranslationModule.base', 'Translations'),
-            'url' => Url::to(['/translation/translate']),
-            'icon' => '<i class="fa fa-align-left"></i>',
-            'isActive' => (Yii::$app->controller && Yii::$app->controller->module && Yii::$app->controller->module->id == 'translation'),
-            'sortOrder' => 700,
-        ));
+        if (Yii::$app->user->isAdmin()) {
+            $event->sender->addItem([
+                'label' => Yii::t('TranslationModule.base', 'Translations'),
+                'url' => Url::to(['/translation/translate']),
+                'icon' => '<i class="fa fa-align-left"></i>',
+                'isActive' => (Yii::$app->controller && Yii::$app->controller->module && Yii::$app->controller->module->id == 'translation'),
+                'sortOrder' => 700,
+            ]);
+        }
     }
 
     public static function onConsoleApplicationInit($event)
