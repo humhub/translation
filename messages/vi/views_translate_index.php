@@ -1,5 +1,5 @@
 <?php
 return array (
-  'Save' => '',
-  'Translation Editor' => '',
+  'Save' => 'Lưu',
+  'Translation Editor' => 'Trình soạn thảo dịch',
 );
