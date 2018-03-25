@@ -1,5 +1,5 @@
 <?php
 return array (
   'Save' => 'Mentés',
-  'Translation Editor' => '',
+  'Translation Editor' => 'Fordítási szerkesztő',
 );
