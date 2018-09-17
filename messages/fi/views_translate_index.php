@@ -1,6 +1,5 @@
 <?php
-
-return [
-    'Save' => '',
-    'Translation Editor' => '',
-];
+return array (
+  'Save' => 'Tallenna',
+  'Translation Editor' => 'Käännös Muokkain',
+);

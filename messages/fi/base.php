@@ -1,5 +1,4 @@
 <?php
-
-return [
-    'Translations' => '',
-];
+return array (
+  'Translations' => 'Käännökset',
+);
