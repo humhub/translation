@@ -3,6 +3,7 @@
 namespace humhub\modules\translation\controllers;
 
 use Yii;
+use yii\helpers\HtmlPurifier;
 use yii\web\HttpException;
 use yii\helpers\Url;
 
@@ -77,6 +78,7 @@ class TranslateController extends \humhub\components\Controller
         if (count($files) == 0) {
             throw new HttpException(400, 'Files not found!');
         }
+
         $this->file = Yii::$app->request->get('file', '');
         if (!in_array($this->file, $this->module->getFiles($this->moduleId, $this->language))) {
             $this->file = array_values($files)[0];
@@ -85,7 +87,7 @@ class TranslateController extends \humhub\components\Controller
         /**
          * Get Messages
          */
-        $this->messages = array();
+        $this->messages = [];
         $this->messageFileName = $this->module->getTranslationFile($this->moduleId, $this->language, $this->file);
         if (file_exists($this->messageFileName)) {
             $this->messages = $this->module->getTranslationMessages($this->messageFileName);
@@ -100,12 +102,21 @@ class TranslateController extends \humhub\components\Controller
                 if (count($this->messages) != 0) {
                     foreach ($this->messages as $orginalMessage => $oldTranslation) {
                         $newTranslation = Yii::$app->request->post('tid_' . md5($orginalMessage));
-                        if (!empty($newTranslation)) {
-                            $this->messages[$orginalMessage] = $newTranslation;
+
+                        $newTranslationPure = HtmlPurifier::process($newTranslation);
+
+                        if($newTranslation !== $newTranslationPure) {
+                            Yii::error('Suspicious translation detected by user: '.Yii::$app->user->getId().' file: '. $this->file . ' '.$newTranslation);
+                            $this->view->warn(Yii::t('TranslationModule.base', 'Your input has been purified from suspicious html.'));
+                        } else {
+                            $this->view->saved();
+                        }
+
+                        if (!empty($newTranslationPure)) {
+                            $this->messages[$orginalMessage] = $newTranslationPure;
                         }
                     }
                     $this->module->saveTranslationMessages($this->messageFileName, $this->messages);
-                    Yii::$app->session->setFlash('success', 1);
                 }
             }
         }
