@@ -21,7 +21,7 @@ $bundle = MainAsset::register($this);
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading"><?php echo Yii::t('TranslationModule.views_translate_index', 'Translation Editor'); ?></div>
+                <div class="panel-heading"><?= Yii::t('TranslationModule.views_translate_index', 'Translation Editor'); ?></div>
                 <div class="panel-body">
 
                     <?php Pjax::begin(['id' => 'pjax']); ?>
@@ -29,7 +29,7 @@ $bundle = MainAsset::register($this);
                     <?php if (Yii::$app->session->hasFlash('success')): ?>
                         <div class="alert alert-success alert-dismissable" id="succesSave">
                             <button aria-hidden="true" data-dismiss="alert" class="close" type="button" timeout="1000">×</button>
-                            <h5><i class="icon fa fa-check"></i>  Saved!</h5>
+                            <h5><i class="icon fa fa-check"></i> <?= Yii::t('TranslationModule.views_translate_index', 'Saved!'); ?></h5>
                         </div>
                         <?php $this->registerJs(
                             'setTimeout(function(){
@@ -40,15 +40,15 @@ $bundle = MainAsset::register($this);
                     <?= Html::beginForm(Url::to(['/translation/translate']), 'POST', ['data-pjax' => true, 'id' => 'form']); ?>
                     <div class="row">
                         <div class="form-group col-md-4">
-                            <label for="">Module</label>
+                            <label for=""><?= Yii::t('TranslationModule.views_translate_index', 'Module'); ?></label>
                             <?= Html::dropDownList('moduleId', $moduleId, $moduleIds, ['class' => 'form-control', 'onChange' => 'selectOptions()']); ?>
                         </div>
                         <div class="form-group col-md-2">
-                            <label for="">Language</label>
+                            <label for=""><?= Yii::t('TranslationModule.views_translate_index', 'Language'); ?></label>
                             <?= Html::dropDownList('language', $language, $languages, ['class' => 'form-control', 'onChange' => 'selectOptions()']); ?>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="">File</label>
+                            <label for=""><?= Yii::t('TranslationModule.views_translate_index', 'File'); ?></label>
                             <?= Html::dropDownList('file', $file, $files, ['class' => 'form-control', 'onChange' => 'selectOptions()']); ?>
                         </div>
 
@@ -56,21 +56,20 @@ $bundle = MainAsset::register($this);
 
                     </div>
                     <hr>
-                    <span style='color:red'>Save before change!</span>
+                    <span style="color:red"><?= Yii::t('TranslationModule.views_translate_index', 'Save before change!'); ?></span>
 
                     <?php $i = 0; ?>
                     <p>
-                        If the value is empty, the message is considered as not translated.
-                        Messages that no longer need translation will have their translations enclosed between a pair of '@@' marks.
-                        Message string can be used with plural forms format. Check i18n section of the documentation for details.
+                        <?= Yii::t('TranslationModule.views_translate_index', 'If the value is empty, the message is considered as not translated.'); ?><br>
+                        <?= Yii::t('TranslationModule.views_translate_index', 'Messages that no longer need translation will have their translations enclosed between a pair of "@@" marks.'); ?><br>
+                        <?= Yii::t('TranslationModule.views_translate_index', 'Message string can be used with plural forms format. Check i18n section of the documentation for details.'); ?>
                         <br/>
                         <br/>
-                        For more informations about translation syntax see <a
-                            href="http://www.yiiframework.com/doc-2.0/guide-tutorial-i18n.html">Yii Framework Guide I18n</a>.
+                        <?= Yii::t('TranslationModule.views_translate_index', 'For more informations about translation syntax see'); ?> <a href="http://www.yiiframework.com/doc-2.0/guide-tutorial-i18n.html">Yii Framework Guide I18n</a>.
                     </p>
 
-                    <p style="float: right">
-                        <?= Html::textInput("search", null, ["class" => "form-control form-search", "placeholder" => 'Search']); // Yii::t('TranslationModule.views_translate_index', 'Search') ?>
+                    <p style="float:right">
+                        <?= Html::textInput('search', null, ['class' => 'form-control form-search', 'placeholder' => Yii::t('TranslationModule.views_translate_index', 'Search')]); ?>
                     </p>
 
                     <p><?= Html::submitButton(Yii::t('TranslationModule.views_translate_index', 'Save'), ['class' => 'btn btn-primary', 'id' => 'submitPjax']); ?></p>
@@ -78,8 +77,8 @@ $bundle = MainAsset::register($this);
                     <hr>
                     <div id="words">
                         <div>
-                            <div class="elem">Original (en)</div>
-                            <div class="elem">Translated (<?php echo $language; ?>)</div>
+                            <div class="elem"><?= Yii::t('TranslationModule.views_translate_index', 'Original (en-US)'); ?></div>
+                            <div class="elem"><?= Yii::t('TranslationModule.views_translate_index', 'Translated'); ?> (<?= $language; ?>)</div>
                         </div>
 
                         <?php foreach ($messages as $orginal => $translated) : ?>
@@ -88,7 +87,7 @@ $bundle = MainAsset::register($this);
                                 <div class="elem">
                                     <div class="pre"><?php print Html::encode($orginal); ?></div>
                                 </div>
-                                <div class="elem"><?php echo Html::textArea('tid_' . md5($orginal), $translated, array('class' => 'form-control')); ?></div>
+                                <div class="elem"><?= Html::textArea('tid_' . md5($orginal), $translated, ['class' => 'form-control']); ?></div>
                             </div>
                         <?php endforeach; ?>
 
