@@ -1,9 +1,9 @@
 HumHub - Translation Module
 ===========================
 
-Integrates a simple translation editor into admin area.
+This module is used by the HumHub community to maintain the translations of the HumHub core and marketplace modules.
 
-**This module is under development yet - do not use on production systems!**
+**This module is not intended for use in HumHub instances!**
 
 Installation:
 ------------
