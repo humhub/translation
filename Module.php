@@ -119,8 +119,8 @@ class Module extends \humhub\components\Module
     public function getFiles($moduleId, $language)
     {
         $sections = array();
-
         $directory = $this->getMessageBasePath($moduleId, $language);
+
         if (is_dir($directory)) {
             $files = scandir($directory);
 
@@ -163,11 +163,13 @@ class Module extends \humhub\components\Module
     private function getMessageBasePath($moduleId = "core", $language = null)
     {
         if ($moduleId == 'core') {
+            if ($language !== null) {
+                return Yii::getAlias('@humhub/messages/' . $language);
+            }
             return Yii::getAlias('@humhub/messages');
         }
 
         $module = Yii::$app->moduleManager->getModule($moduleId);
-
 
         $path = $module->getBasePath() . DIRECTORY_SEPARATOR . 'messages';
 
@@ -187,7 +189,7 @@ class Module extends \humhub\components\Module
             }
         }
 
-        throw new Exception("Could not find message base folder for module and language!");
+#        throw new Exception("Could not find message base folder for module and language!" . $path. $language);
     }
 
     public function getTranslationFile($moduleId, $language, $file)
