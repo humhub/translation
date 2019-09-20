@@ -2,6 +2,7 @@
 
 namespace humhub\modules\translation;
 
+use humhub\modules\space\models\Membership;
 use Yii;
 use yii\helpers\Url;
 
@@ -64,22 +65,25 @@ class Module extends \humhub\components\Module
             $languages[$file] = $file;
         }
 
-        if (!Yii::$app->request->isConsoleRequest) {
-            if (!Yii::$app->user->isAdmin()) {
-                $userLanguages = array();
+        if (!Yii::$app->request->isConsoleRequest && !Yii::$app->user->isAdmin()) {
+            $userLanguages = [];
 
-                $spaceLanguages = array_map(function($space) {
-                    return strtolower($space->name);
-                }, \humhub\modules\space\models\Membership::GetUserSpaces());
-
-                foreach ($spaceLanguages as $sp) {
-                    if (in_array($sp, $languages)) {
-                        $userLanguages[$sp] = $sp;
-                    }
+            $spaceLanguages = array_map(function ($space) {
+                if (strpos($space->name, '-') !== false) {
+                    list($lang, $ter) = explode('-', $space->name, 2);
+                    return strtolower($lang) . '-' . strtoupper($ter);
                 }
+                return strtolower($space->name);
+            }, Membership::GetUserSpaces());
 
-                return $userLanguages;
+
+            foreach ($spaceLanguages as $sp) {
+                if (in_array($sp, $languages)) {
+                    $userLanguages[$sp] = $sp;
+                }
             }
+
+            return $userLanguages;
         }
         return $languages;
     }
@@ -108,7 +112,7 @@ class Module extends \humhub\components\Module
 
     /**
      * Returns a list of available files for a module
-     * 
+     *
      * @param type $module
      */
     public function getFiles($moduleId, $language)
@@ -126,7 +130,7 @@ class Module extends \humhub\components\Module
                 if (!preg_match('/\.php$/', $file)) {
                     continue;
                 }
-                
+
                 $file = basename($file, '.php');
                 $sections[$file] = $file;
             }
@@ -172,7 +176,7 @@ class Module extends \humhub\components\Module
 
     /**
      * Returns all Messages
-     * 
+     *
      * @param type $lang
      * @param string $section
      * @return type
