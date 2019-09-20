@@ -4,6 +4,7 @@ namespace humhub\modules\translation;
 
 use humhub\modules\space\models\Membership;
 use Yii;
+use yii\base\Exception;
 use yii\helpers\Url;
 
 class Module extends \humhub\components\Module
@@ -119,7 +120,7 @@ class Module extends \humhub\components\Module
     {
         $sections = array();
 
-        $directory = $this->getMessageBasePath($moduleId) . DIRECTORY_SEPARATOR . $language;
+        $directory = $this->getMessageBasePath($moduleId, $language);
         if (is_dir($directory)) {
             $files = scandir($directory);
 
@@ -159,19 +160,39 @@ class Module extends \humhub\components\Module
     /**
      * Returns base path for current module
      */
-    private function getMessageBasePath($moduleId = "core")
+    private function getMessageBasePath($moduleId = "core", $language = null)
     {
         if ($moduleId == 'core') {
             return Yii::getAlias('@humhub/messages');
         }
 
         $module = Yii::$app->moduleManager->getModule($moduleId);
-        return $module->getBasePath() . '/messages';
+
+
+        $path = $module->getBasePath() . DIRECTORY_SEPARATOR . 'messages';
+
+        if ($language === null) {
+            return $path;
+        }
+
+        if (is_dir($path . DIRECTORY_SEPARATOR . $language)) {
+            return $path . DIRECTORY_SEPARATOR . $language;
+        }
+
+        // Check for old language folder format
+        if (strpos($language, '-') !== false) {
+            $language = strtolower(str_replace('-', '_', $language));
+            if (is_dir($path . DIRECTORY_SEPARATOR . $language)) {
+                return $path . DIRECTORY_SEPARATOR . $language;
+            }
+        }
+
+        throw new Exception("Could not find message base folder for module and language!");
     }
 
     public function getTranslationFile($moduleId, $language, $file)
     {
-        return $this->getMessageBasePath($moduleId) . DIRECTORY_SEPARATOR . $language . DIRECTORY_SEPARATOR . $file . ".php";
+        return $this->getMessageBasePath($moduleId, $language) . DIRECTORY_SEPARATOR . $file . ".php";
     }
 
     /**
