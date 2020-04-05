@@ -98,7 +98,7 @@ class TranslateController extends \humhub\components\Controller
          * Save Messages
          */
 
-        if(Yii::$app->request->isPjax){
+        if (Yii::$app->request->isPjax) {
             if (Yii::$app->request->post('saveForm') == 1) {
                 if (count($this->messages) != 0) {
                     foreach ($this->messages as $orginalMessage => $oldTranslation) {
@@ -107,10 +107,10 @@ class TranslateController extends \humhub\components\Controller
 
                         $newTranslationPure = HtmlPurifier::process($newTranslation);
 
-                        if(empty($newTranslation)) {
+                        if (empty($newTranslation)) {
                             $this->view->error(Yii::t('TranslationModule.base', 'Your translation seems to be empty and therefore could not be saved.'));
-                        } else if($newTranslation !== $newTranslationPure) {
-                            Yii::error('Suspicious translation detected by user: '.Yii::$app->user->getId().' file: '. $this->file . ' '.$newTranslation);
+                        } else if ($newTranslation !== $newTranslationPure) {
+                            Yii::error('Suspicious translation detected by user: ' . Yii::$app->user->getId() . ' file: ' . $this->file . ' ' . $newTranslation);
                             $this->view->warn(Yii::t('TranslationModule.base', 'Your input has been purified from suspicious html.'));
                         } else {
                             $this->view->saved();
@@ -121,7 +121,7 @@ class TranslateController extends \humhub\components\Controller
                         if (!empty($newTranslationPure) && $validationResult === true) {
                             $this->messages[$orginalMessage] = $newTranslationPure;
 
-                        } else if($validationResult !== true) {
+                        } else if ($validationResult !== true) {
                             $this->view->error($validationResult);
                         } else {
                             $this->view->error(Yii::t('TranslationModule.base', 'Could not save empty translation.'));
@@ -162,7 +162,7 @@ class TranslateController extends \humhub\components\Controller
         preg_match_all('/{([a-zA-Z]+)}/m', $translation, $matches, PREG_SET_ORDER);
 
         foreach ($matches as $match) {
-            if(strpos($original, $match[0]) === false) {
+            if (strpos($original, $match[0]) === false) {
                 return Yii::t('TranslationModule.base', 'The translation contains an invalid parameter {match}', ['match' => $match[0]]);
             }
             $params[$match[1]] = 'Test Value';
@@ -170,8 +170,8 @@ class TranslateController extends \humhub\components\Controller
 
         $formatter = Yii::$app->getI18n()->getMessageFormatter();
         $formatter->format($translation, $params, $this->language);
-        if($formatter->getErrorMessage()) {
-            return Yii::t('TranslationModule.base', 'Invalid translation pattern detected, please see {link}', ['error' => $formatter->getErrorMessage(), 'link' =>'https://www.yiiframework.com/doc/guide/2.0/en/tutorial-i18n#message-formatting']);
+        if ($formatter->getErrorMessage()) {
+            return Yii::t('TranslationModule.base', 'Invalid translation pattern detected, please see {link}', ['error' => $formatter->getErrorMessage(), 'link' => 'https://www.yiiframework.com/doc/guide/2.0/en/tutorial-i18n#message-formatting']);
         }
 
         return true;
@@ -187,25 +187,31 @@ class TranslateController extends \humhub\components\Controller
     {
 
         $moduleIds = $this->module->getModuleIds();
-        array_walk($moduleIds, function(&$value, $key) {
+        array_walk($moduleIds, function (&$value, $key) {
+            if ($this->isCoreModule($key)) {
+                $value = 'HumHub - ' . $value;
+            } else {
+                $value = 'Module - ' . $value;
+            }
             $value .= " (" . $this->module->getModulePercentage($key, $this->language) . "%)";
         });
+        asort($moduleIds);
 
         $files = $this->module->getFiles($this->moduleId, $this->language);
-        array_walk($files, function(&$value, $key) {
+        array_walk($files, function (&$value, $key) {
             $value .= " (" . $this->module->getFilePercentage($key, $this->moduleId, $this->language) . "%)";
         });
 
         $languages = $this->module->getLanguages();
-        array_walk($languages, function(&$value, $key) {
+        array_walk($languages, function (&$value, $key) {
             if ($key == $this->language) {
                 $value .= " (" . $this->module->getLanguagePercentage($key) . "%)";
             }
         });
 
-// Render Template
+        // Render Template
         return $this->render('index', [
-// Available Options
+        // Available Options
             'moduleIds' => $moduleIds,
             'languages' => $languages,
             'files' => $files,
@@ -216,5 +222,27 @@ class TranslateController extends \humhub\components\Controller
             // Translation
             'messages' => $this->messages
         ]);
+    }
+
+
+    private function isCoreModule($moduleId)
+    {
+        if ($moduleId === 'core') {
+            return true;
+        }
+
+        try {
+            $module = Yii::$app->moduleManager->getModule($moduleId);
+
+            if (strpos($module->getBasePath(), Yii::getAlias('@humhub')) !== false) {
+                return true;
+            }
+
+        } catch (\Exception $ex) {
+
+        }
+
+
+        return false;
     }
 }

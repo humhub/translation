@@ -202,7 +202,7 @@ class Module extends \humhub\components\Module
      *
      * @param type $lang
      * @param string $section
-     * @return type
+     * @return array
      */
     public function getTranslationMessages($file)
     {

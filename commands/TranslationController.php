@@ -3,10 +3,12 @@
 namespace humhub\modules\translation\commands;
 
 use Yii;
+use humhub\modules\translation\Module;
 
 /**
  * Translation MOdule
  *
+ * @property Module $module
  * @since 0.5
  */
 class TranslationController extends \yii\console\Controller
@@ -42,8 +44,8 @@ class TranslationController extends \yii\console\Controller
                     }
                 }
             }
-            
-            
+
+
             // Load Message Archive
             $archiveFile = Yii::getAlias('@humhub/messages/' . $language . '/archive.json');
             if (is_file($archiveFile)) {
@@ -84,6 +86,45 @@ class TranslationController extends \yii\console\Controller
 
 
         print "\n";
+    }
+
+
+    public function actionRenameCategory($moduleId, $oldCategory, $newCategory)
+    {
+        /** @var Module $module */
+        $module = Yii::$app->getModule('translation');
+
+        $basePath = Yii::$app->getModule($moduleId)->getBasePath() . '/messages';
+
+        print "Rename:" . $basePath . "\n";
+
+        foreach ($module->getLanguages() as $lang) {
+            $oldFile = $basePath . '/' . $lang . '/' . $oldCategory . '.php';
+            $newFile = $basePath . '/' . $lang . '/' . $newCategory . '.php';
+
+            if (!is_file($oldFile)) {
+                print "!Skipped: " . $oldFile . "\n\n";
+                continue;
+            }
+
+            $oldMessages = $module->getTranslationMessages($oldFile);
+            
+            if (!is_file($newFile)) {
+                $newMessages = [];
+            } else {
+                $newMessages = $module->getTranslationMessages($newFile);
+            }
+
+            $module->saveTranslationMessages($newFile,
+                array_merge($oldMessages, $newMessages));
+
+            unlink($oldFile);
+            
+            print "Updated: " . $newFile . "\n";
+            print "Deleted: " . $oldFile . "\n\n";
+        }
+
+
     }
 
 }
