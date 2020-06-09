@@ -1,0 +1,25 @@
+<?php
+
+return [
+    '<strong>Translation</strong> History' => '',
+    'Back to editor' => '',
+    'Date' => '',
+    'File' => '',
+    'Invalid translation pattern detected, please see {link}' => '',
+    'Language' => '',
+    'Message' => '',
+    'Module' => '',
+    'New' => '',
+    'No translation log available.' => '',
+    'Old' => '',
+    'Old Translation' => '',
+    'Some translations could not be saved.' => '',
+    'Some translations may have been purified from suspicious html.' => '',
+    'The translation contains an invalid parameter {match}' => '',
+    'There are unsaved changes, do you really want to leave this page?' => '',
+    'Translation' => '',
+    'Translation did not change.' => '',
+    'Translations' => '',
+    'Your input has been purified from suspicious html.' => '',
+    'Your translation seems to be empty and therefore could not be saved.' => '',
+];
