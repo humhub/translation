@@ -13,4 +13,5 @@ Changelog
 - Enh: Use of select2 dropdowns
 - Chg: Moved build-archive from core into translation module
 - Enh: Extended validation
+- Chg: Updated HumHub min version to 1.5
 

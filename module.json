@@ -3,8 +3,8 @@
     "name": "Translation Manager",
     "description": "Inline translation manager for HumHub administrators/developers.",
     "keywords": ["translation", "i18n"],
-    "version": "0.2.0",
+    "version": "1.0.0",
     "humhub": {
-        "minVersion": "0.20"
+        "minVersion": "1.5"
     }
 }
