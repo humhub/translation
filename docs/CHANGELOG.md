@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0.0 (Unreleased)
+1.0.0 (June 10, 2020)
 -----------------------
 - Enh: 1.4 nonce support
 - Enh: Added form acknowledge behavior
