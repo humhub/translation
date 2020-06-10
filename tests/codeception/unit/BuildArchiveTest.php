@@ -1,6 +1,6 @@
 <?php
 
-namespace humhub\modules\translation\tests\codeception\unit\reminder;
+namespace humhub\modules\translation\tests\codeception\unit;
 
 use humhub\modules\translation\commands\BuildArchive;
 use humhub\modules\translation\models\Archive;

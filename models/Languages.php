@@ -77,6 +77,12 @@ class Languages extends BaseObject
         return static::$userLanguages;
     }
 
+    public static function flush()
+    {
+        static::$userLanguages = null;
+        static::$languages = null;
+    }
+
     /**
      * Filters out languages not related to the current user.
      * A user needs to be member of the space related to a language.
@@ -92,7 +98,7 @@ class Languages extends BaseObject
         foreach (Membership::GetUserSpaces() as $space) {
             $spaceLanguage = static::getLanguageBySpace($space);
             if (in_array($spaceLanguage, $allLanguages, true)) {
-                $userLanguages[$spaceLanguage] = $spaceLanguage;
+                $userLanguages[] = $spaceLanguage;
             }
         }
 
@@ -114,6 +120,10 @@ class Languages extends BaseObject
         return strtolower($space->name);
     }
 
+    /**
+     * @param $language
+     * @return Space|null
+     */
     public static function findSpaceByLanguage($language)
     {
         $spaceName = static::getSpaceNameByLangauge($language);

@@ -2,16 +2,17 @@
 
 namespace humhub\modules\translation\controllers;
 
+use humhub\components\Controller;
+use humhub\modules\translation\models\Languages;
+use humhub\modules\translation\models\TranslationCoverage;
 use Yii;
 
-class ApiController extends \humhub\components\Controller
+class ApiController extends Controller
 {
 
     /**
      * Inits the Translate Controller
-     * 
-     * @param type $action
-     * @return type
+     *
      */
     public function actionIndex()
     {
@@ -20,16 +21,16 @@ class ApiController extends \humhub\components\Controller
 
 
         $res = Yii::$app->cache->get("translation_status");
-        if ($res === false) {
-            $res = array();
-            foreach ($this->module->getLanguages() as $lang) {
-                $res[] = array($lang, $this->module->getLanguagePercentage($lang));
+        if (!$res) {
+            $res = [];
+            foreach (Languages::getAllTranslatableLanguages() as $lang) {
+                $res[] = [$lang, TranslationCoverage::getLanguageCoverage($lang)];
             }
             Yii::$app->cache->set("translation_status", $res);
         }
 
 
-        return $res;
+        return $this->asJson($res);
     }
 
 }

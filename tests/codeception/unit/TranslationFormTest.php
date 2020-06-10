@@ -1,6 +1,6 @@
 <?php
 
-namespace humhub\modules\translation\tests\codeception\unit\reminder;
+namespace humhub\modules\translation\tests\codeception\unit;
 
 use humhub\modules\space\models\Space;
 use humhub\modules\translation\models\forms\TranslationForm;
@@ -132,6 +132,41 @@ class TranslationFormTest extends TranslationTest
 
         $result = $form->basePath->getMessageFile('test')->getMessages('de')[$this->testMessage];
         $this->assertEquals($result, 'Dies ist ein test');
+    }
+
+    public function testSaveFileAsMember()
+    {
+        $this->becomeUser('User2');
+        $form = new TranslationForm();
+        $this->assertTrue($form->load([
+            'moduleId' => 'translation',
+            'language' => 'de',
+            'file' => 'test',
+            $this->testMessageTID => 'Dies isttt ein test'
+        ]));
+
+        $this->assertTrue($form->save());
+
+        $result = $form->basePath->getMessageFile('test')->getMessages('de')[$this->testMessage];
+        $this->assertEquals($result, 'Dies isttt ein test');
+    }
+
+    public function testSaveFileAsNonMember()
+    {
+        $this->becomeUser('User3');
+
+        $form = new TranslationForm();
+        $this->assertTrue($form->load([
+            'moduleId' => 'translation',
+            'language' => 'de',
+            'file' => 'test',
+            $this->testMessageTID => 'Dies isttt ein test'
+        ]));
+
+        $this->assertFalse($form->save());
+
+        $result = $form->basePath->getMessageFile('test')->getMessages('de')[$this->testMessage];
+        $this->assertNotEquals($result, 'Dies isttt ein test');
     }
 
     /**

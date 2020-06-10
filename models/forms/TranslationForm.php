@@ -2,6 +2,8 @@
 
 namespace humhub\modules\translation\models\forms;
 
+use humhub\modules\space\models\Space;
+use humhub\modules\translation\permissions\ManageTranslations;
 use humhub\modules\translation\models\TranslationCoverage;
 use humhub\modules\translation\models\TranslationFileIF;
 use Yii;
@@ -58,6 +60,11 @@ class TranslationForm extends Model implements TranslationFileIF
      */
     public $warnings = [];
 
+    /**
+     * @var Space
+     */
+    public $space;
+
     public function rules()
     {
         return [
@@ -94,6 +101,11 @@ class TranslationForm extends Model implements TranslationFileIF
         ];
     }
 
+    /**
+     * @var TranslationLog[]
+     */
+    private $translationLogs = [];
+
     public function load($data, $formName = null)
     {
         $result = parent::load($data, $formName);
@@ -112,18 +124,21 @@ class TranslationForm extends Model implements TranslationFileIF
 
         $this->loadMessages();
 
+        // TODO: actually save logs in save instead of load...
+
         if (!$result) {
             return false;
         }
 
-        $space = Languages::findSpaceByLanguage($this->language);
-        if (!$space) {
+        $this->space = Languages::findSpaceByLanguage($this->language);
+        if (!$this->space) {
             return false;
         }
 
-        // TODO: actually save logs in save instead load...
+        $this->translationLogs = [];
+
         foreach ($this->messages as $originalMessage => $oldTranslation) {
-            $translationModel = new TranslationLog($space, [
+            $translationModel = new TranslationLog($this->space, [
                 'language' => $this->language,
                 'module_id' => $this->moduleId,
                 'file' => $this->file,
@@ -131,22 +146,8 @@ class TranslationForm extends Model implements TranslationFileIF
                 'message' => $originalMessage,
             ]);
 
-            if (!$translationModel->load($data)) {
-                continue;
-            }
-
-            $translationModel->save();
-
-            if ($translationModel->hasErrors('translation')) {
-                $this->errors[$translationModel->getTID()] = $translationModel->getFirstError('translation');
-            }
-
-            if ($translationModel->wasPurified) {
-                $this->warnings[$translationModel->getTID()] = Yii::t('TranslationModule.base', 'Your input has been purified from suspicious html.');
-            }
-
-            if (!$translationModel->hasErrors()) {
-                $this->messages[$originalMessage] = $translationModel->translation;
+            if ($translationModel->load($data)) {
+                $this->translationLogs[] = $translationModel;
             }
         }
 
@@ -167,6 +168,10 @@ class TranslationForm extends Model implements TranslationFileIF
      */
     public function save()
     {
+        if(!$this->space || !$this->space->can(ManageTranslations::class)) {
+            return false;
+        }
+
         if (!$this->validate()) {
             return false;
         }
@@ -175,12 +180,33 @@ class TranslationForm extends Model implements TranslationFileIF
             return true;
         }
 
+        $this->saveAndValidateTranslations();
+
         if (!$this->basePath->updateTranslations($this->language, $this->file, $this->messages)) {
             return false;
         }
 
         $this->loadMessages();
         return true;
+    }
+
+    private function saveAndValidateTranslations()
+    {
+        foreach ($this->translationLogs as $translationModel) {
+            $translationModel->save();
+
+            if ($translationModel->hasErrors('translation')) {
+                $this->errors[$translationModel->getTID()] = $translationModel->getFirstError('translation');
+            }
+
+            if ($translationModel->wasPurified) {
+                $this->warnings[$translationModel->getTID()] = Yii::t('TranslationModule.base', 'Your input has been purified from suspicious html.');
+            }
+
+            if (!$translationModel->hasErrors()) {
+                $this->messages[$translationModel->message] = $translationModel->translation;
+            }
+        }
     }
 
     public function getTranslationFieldClass($message)

@@ -42,6 +42,14 @@ class TranslationLog extends ContentActiveRecord implements TranslationFileIF
      */
     public $wasPurified = false;
 
+    /**
+     * @inheritDoc
+     */
+    public $managePermission = ManageTranslations::class;
+
+    /**
+     * @inheritDoc
+     */
     public $wallEntryClass = WallEntry::class;
 
     /**

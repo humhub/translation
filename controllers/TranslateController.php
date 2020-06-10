@@ -2,20 +2,30 @@
 
 namespace humhub\modules\translation\controllers;
 
+use humhub\components\access\ControllerAccess;
 use humhub\components\access\StrictAccess;
 use humhub\modules\translation\models\BasePath;
 use humhub\modules\translation\models\forms\TranslationForm;
 use humhub\modules\translation\models\Languages;
+use humhub\modules\translation\permissions\ManageTranslations;
 use humhub\modules\translation\models\TranslationLog;
 use humhub\modules\translation\widgets\TranslationFormWidget;
 use Yii;
 use yii\data\ActiveDataProvider;
-use yii\helpers\HtmlPurifier;
 use yii\web\HttpException;
-use humhub\modules\translation\helpers\Url;
 
 class TranslateController extends \humhub\components\Controller
 {
+    /**
+     * @inheritDoc
+     */
+    public function getAccessRules()
+    {
+        return [
+            [ControllerAccess::RULE_LOGGED_IN_ONLY],
+            [ControllerAccess::RULE_PERMISSION => [ManageTranslations::class], 'actions' => ['save']]
+        ];
+    }
 
     /**
      * Current active language code e.g. en
