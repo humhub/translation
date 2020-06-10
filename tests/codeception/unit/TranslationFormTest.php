@@ -10,6 +10,18 @@ use translation\TranslationTest;
 
 class TranslationFormTest extends TranslationTest
 {
+    public function testModuleIdSelection()
+    {
+        $form = new TranslationForm();
+        $form->load([ ]);
+        $moduleIdSelection = $form->getModuleIdSelection();
+
+        $this->assertTrue(array_key_exists('core', $moduleIdSelection));
+        $this->assertContains('HumHub - core (',  $moduleIdSelection['core']);
+        $this->assertContains('HumHub - activity (',  $moduleIdSelection['activity']);
+        $this->assertContains('Module - translation (',  $moduleIdSelection['translation']);
+    }
+
     public function testLoadInitAsAdmin()
     {
         $form = new TranslationForm();
@@ -247,10 +259,11 @@ class TranslationFormTest extends TranslationTest
 
         $moduleAlias = $form->basePath->isCoreModulePath() ? 'humhub' : $moduleId;
 
-        $this->assertEquals($moduleId, $form->moduleId);
+        $this->assertEquals($moduleId, $form->getMessageModuleId());
         $this->assertEquals($moduleId, $form->basePath->moduleId);
         $this->assertEquals($moduleId, $form->messageFile->moduleId);
-        $this->assertEquals($language, $form->language);
+        $this->assertEquals($language, $form->getMessageLanguage());
+        $this->assertEquals($baseName, $form->getMessageBasename());
         $this->assertEquals($baseName, $form->messageFile->getBaseName());
         $this->assertEquals($baseName . '.php', $form->messageFile->getFileName());
         $this->assertEqualAlias($form->messageFile->getPath($form->language), "@$moduleAlias/messages/$language/$baseName.php");

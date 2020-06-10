@@ -260,13 +260,18 @@ class TranslationForm extends Model implements TranslationFileIF
         try {
             $module = Yii::$app->moduleManager->getModule($moduleId);
 
-            if (strpos($module->getBasePath(), Yii::getAlias('@humhub')) !== false) {
-                return true;
-            }
-        } catch (\Exception $ex) {
-        }
+            $basePath = $this->replaceSeperator($module->getBasePath());
+            $humhubPath = $this->replaceSeperator(Yii::getAlias('@humhub'));
+
+            return strpos($basePath, $humhubPath) !== false;
+        } catch (\Exception $ex) {}
 
         return false;
+    }
+
+    protected function replaceSeperator($path)
+    {
+        return str_replace(['/', '\\'], DIRECTORY_SEPARATOR, Yii::getAlias($path));
     }
 
     /**
