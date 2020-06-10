@@ -7,7 +7,7 @@ use humhub\modules\translation\models\TranslationLog;
 use translation\TranslationTest;
 use Yii;
 
-class TranslationLogTest extends TranslationTest
+class MessageValidationTest extends TranslationTest
 {
 
     public $initialTranslationSate = [
@@ -17,6 +17,8 @@ class TranslationLogTest extends TranslationTest
             'Today is {0,date}' => '',
             'Balance: {0,number}' => '',
             'Maximum of {n,plural,=1{# space} other{# spaces}}' => '',
+            'Maximum {parameter} of {n,plural,=1{# space} other{# spaces}}' => '',
+            '{count} {n,plural,=1{day} other{days}}' => ''
         ]
     ];
 
@@ -116,7 +118,7 @@ class TranslationLogTest extends TranslationTest
         $this->assertEmpty($form->messageFile->getTranslation('de', 'Test with {parameter}'));
     }
 
-    public function testParameterSelectionValid()
+    public function testPluralParameterValid()
     {
         $this->becomeUser('Admin');
         $form = new TranslationForm();
@@ -124,15 +126,15 @@ class TranslationLogTest extends TranslationTest
             'moduleId' => 'translation',
             'language' => 'de',
             'file' => 'test',
-            TranslationLog::tid('Maximum of {n,plural,=1{# space} other{# spaces}}') => 'Maximal {n,plural,=1{# space} other{# spaces}}'
+            TranslationLog::tid('Maximum {parameter} of {n,plural,=1{# space} other{# spaces}}') => 'Maximal {parameter} {n,plural,=1{# Space} other{# Spaces}}'
         ]));
 
         $this->assertTrue($form->save());
         $this->assertEmpty($form->errors);
-        $this->assertEquals('Maximal {n,plural,=1{# space} other{# spaces}}', $form->messageFile->getTranslation('de', 'Maximum of {n,plural,=1{# space} other{# spaces}}'));
+        $this->assertEquals('Maximal {parameter} {n,plural,=1{# Space} other{# Spaces}}', $form->messageFile->getTranslation('de', 'Maximum {parameter} of {n,plural,=1{# space} other{# spaces}}'));
     }
 
-    public function testParameterSelectionInvalid1()
+    public function testPluralParameterInvalid1()
     {
         $this->becomeUser('Admin');
         $form = new TranslationForm();
@@ -148,7 +150,7 @@ class TranslationLogTest extends TranslationTest
         $this->assertEmpty($form->messageFile->getTranslation('de', 'Maximum of {n,plural,=1{# space} other{# spaces}}'));
     }
 
-    public function testParameterSelectionInvalid2()
+    public function testPluralParameterInvalid2()
     {
         $this->becomeUser('Admin');
         $form = new TranslationForm();

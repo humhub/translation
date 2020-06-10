@@ -14,4 +14,5 @@ Changelog
 - Chg: Moved build-archive from core into translation module
 - Enh: Extended validation
 - Chg: Updated HumHub min version to 1.5
+- Fix: Invalid validation error when parsing plural or selection message pattern
 

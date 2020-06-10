@@ -4,6 +4,7 @@ namespace humhub\modules\translation\models;
 
 use humhub\modules\content\components\ContentActiveRecord;
 use humhub\modules\translation\helpers\Url;
+use humhub\modules\translation\models\parser\MessageParser;
 use humhub\modules\translation\Module;
 use humhub\modules\translation\widgets\WallEntry;
 use Yii;
@@ -158,80 +159,38 @@ class TranslationLog extends ContentActiveRecord implements TranslationFileIF
 
     private function validateTranslationParams()
     {
-        $params = [];
+        try {
+            $requiredParameters = MessageParser::parse($this->message);
+            $actualParameters = MessageParser::parse($this->translation);
 
-        preg_match_all('/{([a-zA-Z]+),([a-zA-Z]+),/m', $this->message, $messageMatch, PREG_SET_ORDER);
-        preg_match_all('/{([a-zA-Z]+),([a-zA-Z]+),/m', $this->translation, $translationMatch, PREG_SET_ORDER);
+            $parameterCompare = MessageParser::compareParameter($requiredParameters, $actualParameters);
 
+            if ($parameterCompare !== true) {
+                list($param, $error) = $parameterCompare;
+                if ($error === MessageParser::COMPARE_RESULT_MISSING) {
+                    $this->addError('translation',
+                        Yii::t('TranslationModule.base', 'The translation is missing a parameter "{match}"', ['match' => $param]));
+                } else {
+                    $this->addError('translation',
+                        Yii::t('TranslationModule.base', 'The translation contains an invalid parameter "{match}"', ['match' => $param]));
+                }
 
-        if(!$this->compareParameter($messageMatch, $translationMatch)) {
-            return;
-        }
-
-        // Assamble parameter from e.g. {n,plural,=1{# space} other{# spaces}}
-        foreach ($translationMatch as $match) {
-            $param = $match[1];
-            $function = $match[2];
-
-            switch ($function) {
-                case 'date':
-                case 'time':
-                    $params[$param] = time();
-                    break;
-                default:
-                    $params[$param] = 4;
-                    break;
+                return;
             }
+
+            // Run a test translation
+            $formatter = Yii::$app->getI18n()->getMessageFormatter();
+            $formatter->format($this->translation, MessageParser::getDummyData($actualParameters), $this->language);
+            if ($formatter->getErrorMessage()) {
+                $this->addError('translation', Yii::t('TranslationModule.base', 'Invalid translation pattern detected, please see {link}', [
+                    'error' => $formatter->getErrorMessage(), 'link' => 'https://www.yiiframework.com/doc/guide/2.0/en/tutorial-i18n#message-formatting'
+                ]));
+            }
+        } catch (\Throwable $t) {
+            Yii::error($t);
+            $this->addError('translation', Yii::t('TranslationModule.base',
+                'Error while parsing the message, please request support by a translation administrator'));
         }
-
-        preg_match_all('/{([a-zA-Z]+)}/m', $this->translation, $translationMatch, PREG_SET_ORDER);
-        preg_match_all('/{([a-zA-Z]+)}/m', $this->message, $messageMatch, PREG_SET_ORDER);
-
-        if(!$this->compareParameter($messageMatch, $translationMatch)) {
-            return;
-        }
-
-        foreach ($translationMatch as $match) {
-            $params[$match[1]] = 'Test Value';
-        }
-
-        // Test translation run
-        $formatter = Yii::$app->getI18n()->getMessageFormatter();
-        $formatter->format($this->translation, $params, $this->language);
-        if ($formatter->getErrorMessage()) {
-            $this->addError('translation', Yii::t('TranslationModule.base', 'Invalid translation pattern detected, please see {link}', [
-                'error' => $formatter->getErrorMessage(), 'link' => 'https://www.yiiframework.com/doc/guide/2.0/en/tutorial-i18n#message-formatting'
-            ]));
-        }
-    }
-
-    private function compareParameter($messageMatches, $translationMatches, $index = 1)
-    {
-        array_walk($messageMatches, function(&$value) use ($index) {
-            $value = $value[$index] ?? null;
-        });
-
-        array_walk($translationMatches, function(&$value) use ($index) {
-            $value = $value[$index] ?? null;
-        });
-
-        $diff = array_diff($messageMatches, $translationMatches);
-
-        if(!empty($diff)) {
-            $this->addError('translation',
-                Yii::t('TranslationModule.base', 'The translation is missing a parameter "{match}"', ['match' => array_values($diff)[0]]));
-            return false;
-        }
-
-        $diff = array_diff($translationMatches, $messageMatches);
-
-        if(!empty($diff)) {
-            $this->addError('translation',
-                Yii::t('TranslationModule.base', 'TThe translation contains an invalid parameter "{match}"', ['match' => array_values($diff)[0]]));
-            return false;
-        }
-
-        return true;
     }
 
     private function purifyTranslation()
