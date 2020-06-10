@@ -23,5 +23,5 @@ MainAsset::register($this);
 
 <?= TranslationLogStreamViewer::widget([
     'contentContainer' => ContentContainerHelper::getCurrent(),
-    'messageStreamEmpty' => Yii::t('TranslationModule.base', 'No translation history available:')
+    'messageStreamEmpty' => Yii::t('TranslationModule.base', 'No translation history available.')
 ]) ?>
