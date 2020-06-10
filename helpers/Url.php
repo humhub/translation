@@ -3,6 +3,7 @@
 namespace humhub\modules\translation\helpers;
 
 use humhub\modules\translation\models\forms\TranslationForm;
+use humhub\modules\translation\models\Languages;
 use humhub\modules\translation\models\MessageFile;
 use humhub\modules\translation\models\TranslationFileIF;
 use humhub\modules\translation\models\TranslationLog;
@@ -25,6 +26,12 @@ class Url extends \yii\helpers\Url
             'language' => $model->getMessageLanguage(),
             'moduleId' => $model->getMessageModuleId(),
             'file' => $model->getMessageBasename()]);
+    }
+
+    public static function toEditSpaceTranslation($space)
+    {
+        return static::to(['/translation/translate/index',
+            'language' => Languages::getLanguageBySpaceName($space)]);
     }
 
     public static function toHistory(TranslationFileIF $model, $message)
