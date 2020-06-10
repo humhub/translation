@@ -135,6 +135,28 @@ class Languages extends BaseObject
         return Space::findOne(['name' => strtoupper($spaceName)]);
     }
 
+    public static function getLanguageBySpaceName($spaceName)
+    {
+        if($spaceName instanceof Space) {
+            $spaceName = $spaceName->name;
+        }
+
+        $language = $spaceName;
+
+        if (strpos($language, '-') !== false) {
+            list($lang, $ter) = explode('-', $spaceName, 2);
+            $language = strtolower($lang) . '-' . strtoupper($ter);
+        } else {
+            $language = strtolower($language);
+        }
+
+        if(!static::isValidLanguage($language)) {
+            return null;
+        }
+
+        return $language;
+    }
+
     public static function getSpaceNameByLangauge($language)
     {
         if(!static::isValidLanguage($language)) {

@@ -3,6 +3,7 @@
 namespace humhub\modules\translation;
 
 use humhub\modules\translation\helpers\Url;
+use humhub\modules\translation\models\Languages;
 use humhub\modules\ui\menu\MenuLink;
 use humhub\modules\translation\commands\TranslationController;
 use Yii;
@@ -24,6 +25,10 @@ class Events
     public static function onSpaceMenuInit($event)
     {
         $space = $event->sender->space;
+
+        if(!Languages::getLanguageBySpaceName($space)) {
+            return;
+        }
 
         $event->sender->addEntry(new MenuLink([
             'id' => 'translation-space',

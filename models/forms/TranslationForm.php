@@ -110,11 +110,14 @@ class TranslationForm extends Model implements TranslationFileIF
     {
         $result = parent::load($data, $formName);
 
+        $dirty = !$this->language;
+
         $this->language = $this->language ?: Languages::getDefaultLanguage();
         $this->basePath = BasePath::getBasePath($this->moduleId);
         $this->files = $this->basePath->getMessageFiles($this->language);
 
         if (!$this->file && !empty($this->files)) {
+            $dirty = true;
             $this->file = $this->files[0]->getBaseName();
         }
 
@@ -124,14 +127,14 @@ class TranslationForm extends Model implements TranslationFileIF
 
         $this->loadMessages();
 
-        // TODO: actually save logs in save instead of load...
-
-        if (!$result) {
+        // In case the form used any default value instead of loaded value we skip translation loading
+        if ($dirty || !$result) {
             return false;
         }
 
         $this->space = Languages::findSpaceByLanguage($this->language);
         if (!$this->space) {
+            $this->addError('space', Yii::t('TranslationModule.base', 'There is no language related space available for language {lang}', ['lang' =>$this->language]));
             return false;
         }
 
@@ -146,7 +149,7 @@ class TranslationForm extends Model implements TranslationFileIF
                 'message' => $originalMessage,
             ]);
 
-            if ($translationModel->load($data)) {
+            if ($translationModel->load($data) && !empty($translationModel->translation)) {
                 $this->translationLogs[] = $translationModel;
             }
         }

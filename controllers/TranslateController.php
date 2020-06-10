@@ -22,8 +22,7 @@ class TranslateController extends \humhub\components\Controller
     public function getAccessRules()
     {
         return [
-            [ControllerAccess::RULE_LOGGED_IN_ONLY],
-            [ControllerAccess::RULE_PERMISSION => [ManageTranslations::class], 'actions' => ['save']]
+            [ControllerAccess::RULE_LOGGED_IN_ONLY]
         ];
     }
 
@@ -109,6 +108,7 @@ class TranslateController extends \humhub\components\Controller
     public function actionSave()
     {
         $model = new TranslationForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if(empty($model->warnings) && empty($model->errors)) {
                 $this->view->saved();
@@ -117,6 +117,11 @@ class TranslateController extends \humhub\components\Controller
             } else {
                 $this->view->warn(Yii::t('TranslationModule.base', 'Some translations may have been purified from suspicious html.'));
             }
+        }
+
+        // In case there is no related language space
+        if(!empty($model->getFirstError('space'))) {
+            $this->view->error($model->getFirstError('space'));
         }
 
         return $this->render('index', [
