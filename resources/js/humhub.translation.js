@@ -5,13 +5,23 @@ humhub.module('translation', function(module, require, $) {
 
     var Form = Widget.extend();
 
+    var stateHideTranslated = false;
+
+    Form.prototype.init = function() {
+        this.updateEmptyFilterState();
+    };
+
     Form.prototype.selectOptions = function(evt) {
         var $form = $('#translation-editor-form');
+
+        var that = this;
 
         // client unloadForm available in HumHub 1.5.3
         if(!client.unloadForm || client.unloadForm($form)) {
             this.options.widgetReloadUrl = this.appendToUrl(this.options.loadUrl, evt.$trigger.is('select[name="file"]'));
-            this.reload();
+            this.reload().then(function() {
+                that.updateEmptyFilterState();
+            });
             if(window.history) {
                 window.history.replaceState(null, null, this.options.widgetReloadUrl );
             }
@@ -59,6 +69,25 @@ humhub.module('translation', function(module, require, $) {
         return (url.indexOf('?') !== -1)
             ? url + '&' + params
             : url + '?' + params;
+    };
+
+    Form.prototype.toggleEmptyTranslationFilter = function() {
+        stateHideTranslated = !stateHideTranslated;
+        this.updateEmptyFilterState();
+    };
+
+    Form.prototype.updateEmptyFilterState = function() {
+        this.$.find('.translation.translated').each(function() {
+            var $row =  $(this).closest('.row');
+            if(stateHideTranslated) {
+                $row.hide();
+                $('#toggle-empty-filter').find('i').removeClass('fa-toggle-off').addClass('fa-toggle-on');
+
+            } else {
+                $row.show();
+                $('#toggle-empty-filter').find('i').removeClass('fa-toggle-on').addClass('fa-toggle-off');
+            }
+        });
     };
 
     module.export({

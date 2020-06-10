@@ -10,6 +10,10 @@ class TranslationFormWidget extends JsWidget
 {
     public $jsWidget = 'translation.Form';
 
+    public $id = 'translation-editor-form';
+
+    public $init = true;
+
     /**
      * @var TranslationForm
      */

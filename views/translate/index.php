@@ -5,6 +5,7 @@ use humhub\modules\translation\widgets\TranslationFormWidget;
 
 use humhub\modules\translation\assets\MainAsset;
 use humhub\modules\ui\icon\widgets\Icon;
+use humhub\widgets\Button;
 
 /* @var $model TranslationForm */
 
@@ -16,7 +17,11 @@ $bundle = MainAsset::register($this);
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading"><?= Icon::get('align-left') ?>  <?= Yii::t('TranslationModule.views_translate_index', '<strong>Translation</strong> Editor') ?></div>
+                <div class="panel-heading">
+                    <?= Icon::get('align-left') ?>  <?= Yii::t('TranslationModule.views_translate_index', '<strong>Translation</strong> Editor') ?>
+                    <?= Button::defaultType(Yii::t('TranslationModule.base', 'Only show missing translations'))->id('toggle-empty-filter')
+                        ->action('toggleEmptyTranslationFilter', null, '#translation-editor-form')->loader(false)->xs()->icon('fa-toggle-off')->right() ?>
+                </div>
                    <?= TranslationFormWidget::widget([
                        'model' => $model,
                    ])?>

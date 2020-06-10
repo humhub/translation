@@ -15,4 +15,5 @@ Changelog
 - Enh: Extended validation
 - Chg: Updated HumHub min version to 1.5
 - Fix: Invalid validation error when parsing plural or selection message pattern
+- Enh #29: Added "Only show missing translation" filter toggle to translation editor
 
