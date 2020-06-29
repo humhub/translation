@@ -5,7 +5,7 @@ namespace humhub\modules\translation\models;
 use humhub\modules\content\components\ContentActiveRecord;
 use humhub\modules\translation\helpers\Url;
 use humhub\modules\translation\models\parser\MessageParser;
-use humhub\modules\translation\Module;
+use humhub\modules\translation\permissions\ManageTranslations;
 use humhub\modules\translation\widgets\WallEntry;
 use Yii;
 use yii\helpers\HtmlPurifier;

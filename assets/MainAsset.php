@@ -9,7 +9,7 @@ use humhub\modules\ui\view\components\View;
 class MainAsset extends AssetBundle
 {
     public $defer = true;
-    public $forceCopy = true;
+    public $forceCopy = false;
     public $sourcePath = '@translation/resources';
     public $js = [
         'js/humhub.translation.js',
