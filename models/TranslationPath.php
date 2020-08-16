@@ -71,7 +71,7 @@ abstract class TranslationPath extends Model
         if(!$this->module) {
             $this->module = $this->isCoreModulePath()
                 ? Yii::$app
-                : Yii::$app->getModule($this->moduleId);
+                : Yii::$app->moduleManager->getModule($this->moduleId);
         }
 
         return $this->module;
