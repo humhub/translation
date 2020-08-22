@@ -1,6 +1,5 @@
 <?php
-
-return [
-    'Save' => '',
-    'This is a test' => '',
-];
+return array (
+  'Save' => 'Zapisz',
+  'This is a test' => 'To jest test',
+);
