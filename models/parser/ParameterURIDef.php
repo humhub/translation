@@ -6,7 +6,7 @@ class ParameterURIDef extends \HTMLPurifier_AttrDef_URI
 {
     public function validate($uri, $config, $context)
     {
-        if(preg_match('/\{[a-zA-Z0-9].*\}/', $uri)) {
+        if(preg_match('/^\{[a-zA-Z0-9]+\}$/', $uri)) {
             return true;
         }
 
