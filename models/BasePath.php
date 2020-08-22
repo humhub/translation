@@ -85,7 +85,11 @@ class BasePath extends TranslationPath
             return null;
         }
 
-        $module = $this->getModule();
+        try {
+            $module = $this->getModule();
+        } catch(\Exception $e) {
+            return null;
+        }
 
         if(!$module) {
             return null;
