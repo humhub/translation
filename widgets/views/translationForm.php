@@ -16,7 +16,7 @@ use humhub\widgets\Button;
 
 <?= Html::beginTag('div', $options) ?>
 
-    <?php ActiveForm::begin(['id' => 'translation-editor-form', 'action' => Url::toSave($model) , 'acknowledge' => true]) ?>
+    <?php ActiveForm::begin(['id' => 'translation-editor-form', 'action' => Url::toSave($model),  'acknowledge' => true ]) ?>
         <div class="translation-editor-filter clearfix">
             <div class="row">
                 <div class="form-group col-md-4">
@@ -64,7 +64,7 @@ use humhub\widgets\Button;
 
 
             <p class="clearfix" style="margin-bottom:0">
-                <?= Button::save()->submit()->right() ?>
+                <?= Button::save()->submit()->right()?>
             </p>
 
             <hr style="margin-top:0">
