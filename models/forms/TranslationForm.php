@@ -214,7 +214,7 @@ class TranslationForm extends Model implements TranslationFileIF
         foreach ($this->messages as $originalMessage => $oldTranslation) {
             if (empty($oldTranslation)) {
                 if (!empty($translations[$i]['translatedText'])) {
-                   $this->messages[$originalMessage] = str_replace(['<span class="notranslate">', '</span>'], ['{', '}'], $translations[$i]['translatedText']);
+                   $this->messages[$originalMessage] = htmlspecialchars_decode(str_replace(['<span class="notranslate">', '</span>', '&#39;'], ['{', '}', '\''], $translations[$i]['translatedText']));
                 }
                 $i++;
             }
