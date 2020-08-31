@@ -183,7 +183,7 @@ class TranslationForm extends Model implements TranslationFileIF
         $toTranslateRequest = '';
         foreach ($this->messages as $originalMessage => $oldTranslation) {
             if (empty($oldTranslation)) {
-                $toTranslateRequest .= '&q='.rawurlencode($originalMessage);
+                $toTranslateRequest .= '&q='.rawurlencode(str_replace(['{', '}'], ['<span class="notranslate">', '</span>'], $originalMessage));
             }
         }
 
@@ -214,7 +214,7 @@ class TranslationForm extends Model implements TranslationFileIF
         foreach ($this->messages as $originalMessage => $oldTranslation) {
             if (empty($oldTranslation)) {
                 if (!empty($translations[$i]['translatedText'])) {
-                   $this->messages[$originalMessage] = $translations[$i]['translatedText'];
+                   $this->messages[$originalMessage] = str_replace(['<span class="notranslate">', '</span>'], ['{', '}'], $translations[$i]['translatedText']);
                 }
                 $i++;
             }
