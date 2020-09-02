@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.0.2 (Unreleased)
+------------------
+- Enh: Allow automatic translation with Google cloud translation API
+
+
 1.0.1 (Unreleased)
 ------------------
 - Enh: Allow translation of non-enabled modules

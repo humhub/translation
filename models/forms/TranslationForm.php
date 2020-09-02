@@ -127,6 +127,8 @@ class TranslationForm extends Model implements TranslationFileIF
 
         $this->loadMessages();
 
+        $this->autoTranslateEmptyValues();
+
         // In case the form used any default value instead of loaded value we skip translation loading
         if ($dirty || !$result) {
             return false;
@@ -162,6 +164,60 @@ class TranslationForm extends Model implements TranslationFileIF
         $this->messages = [];
         if ($this->messageFile instanceof MessageFile && $this->messageFile->validate()) {
             $this->messages = $this->messageFile->getMessages($this->language);
+        }
+    }
+
+
+    /**
+     * Translate automatically with Google translate API
+     * $googleApiKey must be set
+     */
+    protected function autoTranslateEmptyValues ()
+    {
+        $module = Yii::$app->controller->module; // current module
+        if (empty($module->googleApiKey)) {
+            return false;
+        }
+
+        // Get messages to translate
+        $toTranslateRequest = '';
+        foreach ($this->messages as $originalMessage => $oldTranslation) {
+            if (empty($oldTranslation)) {
+                $toTranslateRequest .= '&q='.rawurlencode(str_replace(['{', '}'], ['<span class="notranslate">', '</span>'], $originalMessage));
+            }
+        }
+
+        // If no empty translation
+        if ($toTranslateRequest == '') {
+            return;
+        }
+
+        // Create URL
+        $url = $module->googleApiUrl.'?key=' . $module->googleApiKey . $toTranslateRequest . '&source=en&target='.strtolower(substr($this->language, 0, 2));
+
+        // Ask Google API
+        $handle = curl_init($url);
+        curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($handle);
+        $responseDecoded = json_decode($response, true);
+        $responseCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+        curl_close($handle);
+
+        // Get translations
+        if($responseCode != 200 || !isset($responseDecoded['data']['translations'])) {
+            return;
+        }
+        $translations = $responseDecoded['data']['translations'];
+
+        // Replace empty translations
+        $i = 0;
+        foreach ($this->messages as $originalMessage => $oldTranslation) {
+            if (empty($oldTranslation)) {
+                if (!empty($translations[$i]['translatedText'])) {
+                   $this->messages[$originalMessage] = htmlspecialchars_decode(str_replace(['<span class="notranslate">', '</span>', '&#39;'], ['{', '}', '\''], $translations[$i]['translatedText']));
+                }
+                $i++;
+            }
         }
     }
 
