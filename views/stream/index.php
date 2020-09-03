@@ -8,7 +8,7 @@ use humhub\modules\translation\widgets\TranslationLogStreamViewer;
 use humhub\modules\ui\icon\widgets\Icon;
 use humhub\widgets\Button;
 
-/* @var $this \humhub\components\View */
+/* @var $this \humhub\modules\ui\view\components\View */
 
 MainAsset::register($this);
 
