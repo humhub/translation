@@ -1,5 +1,5 @@
 <?php
-/* @var $this \humhub\components\View */
+/* @var $this \humhub\modules\ui\view\components\View */
 /* @var $dataProvider \yii\data\ActiveDataProvider */
 /* @var $messageFile \humhub\modules\translation\models\MessageFile  */
 /* @var $message string */

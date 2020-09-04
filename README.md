@@ -31,6 +31,20 @@ The following command is used to build the message archive. The message archive 
 php yii translation/build-archive
 ```
 
+## Enable automatic translations for empty values
+
+For automatic translation:
+1. Activate the API Cloud Translation: https://console.developers.google.com/apis/library
+2. Get your Google API key: https://console.developers.google.com/apis/api/translate.googleapis.com/credentials
+3. In `protected/config/common.php`, add:
+```
+    'modules' => [
+        'translation' => [
+            'googleApiKey' => 'YOUR-API-KEY-HERE',
+        ]
+    ],
+```
+
 ## Further reading
 
 - [Yii2 Internationalization](https://www.yiiframework.com/doc/guide/2.0/en/tutorial-i18n#internationalization)

@@ -1,4 +1,4 @@
 <?php
 return array (
-  'This is a test' => '',
+  'Save' => 'Speichern',
 );
