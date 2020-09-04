@@ -1,6 +1,4 @@
 <?php
-
-return [
-    'Save' => '',
-    'This is a test' => '',
-];
+return array (
+  'Save' => 'Salvează',
+);

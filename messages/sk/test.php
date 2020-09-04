@@ -2,5 +2,4 @@
 
 return [
     'Save' => '',
-    'This is a test' => '',
 ];
