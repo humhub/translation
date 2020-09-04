@@ -93,10 +93,7 @@ class TranslateController extends \humhub\components\Controller
     {
         $model = new TranslationForm();
         $model->load(Yii::$app->request->get());
-
-        if (!$model->validate()) {
-            throw new HttpException(404);
-        }
+        $model->validate();
 
         return (Yii::$app->request->isAjax && !Yii::$app->request->isPjax)
             ? TranslationFormWidget::widget(['model' => $model])

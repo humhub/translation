@@ -1,5 +1,6 @@
 <?php
 
+use humhub\libs\Html;
 use humhub\modules\translation\models\forms\TranslationForm;
 use humhub\modules\translation\widgets\TranslationFormWidget;
 
@@ -22,9 +23,9 @@ $bundle = MainAsset::register($this);
                     <?= Button::defaultType(Yii::t('TranslationModule.base', 'Only show missing translations'))->id('toggle-empty-filter')
                         ->action('toggleEmptyTranslationFilter', null, '#translation-editor-translations')->loader(false)->xs()->icon('fa-toggle-off')->right() ?>
                 </div>
-                   <?= TranslationFormWidget::widget([
-                       'model' => $model,
-                   ])?>
+                <?= TranslationFormWidget::widget([
+                    'model' => $model,
+                ]) ?>
             </div>
         </div>
     </div>

@@ -2,6 +2,7 @@
 
 namespace humhub\modules\translation\models\forms;
 
+use humhub\libs\Html;
 use humhub\modules\space\models\Space;
 use humhub\modules\translation\permissions\ManageTranslations;
 use humhub\modules\translation\models\TranslationCoverage;
@@ -69,16 +70,23 @@ class TranslationForm extends Model implements TranslationFileIF
     {
         return [
             [['language'], 'validateLanguage'],
-            [['language', 'moduleId', 'file'], 'string'],
-            [['language', 'moduleId', 'files', 'file', 'messageFile'], 'required'],
             [['file'], 'validateFile'],
+            [['file'], 'required' , 'message' => Yii::t('TranslationModule.base', 'The selected translation file could not be found.')],
+            [['files'], 'required' , 'message' => Yii::t('TranslationModule.base', 'No translation files found for given selection.')],
+            [['language', 'moduleId', 'file'], 'string'],
+            [['language', 'moduleId'], 'required'],
         ];
+    }
+
+    public function getMessageSettingString($withFile = true)
+    {
+        return  ['settings' => '"'.Html::encode($this->moduleId) . ' / ' . Html::encode($this->language) . (($this->file && $withFile) ? ' / '. Html::encode($this->file) : '').'"'];
     }
 
     public function validateFile()
     {
         if (!$this->messageFile || !$this->messageFile->validate()) {
-            $this->addError('file', 'Message file not found!');
+            $this->addError('file', Yii::t('TranslationModule.base', 'The message file for {settings} not found!', $this->getMessageSettingString()));
         }
     }
 
@@ -88,7 +96,7 @@ class TranslationForm extends Model implements TranslationFileIF
             $this->addError('language', 'You are not allowed to translate this language!');
         }
         if (!$this->messageFile || !$this->messageFile->validateLanguagePath($this->language)) {
-            $this->addError('language', 'Language file not found!');
+            $this->addError('language', Yii::t('TranslationModule.base', 'The translation path for language {settings} could not be found!', $this->getMessageSettingString(false)));
         }
     }
 
@@ -245,7 +253,16 @@ class TranslationForm extends Model implements TranslationFileIF
         $moduleIds = BasePath::getModuleIds();
         array_walk($moduleIds, function (&$value, $key) {
             $value = $this->isCoreModule($key) ? 'HumHub - ' . $value : $value = 'Module - ' . $value;
-            $value .= ' (' . TranslationCoverage::getModuleCoverage(BasePath::getBasePath($key), $this->language) . '%)';
+
+            $coverage =  TranslationCoverage::getModuleCoverage(BasePath::getBasePath($key), $this->language);
+
+            if($coverage === false) {
+                $value .= ' (?)';
+            } else {
+                $value .= ' (' . $coverage . '%)';
+            }
+
+
         });
         asort($moduleIds);
         return $moduleIds;

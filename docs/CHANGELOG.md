@@ -4,6 +4,7 @@ Changelog
 1.0.1 (Unreleased)
 ------------------
 - Enh: Allow translation of non-enabled modules
+- Enh: Provide specific error message in case message path could not be found instead of 404
 
 
 1.0.0 (June 10, 2020)
