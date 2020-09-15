@@ -112,7 +112,7 @@ class TranslateController extends \humhub\components\Controller
             } else if(!empty($model->errors)) {
                 $this->view->error(Yii::t('TranslationModule.base', 'Some translations could not be saved.'));
             } else {
-                $this->view->warn(Yii::t('TranslationModule.base', 'Some translations may have been purified from suspicious html.'));
+                $this->view->warn(Yii::t('TranslationModule.base', 'Some translations may have been purified.'));
             }
         }
 

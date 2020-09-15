@@ -267,7 +267,7 @@ class TranslationForm extends Model implements TranslationFileIF
             }
 
             if ($translationModel->wasPurified) {
-                $this->warnings[$translationModel->getTID()] = Yii::t('TranslationModule.base', 'Your input has been purified from suspicious html.');
+                $this->warnings[$translationModel->getTID()] = Yii::t('TranslationModule.base', 'Your input has been purified.');
             }
 
             if (!$translationModel->hasErrors()) {
