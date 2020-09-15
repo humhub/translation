@@ -71,16 +71,18 @@ if($model->hasErrors()) {
 
         <div class="panel-body">
 
-                <?php if(!empty($errors)) : ?>
-                    <div class="alert alert-danger">
-                        <?= $errors ?>
+            <?php if(!empty($errors)) : ?>
 
-                        <?= Yii::t('TranslationModule.base', 'If you are responsible for this module, try running the following command:')?>
-                        &nbsp;<code>php yii message/extract-module myModuleId</code>
-                        <br>
-                        <?= Yii::t('TranslationModule.base', 'Otherwise, please report this to the module owner or translation admin.')?>
-                    </div>
-                <?php endif; ?>
+                <div class="alert alert-danger">
+                    <?= $errors ?>
+
+                    <?= Yii::t('TranslationModule.base', 'If you are responsible for this module, try running the following command:')?>
+                    &nbsp;<code>php yii message/extract-module myModuleId</code>
+                    <br>
+                    <?= Yii::t('TranslationModule.base', 'Otherwise, please report this to the module owner or translation admin.')?>
+                </div>
+
+            <?php else: ?>
 
                 <p style="float:left">
                     <?= Html::textInput('search', null, [
@@ -126,6 +128,7 @@ if($model->hasErrors()) {
                 <hr>
 
                 <p class="clearfix"><?= Button::save()->submit()->right() ?></p>
+            <?php endif; ?>
         </div>
     <?php ActiveForm::end() ?>
 <?= Html::endTag('div') ?>
