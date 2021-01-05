@@ -2,18 +2,22 @@
 
 namespace humhub\modules\translation\stream;
 
+use humhub\modules\stream\models\ContentContainerStreamQuery;
 use humhub\modules\stream\models\filters\OriginatorStreamFilter;
-use humhub\modules\stream\models\WallStreamQuery;
 use humhub\modules\translation\stream\filters\ModuleIdFilter;
 
-class StreamQuery extends WallStreamQuery
+class StreamQuery extends ContentContainerStreamQuery
 {
+
+
     public $filterHandlers = [
         ModuleIdFilter::class,
         OriginatorStreamFilter::class,
     ];
 
+    public $pinnedContentSupport = false;
     protected $preventSuppression = true;
+
     public $channel = 'translation';
 
     protected function setupCriteria()

@@ -5,6 +5,6 @@
     "keywords": ["translation", "i18n"],
     "version": "1.0.0",
     "humhub": {
-        "minVersion": "1.5"
+        "minVersion": "1.6"
     }
 }
