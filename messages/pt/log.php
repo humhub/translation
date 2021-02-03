@@ -1,6 +1,5 @@
 <?php
-
-return [
-    '<strong>Translation</strong> History' => '',
-    'Back to editor' => '',
-];
+return array (
+  '<strong>Translation</strong> History' => '<strong>Histórico</strong> de traduções',
+  'Back to editor' => 'Voltar ao editor',
+);
