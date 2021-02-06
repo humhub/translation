@@ -38,6 +38,6 @@ return array (
   'Translations' => 'Traduções',
   'View History' => 'Ver histórico',
   'View history' => 'Ver histórico',
-  'Your input has been purified.' => 'O sua submissão foi alterada.',
+  'Your input has been purified.' => 'A sua submissão foi alterada.',
   'Your translation seems to be empty and therefore could not be saved.' => 'A sua tradução parece estar vazia, e como tal não foi guardada.',
 );
