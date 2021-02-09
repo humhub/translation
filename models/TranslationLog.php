@@ -92,6 +92,14 @@ class TranslationLog extends ContentActiveRecord implements TranslationFileIF
     }
 
     /**
+     * @inheritdoc
+     */
+    public function getContentDescription()
+    {
+        return $this->translation;
+    }
+
+    /**
      * @inheritDoc
      */
     public static function tableName()
