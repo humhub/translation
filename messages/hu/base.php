@@ -1,7 +1,7 @@
 <?php
 return array (
-  '<strong>Translation</strong> History' => '<strong>Fordítás</strong> Előzmények',
-  '<strong>Translation</strong> history' => '<strong>Fordítás</strong> előzmények',
+  '<strong>Translation</strong> History' => '<strong>Fordítási</strong> előzmények',
+  '<strong>Translation</strong> history' => '<strong>Fordítási</strong> előzmények',
   'Active translation' => 'Aktív fordítás',
   'Back to editor' => 'Vissza a szerkesztőhöz',
   'Confirm translations.' => 'Fordítások megerősítése.',
