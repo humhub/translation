@@ -6,6 +6,7 @@ Changelog
 - Enh: Allow automatic translation with Google cloud translation API
 - Enh: Provide specific error message in case message path could not be found instead of 404
 - Fix #36: Fix empty translation text on activities
+- Enh #40: Support attribute “target” for link tag
 
 
 1.0.1 (Unreleased)

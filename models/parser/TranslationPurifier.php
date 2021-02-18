@@ -17,6 +17,7 @@ class TranslationPurifier extends HtmlPurifier
         $config->set('HTML.Doctype', 'HTML 4.01 Transitional');
         $def =  $config->getHTMLDefinition(true);
         $def->addAttribute('a', 'href', new ParameterURIDef());
+        $def->addAttribute('a', 'target', new ParameterURIDef());
         $def->addAttribute('img', 'src', new ParameterURIDef());
     }
 }
