@@ -6,6 +6,7 @@ Changelog
 - Enh: Allow automatic translation with Google cloud translation API
 - Enh: Provide specific error message in case message path could not be found instead of 404
 - Fix #36: Fix empty translation text on activities
+- Fix #41: Allow to translate module from folder name different than module id
 
 
 1.0.1 (Unreleased)
