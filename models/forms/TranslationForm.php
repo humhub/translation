@@ -4,6 +4,7 @@ namespace humhub\modules\translation\models\forms;
 
 use humhub\libs\Html;
 use humhub\modules\space\models\Space;
+use humhub\modules\translation\Module;
 use humhub\modules\translation\permissions\ManageTranslations;
 use humhub\modules\translation\models\TranslationCoverage;
 use humhub\modules\translation\models\TranslationFileIF;
@@ -182,7 +183,8 @@ class TranslationForm extends Model implements TranslationFileIF
      */
     protected function autoTranslateEmptyValues ()
     {
-        $module = Yii::$app->controller->module; // current module
+        /* @var Module $module */
+        $module = Yii::$app->getModule('translation');
         if (empty($module->googleApiKey)) {
             return false;
         }
