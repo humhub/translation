@@ -3,9 +3,7 @@
 namespace humhub\modules\translation\tests\codeception\unit;
 
 use humhub\modules\translation\models\BasePath;
-use tests\codeception\_support\HumHubDbTestCase;
 use translation\TranslationTest;
-use Yii;
 
 class MessageFileTest extends TranslationTest
 {
