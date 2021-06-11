@@ -17,9 +17,9 @@ class TranslationFormTest extends TranslationTest
         $moduleIdSelection = $form->getModuleIdSelection();
 
         $this->assertTrue(array_key_exists('core', $moduleIdSelection));
-        $this->assertContains('HumHub - core (',  $moduleIdSelection['core']);
-        $this->assertContains('HumHub - activity (',  $moduleIdSelection['activity']);
-        $this->assertContains('Module - translation (',  $moduleIdSelection['translation']);
+        $this->assertStringContainsString('HumHub - core (',  $moduleIdSelection['core']);
+        $this->assertStringContainsString('HumHub - activity (',  $moduleIdSelection['activity']);
+        $this->assertStringContainsString('Module - translation (',  $moduleIdSelection['translation']);
     }
 
     public function testLoadInitAsAdmin()
