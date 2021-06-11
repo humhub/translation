@@ -246,16 +246,16 @@ class MessageParserTest extends HumHubDbTestCase
 
     public function testGetNumberDummyData()
     {
-        $this->assertInternalType('int', MessageParser::getDummyData(['number' => MessageParser::PARAMETER_TYPE_NUMBER])['number']);
+        $this->assertIsInt(MessageParser::getDummyData(['number' => MessageParser::PARAMETER_TYPE_NUMBER])['number']);
     }
 
     public function testGetDateDummyData()
     {
-        $this->assertInternalType('int', MessageParser::getDummyData(['date' => MessageParser::PARAMETER_TYPE_DATE])['date']);
+        $this->assertIsInt(MessageParser::getDummyData(['date' => MessageParser::PARAMETER_TYPE_DATE])['date']);
     }
 
     public function testGetTimeDummyData()
     {
-        $this->assertInternalType('int', MessageParser::getDummyData(['time' => MessageParser::PARAMETER_TYPE_TIME])['time']);
+        $this->assertIsInt(MessageParser::getDummyData(['time' => MessageParser::PARAMETER_TYPE_TIME])['time']);
     }
 }
