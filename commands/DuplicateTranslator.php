@@ -84,9 +84,6 @@ class DuplicateTranslator extends TranslationCommand
                 foreach ($messageFile->getMessages($language) as $original => $translated) {
                     if (empty($translated) && isset($allTranslatedMessages[$original]) && !empty($allTranslatedMessages[$original])) {
                         $messages[$original] = $allTranslatedMessages[$original];
-
-                        print $original."\n";
-
                         $autoTranslated++;
                         $messagesChanged = true;
                     }
