@@ -189,7 +189,7 @@ class TranslationForm extends Model implements TranslationFileIF
     protected function autoTranslateEmptyValues($queryStart = 1)
     {
         /** @var Module $module */
-        $module = Yii::$app->controller->module; // current module
+        $module = Yii::$app->getModule('translation');
         if (empty($module->googleApiKey)) {
             return false;
         }
