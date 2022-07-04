@@ -18,6 +18,11 @@ use humhub\modules\translation\models\TranslationLog;
 class TranslationForm extends Model implements TranslationFileIF
 {
     /**
+     * Maximum text queries that Google translate API can do in one HTTP request
+     */
+    public const GOOGLE_TRANSLATE_MAX_TEXT_QUERIES = 128;
+
+    /**
      * @var string
      */
     public $language;
@@ -181,19 +186,28 @@ class TranslationForm extends Model implements TranslationFileIF
      * Translate automatically with Google translate API
      * $googleApiKey must be set
      */
-    protected function autoTranslateEmptyValues ()
+    protected function autoTranslateEmptyValues($queryStart = 1)
     {
-        /* @var Module $module */
-        $module = Yii::$app->getModule('translation');
+        /** @var Module $module */
+        $module = Yii::$app->controller->module; // current module
         if (empty($module->googleApiKey)) {
             return false;
         }
 
         // Get messages to translate
         $toTranslateRequest = '';
+        $queryNumb = 0;
         foreach ($this->messages as $originalMessage => $oldTranslation) {
             if (empty($oldTranslation)) {
-                $toTranslateRequest .= '&q='.rawurlencode(str_replace(['{', '}'], ['<span class="notranslate">', '</span>'], $originalMessage));
+                $queryNumb++;
+                if ($queryNumb < $queryStart) {
+                    continue;
+                }
+                if ($queryNumb >= ($queryStart + static::GOOGLE_TRANSLATE_MAX_TEXT_QUERIES)) {
+                    $this->autoTranslateEmptyValues($queryNumb);
+                    break;
+                }
+                $toTranslateRequest .= '&q=' . rawurlencode(str_replace(['{', '}'], ['<span class="notranslate">', '</span>'], $originalMessage));
             }
         }
 
@@ -202,8 +216,13 @@ class TranslationForm extends Model implements TranslationFileIF
             return;
         }
 
-        // Create URL
-        $url = $module->googleApiUrl.'?key=' . $module->googleApiKey . $toTranslateRequest . '&source=en&target='.strtolower(substr($this->language, 0, 2));
+        // Build URL
+        $query = [
+            'key' => $module->googleApiKey,
+            'source' => 'en',
+            'target' => strtolower(substr($this->language, 0, 2)),
+        ];
+        $url = $module->googleApiUrl . '?' . http_build_query($query) . $toTranslateRequest;
 
         // Ask Google API
         $handle = curl_init($url);
@@ -214,19 +233,28 @@ class TranslationForm extends Model implements TranslationFileIF
         curl_close($handle);
 
         // Get translations
-        if($responseCode != 200 || !isset($responseDecoded['data']['translations'])) {
+        if (!isset($responseDecoded['data']['translations'])) {
+            Yii::error('Translation module - autoTranslateEmptyValues error code ' . $responseCode . ' for URL ' . $url);
             return;
         }
         $translations = $responseDecoded['data']['translations'];
 
         // Replace empty translations
-        $i = 0;
+        $queryNumb = 0;
+        $resultNumb = 0;
         foreach ($this->messages as $originalMessage => $oldTranslation) {
             if (empty($oldTranslation)) {
-                if (!empty($translations[$i]['translatedText'])) {
-                   $this->messages[$originalMessage] = htmlspecialchars_decode(str_replace(['<span class="notranslate">', '</span>', '&#39;'], ['{', '}', '\''], $translations[$i]['translatedText']));
+                $queryNumb++;
+                if ($queryNumb < $queryStart) {
+                    continue;
                 }
-                $i++;
+                if ($queryNumb >= ($queryStart + static::GOOGLE_TRANSLATE_MAX_TEXT_QUERIES)) {
+                    break;
+                }
+                if (!empty($translations[$resultNumb]['translatedText'])) {
+                    $this->messages[$originalMessage] = htmlspecialchars_decode(str_replace(['<span class="notranslate">', '</span>', '&#39;'], ['{', '}', '\''], $translations[$resultNumb]['translatedText']));
+                }
+                $resultNumb++;
             }
         }
     }
