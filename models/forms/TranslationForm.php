@@ -18,6 +18,21 @@ use humhub\modules\translation\models\TranslationLog;
 class TranslationForm extends Model implements TranslationFileIF
 {
     /**
+     * Language codes supported by Google Translate (https://cloud.google.com/translate/docs/languages)
+     */
+    public const GOOGLE_TRANSLATE_SUPPORTED_LANGUAGES = ['af', 'sq', 'am', 'ar', 'hy', 'az', 'eu', 'be', 'bn', 'bs', 'bg', 'ca', 'ceb', 'zh', 'zh-CN', 'zh-TW', 'co', 'hr', 'cs', 'da', 'nl', 'en', 'eo', 'et', 'fi', 'fr', 'fy', 'gl', 'ka', 'de', 'el', 'gu', 'ht', 'ha', 'haw', 'iw', 'he', 'hi', 'hmn', 'hu', 'is', 'ig', 'id', 'ga', 'it', 'ja', 'jv', 'kn', 'kk', 'km', 'rw', 'ko', 'ku', 'ky', 'lo', 'la', 'lv', 'lt', 'lb', 'mk', 'mg', 'ms', 'ml', 'mt', 'mi', 'mr', 'mn', 'my', 'ne', 'no', 'ny', 'or', 'ps', 'fa', 'pl', 'pt', 'pa', 'ro', 'ru', 'sm', 'gd', 'sr', 'st', 'sn', 'sd', 'si', 'sk', 'sl', 'so', 'es', 'su', 'sw', 'sv', 'tl', 'tg', 'ta', 'tt', 'te', 'th', 'tr', 'tk', 'uk', 'ur', 'ug', 'uz', 'vi', 'cy', 'xh', 'yi', 'yo', 'zu'];
+
+    /**
+     * Correspondance between Humhub and Google translate language codes
+     */
+    public const HUMHUB_LANGUAGE_CODE_TO_GOOGLE_TRANSLATE = [
+        'nb-NO' => 'no',
+        'nn-NO' => 'no',
+        'pt-BR' => 'pt',
+        'fa-IR' => 'fa',
+    ];
+
+    /**
      * Maximum text queries that Google translate API can do in one HTTP request
      */
     public const GOOGLE_TRANSLATE_MAX_TEXT_QUERIES = 128;
@@ -185,13 +200,23 @@ class TranslationForm extends Model implements TranslationFileIF
     /**
      * Translate automatically with Google translate API
      * $googleApiKey must be set
+     * @param int $queryStart
+     * @return void
      */
-    protected function autoTranslateEmptyValues($queryStart = 1)
+    protected function autoTranslateEmptyValues(int $queryStart = 1)
     {
+        // Get target language code
+        $targetLanguageCode = strtr($this->language, static::HUMHUB_LANGUAGE_CODE_TO_GOOGLE_TRANSLATE);
+
+        // Check if code is supported by Google translate
+        if (!in_array($targetLanguageCode, static::GOOGLE_TRANSLATE_SUPPORTED_LANGUAGES)) {
+            return;
+        }
+
         /** @var Module $module */
         $module = Yii::$app->getModule('translation');
         if (empty($module->googleApiKey)) {
-            return false;
+            return;
         }
 
         // Get messages to translate
@@ -220,7 +245,7 @@ class TranslationForm extends Model implements TranslationFileIF
         $query = [
             'key' => $module->googleApiKey,
             'source' => 'en',
-            'target' => strtolower(substr($this->language, 0, 2)),
+            'target' => $targetLanguageCode,
         ];
         $url = $module->googleApiUrl . '?' . http_build_query($query) . $toTranslateRequest;
 
