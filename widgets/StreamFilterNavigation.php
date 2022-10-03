@@ -22,7 +22,7 @@ class StreamFilterNavigation extends WallStreamFilterNavigation
         $this->addFilterBlock(static::FILTER_BLOCK_MODULE, [
             'title' => Yii::t('TranslationModule.base', 'Module'),
             'sortOrder' => 100
-        ], static::PANEL_POSITION_LEFT);
+        ], static::PANEL_COLUMN_1);
     }
 
     protected function initFilters()
