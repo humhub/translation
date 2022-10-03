@@ -5,7 +5,7 @@ return array (
   'Active translation' => '',
   'Back to editor' => '',
   'Confirm translations.' => '',
-  'Date' => '',
+  'Date' => 'Ημερομηνία',
   'Discussion' => '',
   'Edit translations' => '',
   'Error while parsing the message, please request support by a translation administrator' => '',

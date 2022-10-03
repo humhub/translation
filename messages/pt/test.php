@@ -1,4 +1,4 @@
 <?php
 return array (
-  'Save' => 'Guardar',
+  'Save' => 'Gravar',
 );
