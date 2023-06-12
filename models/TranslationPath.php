@@ -5,8 +5,8 @@ namespace humhub\modules\translation\models;
 
 
 use Yii;
-use yii\base\Module;
 use yii\base\Model;
+use yii\base\Module;
 
 /**
  * Class TranslationPath represents a filesystem path within the translation system. Instances of this model
@@ -48,14 +48,14 @@ abstract class TranslationPath extends Model
 
     public function validateModule()
     {
-        if(!$this->getModule()) {
+        if (!$this->getModule()) {
             $this->addError('moduleId', 'Module not found!');
         }
     }
 
     public function validateLanguagePath($language)
     {
-        return is_dir($this->getPath($language));
+        return is_dir((string)$this->getPath($language));
     }
 
     public static function validateLanguage($language)
@@ -68,7 +68,7 @@ abstract class TranslationPath extends Model
      */
     public function getModule()
     {
-        if(!$this->module) {
+        if (!$this->module) {
             $this->module = $this->isCoreModulePath()
                 ? Yii::$app
                 : Yii::$app->moduleManager->getModule($this->moduleId);
