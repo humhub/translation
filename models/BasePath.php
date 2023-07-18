@@ -156,7 +156,9 @@ class BasePath extends TranslationPath
             if ($messagePath->validate()) {
                 $modules[$moduleId] = $moduleId;
             } else {
-                Yii::warning("Invalid message path of module $moduleId detected.");
+                if (!in_array($moduleId, ['live', 'queue'])) {
+                    Yii::warning("Invalid message path of module {$moduleId} detected.", 'translation');
+                }
             }
         }
 
