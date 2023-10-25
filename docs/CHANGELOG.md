@@ -9,6 +9,7 @@ Changelog
 - Fix #44: Allow snake case for URI vars in href
 - Fix #47: Fix tests
 - Enh #58: Tests for `next` version
+- Fix #59: Fix visibility of the method `Controller::getAccessRules()`
 
 
 1.0.1 (Unreleased)
