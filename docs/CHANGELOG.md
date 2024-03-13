@@ -6,6 +6,7 @@ Changelog
 - Enh: Allow automatic translation with Google cloud translation API
 - Enh: Provide specific error message in case message path could not be found instead of 404
 - Fix #36: Fix empty translation text on activities
+- Enh #40: Support attribute “target” for link tag
 - Fix #44: Allow snake case for URI vars in href
 - Fix #47: Fix tests
 - Enh #58: Tests for `next` version
