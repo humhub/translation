@@ -15,7 +15,7 @@ return array (
   'Language' => 'Jazyk',
   'Message' => 'Správa',
   'Module' => '',
-  'New' => '',
+  'New' => 'Nový',
   'No translation files found for given selection.' => '',
   'No translation history available.' => '',
   'No translation log available.' => '',
