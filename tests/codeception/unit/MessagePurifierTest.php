@@ -42,9 +42,11 @@ class MessagePurifierTest extends HumHubDbTestCase
         $this->assertEquals('<br>', TranslationPurifier::process('<br>'));
     }
 
-    /*public function testNonEntityTranslation()
+    public function testNonEntityTranslation()
     {
         $this->assertEquals('&', TranslationPurifier::process('&'));
-    }*/
+        $this->assertEquals('&amp;', TranslationPurifier::process('&amp;'));
+        $this->assertEquals('& &amp; &nbsp;', TranslationPurifier::process('& &amp; &nbsp;'));
+    }
 
 }
