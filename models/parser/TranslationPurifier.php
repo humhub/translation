@@ -26,4 +26,18 @@ class TranslationPurifier extends HtmlPurifier
         $def->addAttribute('a', 'href', new ParameterURIDef());
         $def->addAttribute('img', 'src', new ParameterURIDef());
     }
+
+    /**
+     * @inheritdoc
+     */
+    public static function process($content, $config = null)
+    {
+        // Keep the char `&` without converting to `&amp;`
+        $ampHolder = '_AMP_HOLDER_' . time();
+        $content = str_replace('&', $ampHolder, $content);
+
+        $result = parent::process($content, $config);
+
+        return str_replace($ampHolder, '&', $result);
+    }
 }

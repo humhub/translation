@@ -10,7 +10,7 @@ Changelog
 - Fix #47: Fix tests
 - Enh #58: Tests for `next` version
 - Fix #59: Fix visibility of the method `Controller::getAccessRules()`
-
+- Fix #63: Don't purify the char `&`
 
 1.0.1 (Unreleased)
 ------------------
