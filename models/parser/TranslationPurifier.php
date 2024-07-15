@@ -18,6 +18,12 @@ class TranslationPurifier extends HtmlPurifier
         // Allow specific tags and attributes
         $config->set('HTML.Allowed', 'p,b,i,u,s,a[href|target],img[src|alt],ul,ol,li,blockquote,code,pre,span,hr,br,strong');
 
+        // Allow the attribute `target="_blank"` for links
+        $config->set('Attr.AllowedFrameTargets', ['_blank']);
+        // Disable `rel="noreferrer noopener"` because it is automatically added for target blank
+        $config->set('HTML.TargetNoopener', false);
+        $config->set('HTML.TargetNoreferrer', false);
+
         // Allow non-ASCII characters
         $config->set('Core.EscapeNonASCIICharacters', false);
 
