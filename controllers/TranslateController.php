@@ -7,7 +7,6 @@ use humhub\components\access\StrictAccess;
 use humhub\modules\translation\models\BasePath;
 use humhub\modules\translation\models\forms\TranslationForm;
 use humhub\modules\translation\models\Languages;
-use humhub\modules\translation\permissions\ManageTranslations;
 use humhub\modules\translation\models\TranslationLog;
 use humhub\modules\translation\widgets\TranslationFormWidget;
 use Yii;
@@ -19,7 +18,7 @@ class TranslateController extends \humhub\components\Controller
     /**
      * @inheritDoc
      */
-    public function getAccessRules()
+    protected function getAccessRules()
     {
         return [
             [ControllerAccess::RULE_LOGGED_IN_ONLY]

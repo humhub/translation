@@ -99,7 +99,7 @@ class MessageFile extends TranslationPath
 
     public function validateLanguagePath($language)
     {
-        $filePath = realpath($this->getPath($language));
+        $filePath = realpath((string)$this->getPath($language));
 
         if(!$filePath || !is_file($filePath)) {
             return false;
@@ -109,7 +109,7 @@ class MessageFile extends TranslationPath
         $messages = dirname($languageDir);
         $moduleId = dirname($messages);
 
-        $expectedModuleId = $this->isCoreModulePath() ? 'humhub' : $this->moduleId;
+        $expectedModuleId = $this->isCoreModulePath() ? 'humhub' : basename($this->module->getBasePath());
 
         if(!($this->validateParent($languageDir, $language) || $this->validateParent($languageDir, static::toLegacyLanguageCode($language)))
             || !$this->validateParent($messages, 'messages')

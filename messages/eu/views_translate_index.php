@@ -6,7 +6,7 @@ return array (
   'Message string can be used with plural forms format. Check i18n section of the documentation for details.' => '',
   'Messages that no longer need translation will have their translations enclosed between a pair of "@@" marks.' => '',
   'Original (en-US)' => '',
-  'Search' => 'Kërko',
+  'Search' => 'Bilatu',
   'Translated' => '',
   'Translation Editor' => '',
 );

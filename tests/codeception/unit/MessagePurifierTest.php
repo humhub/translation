@@ -9,7 +9,11 @@ class MessagePurifierTest extends HumHubDbTestCase
 {
     public function testParameterInLinkIsNotEscaped()
     {
+        $this->assertEquals('<a>{asdf}</a>', TranslationPurifier::process('<a>{asdf}</a>'));
         $this->assertEquals('<a href="{asdf}">{asdf}</a>', TranslationPurifier::process('<a href="{asdf}">{asdf}</a>'));
+        $this->assertEquals('<a href="{asdf}" target="_blank">{asdf}</a>', TranslationPurifier::process('<a href="{asdf}" target="_blank">{asdf}</a>'));
+        $this->assertEquals('<a href="{asdf}" target="_blank">{asdf}</a>', TranslationPurifier::process('<a href="{asdf}" target="_blank" style="color:red">{asdf}</a>'));
+        $this->assertEquals('<a href="{asdf}">{asdf}</a>', TranslationPurifier::process('<a href="{asdf}" target="test" style="color:red">{asdf}</a>'));
     }
 
     public function testOnlySingleParameterInLinkNotEscaped1()
@@ -42,9 +46,11 @@ class MessagePurifierTest extends HumHubDbTestCase
         $this->assertEquals('<br>', TranslationPurifier::process('<br>'));
     }
 
-    /*public function testNonEntityTranslation()
+    public function testNonEntityTranslation()
     {
         $this->assertEquals('&', TranslationPurifier::process('&'));
-    }*/
+        $this->assertEquals('&amp;', TranslationPurifier::process('&amp;'));
+        $this->assertEquals('& &amp; &nbsp;', TranslationPurifier::process('& &amp; &nbsp;'));
+    }
 
 }
