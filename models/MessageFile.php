@@ -109,7 +109,7 @@ class MessageFile extends TranslationPath
         $messages = dirname($languageDir);
         $moduleId = dirname($messages);
 
-        $expectedModuleId = $this->isCoreModulePath() ? 'humhub' : basename($this->module->getBasePath());
+        $expectedModuleId = $this->isCoreModulePath() ? 'humhub' : basename($this->getModule()->getBasePath());
 
         if(!($this->validateParent($languageDir, $language) || $this->validateParent($languageDir, static::toLegacyLanguageCode($language)))
             || !$this->validateParent($messages, 'messages')
