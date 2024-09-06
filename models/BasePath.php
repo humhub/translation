@@ -3,10 +3,10 @@
 
 namespace humhub\modules\translation\models;
 
+use humhub\modules\file\libs\FileHelper;
 use Yii;
 use yii\base\Exception;
 use yii\base\InvalidArgumentException;
-use humhub\modules\file\libs\FileHelper;
 use yii\base\Module;
 
 class BasePath extends TranslationPath
@@ -30,7 +30,7 @@ class BasePath extends TranslationPath
 
     public function validatePath()
     {
-        if(!is_dir($this->getPath())) {
+        if (!is_dir((string)$this->getPath())) {
             $this->addError('moduleId', 'Module does not have a message base path.');
         }
     }
@@ -41,7 +41,7 @@ class BasePath extends TranslationPath
      */
     public static function getBasePath($moduleId)
     {
-        if(!isset(static::$basePaths[$moduleId])) {
+        if (!isset(static::$basePaths[$moduleId])) {
             static::$basePaths[$moduleId] = new static(['moduleId' => $moduleId]);
         }
 
@@ -54,13 +54,13 @@ class BasePath extends TranslationPath
      */
     public function getMessageFile($file)
     {
-        $file = basename($file, '.php').'.php';
+        $file = basename($file, '.php') . '.php';
 
-        if(!isset($this->messageFiles[$file])) {
+        if (!isset($this->messageFiles[$file])) {
             $this->messageFiles[$file] = new MessageFile(['basePath' => $this, 'file' => $file]);
         }
 
-        return  $this->messageFiles[$file];
+        return $this->messageFiles[$file];
     }
 
     /**
@@ -75,23 +75,23 @@ class BasePath extends TranslationPath
      */
     public function getPath($language = null)
     {
-        if($this->isCoreModulePath()) {
+        if ($this->isCoreModulePath()) {
             return $language
                 ? Yii::getAlias('@humhub/messages/' . $language)
                 : Yii::getAlias('@humhub/messages');
         }
 
-        if($language && !static::validateLanguage($language)) {
+        if ($language && !static::validateLanguage($language)) {
             return null;
         }
 
         try {
             $module = $this->getModule();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return null;
         }
 
-        if(!$module) {
+        if (!$module) {
             return null;
         }
 
@@ -123,7 +123,7 @@ class BasePath extends TranslationPath
      */
     public function getMessageFiles($language)
     {
-        if(!$this->validateLanguagePath($language)) {
+        if (!$this->validateLanguagePath($language)) {
             return [];
         }
 
@@ -132,11 +132,12 @@ class BasePath extends TranslationPath
          * if this is not the case this is rather an error
          */
         $files = FileHelper::findFiles($this->getPath($language), ['only' => ['*.php'], 'recursive' => false]);
+        sort($files);
 
         $result = [];
         foreach ($files as $file) {
-            $messageFile = $this->getMessageFile(basename( $file, '.php').'.php');
-            if($messageFile->validate() && $messageFile->validateLanguagePath($language)) {
+            $messageFile = $this->getMessageFile(basename($file, '.php') . '.php');
+            if ($messageFile->validate() && $messageFile->validateLanguagePath($language)) {
                 $result[] = $messageFile;
             }
         }
@@ -155,7 +156,9 @@ class BasePath extends TranslationPath
             if ($messagePath->validate()) {
                 $modules[$moduleId] = $moduleId;
             } else {
-                Yii::warning("Invalid message path of module $moduleId detected.");
+                if (!in_array($moduleId, ['live', 'queue'])) {
+                    Yii::warning("Invalid message path of module {$moduleId} detected.", 'translation');
+                }
             }
         }
 

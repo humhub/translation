@@ -6,8 +6,13 @@ Changelog
 - Enh: Allow automatic translation with Google cloud translation API
 - Enh: Provide specific error message in case message path could not be found instead of 404
 - Fix #36: Fix empty translation text on activities
+- Fix #44: Allow snake case for URI vars in href
+- Fix #47: Fix tests
+- Enh #58: Tests for `next` version
+- Fix #59: Fix visibility of the method `Controller::getAccessRules()`
+- Fix #63: Don't purify the char `&`
+- Fix #65: Fix keeping of target in links of translated text
 - Fix #41: Allow to translate module from folder name different than module id
-
 
 1.0.1 (Unreleased)
 ------------------
@@ -29,4 +34,3 @@ Changelog
 - Chg: Updated HumHub min version to 1.5
 - Fix: Invalid validation error when parsing plural or selection message pattern
 - Enh #29: Added "Only show missing translation" filter toggle to translation editor
-

@@ -4,6 +4,7 @@ namespace humhub\modules\translation\models\forms;
 
 use humhub\libs\Html;
 use humhub\modules\space\models\Space;
+use humhub\modules\translation\Module;
 use humhub\modules\translation\permissions\ManageTranslations;
 use humhub\modules\translation\models\TranslationCoverage;
 use humhub\modules\translation\models\TranslationFileIF;
@@ -16,6 +17,26 @@ use humhub\modules\translation\models\TranslationLog;
 
 class TranslationForm extends Model implements TranslationFileIF
 {
+    /**
+     * Language codes supported by Google Translate (https://cloud.google.com/translate/docs/languages)
+     */
+    public const GOOGLE_TRANSLATE_SUPPORTED_LANGUAGES = ['af', 'sq', 'am', 'ar', 'hy', 'az', 'eu', 'be', 'bn', 'bs', 'bg', 'ca', 'ceb', 'zh', 'zh-CN', 'zh-TW', 'co', 'hr', 'cs', 'da', 'nl', 'en', 'eo', 'et', 'fi', 'fr', 'fy', 'gl', 'ka', 'de', 'el', 'gu', 'ht', 'ha', 'haw', 'iw', 'he', 'hi', 'hmn', 'hu', 'is', 'ig', 'id', 'ga', 'it', 'ja', 'jv', 'kn', 'kk', 'km', 'rw', 'ko', 'ku', 'ky', 'lo', 'la', 'lv', 'lt', 'lb', 'mk', 'mg', 'ms', 'ml', 'mt', 'mi', 'mr', 'mn', 'my', 'ne', 'no', 'ny', 'or', 'ps', 'fa', 'pl', 'pt', 'pa', 'ro', 'ru', 'sm', 'gd', 'sr', 'st', 'sn', 'sd', 'si', 'sk', 'sl', 'so', 'es', 'su', 'sw', 'sv', 'tl', 'tg', 'ta', 'tt', 'te', 'th', 'tr', 'tk', 'uk', 'ur', 'ug', 'uz', 'vi', 'cy', 'xh', 'yi', 'yo', 'zu'];
+
+    /**
+     * Correspondance between Humhub and Google translate language codes
+     */
+    public const HUMHUB_LANGUAGE_CODE_TO_GOOGLE_TRANSLATE = [
+        'nb-NO' => 'no',
+        'nn-NO' => 'no',
+        'pt-BR' => 'pt',
+        'fa-IR' => 'fa',
+    ];
+
+    /**
+     * Maximum text queries that Google translate API can do in one HTTP request
+     */
+    public const GOOGLE_TRANSLATE_MAX_TEXT_QUERIES = 128;
+
     /**
      * @var string
      */
@@ -179,19 +200,39 @@ class TranslationForm extends Model implements TranslationFileIF
     /**
      * Translate automatically with Google translate API
      * $googleApiKey must be set
+     * @param int $queryStart
+     * @return void
      */
-    protected function autoTranslateEmptyValues ()
+    protected function autoTranslateEmptyValues(int $queryStart = 1)
     {
-        $module = Yii::$app->controller->module; // current module
+        // Get target language code
+        $targetLanguageCode = strtr($this->language, static::HUMHUB_LANGUAGE_CODE_TO_GOOGLE_TRANSLATE);
+
+        // Check if code is supported by Google translate
+        if (!in_array($targetLanguageCode, static::GOOGLE_TRANSLATE_SUPPORTED_LANGUAGES)) {
+            return;
+        }
+
+        /** @var Module $module */
+        $module = Yii::$app->getModule('translation');
         if (empty($module->googleApiKey)) {
-            return false;
+            return;
         }
 
         // Get messages to translate
         $toTranslateRequest = '';
+        $queryNumb = 0;
         foreach ($this->messages as $originalMessage => $oldTranslation) {
             if (empty($oldTranslation)) {
-                $toTranslateRequest .= '&q='.rawurlencode(str_replace(['{', '}'], ['<span class="notranslate">', '</span>'], $originalMessage));
+                $queryNumb++;
+                if ($queryNumb < $queryStart) {
+                    continue;
+                }
+                if ($queryNumb >= ($queryStart + static::GOOGLE_TRANSLATE_MAX_TEXT_QUERIES)) {
+                    $this->autoTranslateEmptyValues($queryNumb);
+                    break;
+                }
+                $toTranslateRequest .= '&q=' . rawurlencode(str_replace(['{', '}'], ['<span class="notranslate">', '</span>'], $originalMessage));
             }
         }
 
@@ -200,8 +241,13 @@ class TranslationForm extends Model implements TranslationFileIF
             return;
         }
 
-        // Create URL
-        $url = $module->googleApiUrl.'?key=' . $module->googleApiKey . $toTranslateRequest . '&source=en&target='.strtolower(substr($this->language, 0, 2));
+        // Build URL
+        $query = [
+            'key' => $module->googleApiKey,
+            'source' => 'en',
+            'target' => $targetLanguageCode,
+        ];
+        $url = $module->googleApiUrl . '?' . http_build_query($query) . $toTranslateRequest;
 
         // Ask Google API
         $handle = curl_init($url);
@@ -212,19 +258,28 @@ class TranslationForm extends Model implements TranslationFileIF
         curl_close($handle);
 
         // Get translations
-        if($responseCode != 200 || !isset($responseDecoded['data']['translations'])) {
+        if (!isset($responseDecoded['data']['translations'])) {
+            Yii::error('Translation module - autoTranslateEmptyValues error code ' . $responseCode . ' for URL ' . $url);
             return;
         }
         $translations = $responseDecoded['data']['translations'];
 
         // Replace empty translations
-        $i = 0;
+        $queryNumb = 0;
+        $resultNumb = 0;
         foreach ($this->messages as $originalMessage => $oldTranslation) {
             if (empty($oldTranslation)) {
-                if (!empty($translations[$i]['translatedText'])) {
-                   $this->messages[$originalMessage] = htmlspecialchars_decode(str_replace(['<span class="notranslate">', '</span>', '&#39;'], ['{', '}', '\''], $translations[$i]['translatedText']));
+                $queryNumb++;
+                if ($queryNumb < $queryStart) {
+                    continue;
                 }
-                $i++;
+                if ($queryNumb >= ($queryStart + static::GOOGLE_TRANSLATE_MAX_TEXT_QUERIES)) {
+                    break;
+                }
+                if (!empty($translations[$resultNumb]['translatedText'])) {
+                    $this->messages[$originalMessage] = htmlspecialchars_decode(str_replace(['<span class="notranslate">', '</span>', '&#39;'], ['{', '}', '\''], $translations[$resultNumb]['translatedText']));
+                }
+                $resultNumb++;
             }
         }
     }

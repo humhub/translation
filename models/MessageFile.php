@@ -99,7 +99,7 @@ class MessageFile extends TranslationPath
 
     public function validateLanguagePath($language)
     {
-        $filePath = realpath($this->getPath($language));
+        $filePath = realpath((string)$this->getPath($language));
 
         if(!$filePath || !is_file($filePath)) {
             return false;

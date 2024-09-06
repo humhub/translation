@@ -12,6 +12,10 @@ class Events
 {
     public static function onTopMenuInit($event)
     {
+        if (Yii::$app->user->isGuest) {
+            return;
+        }
+
         $event->sender->addEntry(new MenuLink([
             'id' => 'translation-main',
             'icon' => 'align-left',
