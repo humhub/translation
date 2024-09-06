@@ -2,6 +2,7 @@
 
 namespace humhub\modules\translation\models\parser;
 
+use HTMLPurifier_AttrDef_Enum;
 use yii\helpers\HtmlPurifier;
 
 class TranslationPurifier extends HtmlPurifier
@@ -30,6 +31,7 @@ class TranslationPurifier extends HtmlPurifier
         // To avoid escaping inside the attributes
         $def = $config->getHTMLDefinition(true);
         $def->addAttribute('a', 'href', new ParameterURIDef());
+        $def->addAttribute('a', 'target', new HTMLPurifier_AttrDef_Enum(['_blank', '_self', '_parent', '_top']));
         $def->addAttribute('img', 'src', new ParameterURIDef());
     }
 
