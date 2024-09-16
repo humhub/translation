@@ -14,6 +14,7 @@ Changelog
 - Fix #63: Don't purify the char `&`
 - Fix #65: Fix keeping of target in links of translated text
 - Fix #41: Allow to translate module from folder name different than module id
+- Enh #69: Display translation from parent language in placeholder
 
 1.0.1 (Unreleased)
 ------------------

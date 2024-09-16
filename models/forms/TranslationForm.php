@@ -75,6 +75,11 @@ class TranslationForm extends Model implements TranslationFileIF
     /**
      * @var array
      */
+    public $parentMessages;
+
+    /**
+     * @var array
+     */
     public $errors = [];
 
     /**
@@ -193,6 +198,11 @@ class TranslationForm extends Model implements TranslationFileIF
         $this->messages = [];
         if ($this->messageFile instanceof MessageFile && $this->messageFile->validate()) {
             $this->messages = $this->messageFile->getMessages($this->language);
+
+            $parentLanguage = $this->getParentLanguage();
+            if ($parentLanguage !== null && array_key_exists($parentLanguage, Yii::$app->i18n->getAllowedLanguages())) {
+                $this->parentMessages = $this->messageFile->getMessages($parentLanguage);
+            }
         }
     }
 
@@ -455,5 +465,10 @@ class TranslationForm extends Model implements TranslationFileIF
     public function getMessageBasename()
     {
         return $this->messageFile->getBaseName();
+    }
+
+    protected function getParentLanguage(): ?string
+    {
+        return preg_match('/^(.+?)-(.+)$/i', $this->language, $m) ? $m[1] : null;
     }
 }

@@ -109,7 +109,10 @@ if($model->hasErrors()) {
                                 <div class="pre"><?= Html::encode($original) ?></div>
                             </div>
                             <div class="form-group elem <?= $model->getTranslationFieldClass($original)?>" style="position:relative">
-                                <?= Html::textArea(TranslationLog::tid($original), $translated, ['class' => 'form-control translation '.(empty($translated) ? 'empty' : 'translated')]) ?>
+                                <?= Html::textArea(TranslationLog::tid($original), $translated, [
+                                    'class' => 'form-control translation ' . (empty($translated) ? 'empty' : 'translated'),
+                                    'placeholder' => $model->parentMessages[$original] ?? '',
+                                ]) ?>
 
                                 <?php if(!empty($model->getHelpBlockMessage($original))) : ?>
                                     <p class="help-block"><?= Html::encode($model->getHelpBlockMessage($original)) ?></p>
