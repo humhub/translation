@@ -90,6 +90,34 @@ humhub.module('translation', function(module, require, $) {
         });
     };
 
+    Form.prototype.copyAllOriginals = function () {
+        this.$.find('#words > .row').each(function () {
+            const input = $(this).find('textarea');
+            if (input.val() === '') {
+                input.val($(this).find('.elem .pre').text());
+            }
+        });
+    }
+
+    Form.prototype.copyAllParents = function () {
+        this.$.find('#words textarea').each(function () {
+            const input = $(this);
+            if (input.val() === '') {
+                input.val(input.attr('placeholder'));
+            }
+        });
+    }
+
+    Form.prototype.copyOriginal = function (evt) {
+        evt.$trigger.closest('.row').find('textarea')
+            .val(evt.$trigger.prev().text());
+    }
+
+    Form.prototype.copyParent = function (evt) {
+        const input = evt.$trigger.parent().find('textarea');
+        input.val(input.attr('placeholder'));
+    }
+
     module.export({
         Form: Form
     })

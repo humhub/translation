@@ -467,7 +467,7 @@ class TranslationForm extends Model implements TranslationFileIF
         return $this->messageFile->getBaseName();
     }
 
-    protected function getParentLanguage(): ?string
+    public function getParentLanguage(): ?string
     {
         return preg_match('/^(.+?)-(.+)$/i', $this->language, $m) ? $m[1] : null;
     }

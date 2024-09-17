@@ -29,6 +29,7 @@ if($model->hasErrors()) {
     }
 }
 
+$hasParentLanguage = $model->getParentLanguage() !== null;
 ?>
 
 <?= Html::beginTag('div', $options) ?>
@@ -92,7 +93,24 @@ if($model->hasErrors()) {
                 </p>
 
                 <p class="clearfix" style="margin-bottom:0">
-                    <?= Button::save()->submit()->right()?>
+                    <?= $saveButton = Button::save()->submit()->right() ?>
+
+                    <?= $copyButton = Button::defaultType('Copy original messages')
+                        ->icon('copy')
+                        ->action('copyAllOriginals')
+                        ->loader(false)
+                        ->tooltip(Yii::t('TranslationModule.base', 'Fill empty translations with original message'))
+                        ->style('margin-right:10px')
+                        ->right() ?>
+
+                    <?= $parentButton = $hasParentLanguage ?
+                        Button::defaultType('Use parent language translations')
+                        ->icon('clipboard')
+                        ->action('copyAllParents')
+                        ->loader(false)
+                        ->tooltip(Yii::t('TranslationModule.base', 'Fill empty translations with parent language message'))
+                        ->style('margin-right:10px')
+                        ->right() : '' ?>
                 </p>
 
                 <hr style="margin-top:0">
@@ -107,6 +125,13 @@ if($model->hasErrors()) {
                         <div class="row ">
                             <div class="elem">
                                 <div class="pre"><?= Html::encode($original) ?></div>
+                                <?= Button::defaultType()
+                                    ->icon('arrow-right')
+                                    ->action('copyOriginal')
+                                    ->loader(false)
+                                    ->cssClass('translation-copy-original-button')
+                                    ->xs()
+                                ?>
                             </div>
                             <div class="form-group elem <?= $model->getTranslationFieldClass($original)?>" style="position:relative">
                                 <?= Html::textArea(TranslationLog::tid($original), $translated, [
@@ -122,6 +147,14 @@ if($model->hasErrors()) {
                                     ->icon('history')
                                     ->title(Yii::t('TranslationModule.base', 'View history'))
                                     ->cssClass('translation-history-button tt') ?>
+
+                                <?= $hasParentLanguage ?
+                                    Button::defaultType()
+                                    ->icon('clipboard')
+                                    ->action('copyParent')
+                                    ->loader(false)
+                                    ->cssClass('translation-copy-parent-button')
+                                    ->xs() : '' ?>
                             </div>
 
                         </div>
@@ -130,7 +163,11 @@ if($model->hasErrors()) {
                 </div>
                 <hr>
 
-                <p class="clearfix"><?= Button::save()->submit()->right() ?></p>
+                <p class="clearfix">
+                    <?= $saveButton ?>
+                    <?= $copyButton ?>
+                    <?= $parentButton ?>
+                </p>
             <?php endif; ?>
         </div>
     <?php ActiveForm::end() ?>
