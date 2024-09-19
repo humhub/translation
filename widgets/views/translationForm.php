@@ -93,24 +93,7 @@ $hasParentLanguage = $model->getParentLanguage() !== null;
                 </p>
 
                 <p class="clearfix" style="margin-bottom:0">
-                    <?= $saveButton = Button::save()->submit()->right() ?>
-
-                    <?= $copyButton = Button::defaultType('Copy original messages')
-                        ->icon('copy')
-                        ->action('copyAllOriginals')
-                        ->loader(false)
-                        ->tooltip(Yii::t('TranslationModule.base', 'Fill empty translations with original message'))
-                        ->style('margin-right:10px')
-                        ->right() ?>
-
-                    <?= $parentButton = $hasParentLanguage ?
-                        Button::defaultType('Use parent language translations')
-                        ->icon('clipboard')
-                        ->action('copyAllParents')
-                        ->loader(false)
-                        ->tooltip(Yii::t('TranslationModule.base', 'Fill empty translations with parent language message'))
-                        ->style('margin-right:10px')
-                        ->right() : '' ?>
+                    <?= Button::save()->submit()->right() ?>
                 </p>
 
                 <hr style="margin-top:0">
@@ -122,41 +105,43 @@ $hasParentLanguage = $model->getParentLanguage() !== null;
                     </div>
 
                     <?php foreach ($model->messages as $original => $translated) : ?>
-                        <div class="row ">
+                        <div class="item">
                             <div class="elem">
                                 <div class="pre"><?= Html::encode($original) ?></div>
-                                <?= Button::defaultType()
-                                    ->icon('arrow-right')
-                                    ->action('copyOriginal')
-                                    ->loader(false)
-                                    ->cssClass('translation-copy-original-button')
-                                    ->xs()
-                                ?>
+                                <div>
+                                    <?= Button::defaultType('<span>' . Yii::t('TranslationModule.base', 'Adopt original language') . '</span>')
+                                        ->icon('arrow-right')
+                                        ->action('copyOriginal')
+                                        ->tooltip(Yii::t('TranslationModule.base', 'Adopt original language'))
+                                        ->loader(false) ?>
+                                </div>
                             </div>
-                            <div class="form-group elem <?= $model->getTranslationFieldClass($original)?>" style="position:relative">
-                                <?= Html::textArea(TranslationLog::tid($original), $translated, [
-                                    'class' => 'form-control translation ' . (empty($translated) ? 'empty' : 'translated'),
-                                    'placeholder' => $model->parentMessages[$original] ?? '',
-                                ]) ?>
+                            <div class="elem <?= $model->getTranslationFieldClass($original) ?>">
+                                <div>
+                                    <?= Html::textArea(TranslationLog::tid($original), $translated, [
+                                        'class' => 'form-control translation ' . (empty($translated) ? 'empty' : 'translated'),
+                                        'placeholder' => $model->parentMessages[$original] ?? '',
+                                    ]) ?>
 
-                                <?php if(!empty($model->getHelpBlockMessage($original))) : ?>
-                                    <p class="help-block"><?= Html::encode($model->getHelpBlockMessage($original)) ?></p>
-                                <?php endif; ?>
-
-                                <?= Button::asLink(null, Url::toHistory($model, $original))
+                                    <?php if(!empty($model->getHelpBlockMessage($original))) : ?>
+                                        <p class="help-block"><?= Html::encode($model->getHelpBlockMessage($original)) ?></p>
+                                    <?php endif; ?>
+                                </div>
+                                <div>
+                                <?= Button::defaultType('<span>' . Yii::t('TranslationModule.base', 'View history') . '</span>')
+                                    ->link(Url::toHistory($model, $original))
                                     ->icon('history')
-                                    ->title(Yii::t('TranslationModule.base', 'View history'))
-                                    ->cssClass('translation-history-button tt') ?>
+                                    ->tooltip(Yii::t('TranslationModule.base', 'View translation history'))
+                                    ->loader(false) ?>
 
                                 <?= $hasParentLanguage ?
-                                    Button::defaultType()
-                                    ->icon('clipboard')
+                                    Button::success('<span>' . Yii::t('TranslationModule.base', 'Confirm translation') . '</span>')
+                                    ->icon('check')
                                     ->action('copyParent')
-                                    ->loader(false)
-                                    ->cssClass('translation-copy-parent-button')
-                                    ->xs() : '' ?>
+                                        ->tooltip(Yii::t('TranslationModule.base', 'Confirm translation'))
+                                    ->loader(false) : '' ?>
+                                </div>
                             </div>
-
                         </div>
                     <?php endforeach; ?>
 
@@ -164,9 +149,7 @@ $hasParentLanguage = $model->getParentLanguage() !== null;
                 <hr>
 
                 <p class="clearfix">
-                    <?= $saveButton ?>
-                    <?= $copyButton ?>
-                    <?= $parentButton ?>
+                    <?= Button::save()->submit()->right() ?>
                 </p>
             <?php endif; ?>
         </div>
