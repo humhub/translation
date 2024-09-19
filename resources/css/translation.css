@@ -100,7 +100,7 @@
     }
     #words .item {
         flex-direction: column;
-        padding-bottom: 20px;
+        padding-bottom: 40px;
     }
     #words .elem {
         width: 100%;
@@ -108,13 +108,13 @@
         padding-bottom: 0;
     }
     #words .elem:first-child {
-        padding-right: 0;
+        padding: 0;
     }
     #words .elem > div {
         width: 100%;
     }
     #words .elem > div:first-child {
-        margin-bottom: 10px;
+        margin-bottom: 7px;
     }
     #words .elem > div:last-child {
         display: flex;
