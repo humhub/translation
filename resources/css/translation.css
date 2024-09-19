@@ -1,15 +1,53 @@
+#words {
+    display: flex;
+    flex-direction: column;
+}
+#words .item {
+    display: flex;
+    align-items: stretch;
+}
 #words .elem {
     width: 50%;
-    max-width: 50%;
-    padding: 10px 20px;
-    float: left;;
+    padding: 10px 0;
+    float: left;
+    display: flex;
+    align-items: center;
 }
-
+#words .elem:first-child {
+    padding-right: 10px;
+}
+#words .elem > div:first-child {
+    flex-grow: 1;
+    height: 100%;
+}
+#words .elem > div:last-child {
+    white-space: nowrap;
+}
+#words .elem .btn i {
+    margin: 0;
+}
+#words .elem .btn span {
+    display: none;
+}
+#words .elem .btn {
+    float: left;
+    margin-left: 10px;
+    padding: 8px 12px;
+}
+#words textarea {
+    height: 100%;
+}
+#words textarea::-webkit-input-placeholder {
+    color: var(--success) !important;
+}
+#words textarea::-moz-placeholder { /* Firefox 19+ */
+    color: var(--success) !important;
+}
 
 #translation-editor .pre {
     display: block;
     padding: 9.5px;
-    margin: 0 0 10px;
+    margin: 0;
     font-size: 13px;
     line-height: 1.42857143;
     color: #333;
@@ -19,13 +57,6 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     min-height: 56px;
-}
-
-.translation-history-button {
-    position:absolute;
-    right:25px;
-    top:15px;
-    opacity:0.5
 }
 
 .translation-wallentry-content .detail-view th,
@@ -63,21 +94,45 @@
     width: 310px;
 }
 
-
 @media screen and (max-width: 768px) {
+    #words > div:first-child {
+        display: none;
+    }
+    #words .item {
+        flex-direction: column;
+        padding-bottom: 40px;
+    }
     #words .elem {
-        width: 50%;
-        max-width: 50%;
-        padding: 5px 10px;
-        float: left;;
+        width: 100%;
+        flex-direction: column;
+        padding-bottom: 0;
     }
-
-    .translation-history-button {
-        position:absolute;
-        right:15px;
-        bottom:10px;
-        top:unset;
-        opacity:0.5
+    #words .elem:first-child {
+        padding: 0;
     }
-
+    #words .elem > div {
+        width: 100%;
+    }
+    #words .elem > div:first-child {
+        margin-bottom: 7px;
+    }
+    #words .elem > div:last-child {
+        display: flex;
+    }
+    #words .elem .btn {
+        width: 100%;
+        margin-left: 0;
+    }
+    #words .elem .btn:last-child:not(:first-child) {
+        margin-left: 10px;
+    }
+    #words .elem .btn i {
+        margin-right: 4px;
+    }
+    #words .elem .btn i.fa-arrow-right {
+        transform: rotate(90deg);
+    }
+    #words .elem .btn span {
+        display: inline;
+    }
 }

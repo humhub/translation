@@ -90,6 +90,16 @@ humhub.module('translation', function(module, require, $) {
         });
     };
 
+    Form.prototype.copyOriginal = function (evt) {
+        evt.$trigger.closest('.item').find('textarea')
+            .val(evt.$trigger.closest('.elem').find('.pre').text());
+    }
+
+    Form.prototype.copyParent = function (evt) {
+        const input = evt.$trigger.closest('.elem').find('textarea');
+        input.val(input.attr('placeholder'));
+    }
+
     module.export({
         Form: Form
     })
