@@ -98,6 +98,7 @@ humhub.module('translation', function(module, require, $) {
     Form.prototype.copyParent = function (evt) {
         const input = evt.$trigger.closest('.elem').find('textarea');
         input.val(input.attr('placeholder'));
+        evt.$trigger.remove();
     }
 
     module.export({
