@@ -42,7 +42,7 @@ humhub.module('translation', function(module, require, $) {
 
         this.searchTimeout = setTimeout(function() {
             var inputValue =  evt.$trigger.val();
-            $("#words").find('.row').each(function(indx, el){
+            $("#words").find('.item').each(function(indx, el){
                 var $row = $(this);
                 if (inputValue  && !new RegExp(escapeRegExp(inputValue), 'i').test($row.text())){
                     $row.hide();
@@ -78,7 +78,7 @@ humhub.module('translation', function(module, require, $) {
 
     Form.prototype.updateEmptyFilterState = function() {
         this.$.find('.translation.translated').each(function() {
-            var $row =  $(this).closest('.row');
+            var $row =  $(this).closest('.item');
             if(stateHideTranslated) {
                 $row.hide();
                 $('#toggle-empty-filter').find('i').removeClass('fa-toggle-off').addClass('fa-toggle-on');
