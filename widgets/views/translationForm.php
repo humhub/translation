@@ -134,11 +134,12 @@ $hasParentLanguage = $model->getParentLanguage() !== null;
                                     ->tooltip(Yii::t('TranslationModule.base', 'View translation history'))
                                     ->loader(false) ?>
 
-                                <?= $hasParentLanguage && $translated === '' ?
+                                <?= $hasParentLanguage ?
                                     Button::success('<span>' . Yii::t('TranslationModule.base', 'Confirm translation') . '</span>')
                                     ->icon('check')
                                     ->action('copyParent')
                                     ->tooltip(Yii::t('TranslationModule.base', 'Confirm translation'))
+                                    ->cssClass($translated === '' ? '' : 'translation-confirm-approved')
                                     ->loader(false) : '' ?>
                                 </div>
                             </div>
