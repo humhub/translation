@@ -1,8 +1,6 @@
 <?php
 
-
 namespace humhub\modules\translation\models;
-
 
 use humhub\modules\translation\models\validators\MessageFileNameValidator;
 use Yii;
@@ -10,7 +8,6 @@ use yii\base\Exception;
 
 class MessageFile extends TranslationPath
 {
-
     /**
      * @var BasePath
      */
@@ -25,7 +22,7 @@ class MessageFile extends TranslationPath
     {
         parent::init();
 
-        if(!($this->basePath instanceof BasePath)) {
+        if (!($this->basePath instanceof BasePath)) {
             $this->basePath = BasePath::getBasePath($this->moduleId);
         }
 
@@ -38,8 +35,8 @@ class MessageFile extends TranslationPath
             [['file', 'basePath'], 'required'],
             [['file'], 'string'],
             ['file', MessageFileNameValidator::class],
-            ['basePath', function() {
-                if(!$this->basePath->validate()) {
+            ['basePath', function () {
+                if (!$this->basePath->validate()) {
                     $this->addError('basePath', 'Invalid basepath');
                 }
             }],
@@ -56,7 +53,7 @@ class MessageFile extends TranslationPath
 
     public function getFileName()
     {
-        return $this->getBaseName().'.php';
+        return $this->getBaseName() . '.php';
     }
 
     public function getBaseName()
@@ -74,7 +71,7 @@ class MessageFile extends TranslationPath
      */
     public function getPath($language = null, $validate = true)
     {
-        if(!$language) {
+        if (!$language) {
             return null;
         }
 
@@ -90,7 +87,7 @@ class MessageFile extends TranslationPath
 
     public function getMessages($language)
     {
-        if(!$this->validate() || !$this->validateLanguagePath($language)) {
+        if (!$this->validate() || !$this->validateLanguagePath($language)) {
             return [];
         }
 
@@ -101,7 +98,7 @@ class MessageFile extends TranslationPath
     {
         $filePath = realpath((string)$this->getPath($language));
 
-        if(!$filePath || !is_file($filePath)) {
+        if (!$filePath || !is_file($filePath)) {
             return false;
         }
 
@@ -111,7 +108,7 @@ class MessageFile extends TranslationPath
 
         $expectedModuleId = $this->isCoreModulePath() ? 'humhub' : basename($this->getModule()->getBasePath());
 
-        if(!($this->validateParent($languageDir, $language) || $this->validateParent($languageDir, static::toLegacyLanguageCode($language)))
+        if (!($this->validateParent($languageDir, $language) || $this->validateParent($languageDir, static::toLegacyLanguageCode($language)))
             || !$this->validateParent($messages, 'messages')
             || !$this->validateParent($moduleId, $expectedModuleId)) {
             return false;
@@ -127,7 +124,7 @@ class MessageFile extends TranslationPath
 
     public function updateTranslations($language, $messages, $create = false)
     {
-        if(!$create && (!$this->validate() || !$this->validateLanguagePath($language))) {
+        if (!$create && (!$this->validate() || !$this->validateLanguagePath($language))) {
             return false;
         }
 

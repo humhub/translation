@@ -1,6 +1,5 @@
 <?php
 
-
 namespace humhub\modules\translation\models;
 
 /**
@@ -21,7 +20,7 @@ class TranslationCoverage
      *
      * @param MessageFile $file
      * @param $language
-     * @return float|int|boolean
+     * @return float|int|bool
      */
     public static function getFileCoverage(MessageFile $file, $language)
     {
@@ -35,11 +34,11 @@ class TranslationCoverage
      *
      * @param BasePath $basePath
      * @param $language
-     * @return float|int|boolean
+     * @return float|int|bool
      */
     public static function getModuleCoverage(BasePath $basePath, $language)
     {
-        return static::calculateCoverage(static function() use($basePath, $language) {
+        return static::calculateCoverage(static function () use ($basePath, $language) {
             foreach ($basePath->getMessageFiles($language) as $messageFile) {
                 yield $messageFile->getMessages($language);
             }
@@ -73,7 +72,7 @@ class TranslationCoverage
      * Returns false if there are no messages to translate
      *
      * @param $generator
-     * @return float|int|boolean
+     * @return float|int|bool
      */
     private static function calculateCoverage($generator)
     {

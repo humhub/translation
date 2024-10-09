@@ -1,6 +1,5 @@
 <?php
 
-
 namespace humhub\modules\translation\widgets;
 
 use humhub\modules\content\widgets\EditLink;
@@ -30,7 +29,7 @@ class WallEntry extends BaseWallEntry
             'sortOrder' => 50,
         ]));
         $this->addControl($result, [EditLink::class, [
-            'model' => $this->contentObject, 'mode' => static::EDIT_MODE_NEW_WINDOW, 'url' => Url::toEditTranslation($this->contentObject)
+            'model' => $this->contentObject, 'mode' => static::EDIT_MODE_NEW_WINDOW, 'url' => Url::toEditTranslation($this->contentObject),
         ], ['sortOrder' => 100]]);
         return $result;
     }

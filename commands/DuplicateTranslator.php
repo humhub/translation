@@ -1,6 +1,5 @@
 <?php
 
-
 namespace humhub\modules\translation\commands;
 
 use humhub\modules\translation\models\BasePath;
@@ -22,9 +21,9 @@ use yii\helpers\Json;
  */
 class DuplicateTranslator extends TranslationCommand
 {
-    const RESULT_INDEX_MESSAGE_COUNT = 0;
-    const RESULT_INDEX_TRANSLATED_MESSAGE_COUNT = 1;
-    const RESULT_INDEX_TRANSLATED_DUPLICATES = 2;
+    public const RESULT_INDEX_MESSAGE_COUNT = 0;
+    public const RESULT_INDEX_TRANSLATED_MESSAGE_COUNT = 1;
+    public const RESULT_INDEX_TRANSLATED_DUPLICATES = 2;
 
 
     /**
@@ -32,7 +31,7 @@ class DuplicateTranslator extends TranslationCommand
      * @return array
      * @throws \yii\base\Exception
      */
-    public static function translateDuplicatesForLanguage($language, $module = null) : array
+    public static function translateDuplicatesForLanguage($language, $module = null): array
     {
         static::log("\nHandling Language: " . $language);
 
@@ -98,8 +97,8 @@ class DuplicateTranslator extends TranslationCommand
         $result =  [$messageCount, count($allTranslatedMessages), $autoTranslated];
 
         static::log("\tTotal messages:" . $result[0]);
-        static::log("\tTranslated:" .  $result[1]);
-        static::log("\tAuto translated:" .  $result[2]);
+        static::log("\tTranslated:" . $result[1]);
+        static::log("\tAuto translated:" . $result[2]);
         static::log("");
 
         return $result;

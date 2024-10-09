@@ -189,7 +189,8 @@ class MessageParserTest extends HumHubDbTestCase
     {
         $result = MessageParser::compareParameter(
             ['a' => MessageParser::PARAMETER_TYPE_DEFAULT],
-            ['a' => MessageParser::PARAMETER_TYPE_DEFAULT]);
+            ['a' => MessageParser::PARAMETER_TYPE_DEFAULT],
+        );
 
         $this->assertTrue($result);
     }
@@ -198,7 +199,8 @@ class MessageParserTest extends HumHubDbTestCase
     {
         $result = MessageParser::compareParameter(
             ['a' => MessageParser::PARAMETER_TYPE_DEFAULT],
-            ['a' => MessageParser::PARAMETER_TYPE_TIME]);
+            ['a' => MessageParser::PARAMETER_TYPE_TIME],
+        );
 
         $this->assertNotTrue($result);
         $this->assertEquals(['a', -1], $result);
@@ -208,7 +210,8 @@ class MessageParserTest extends HumHubDbTestCase
     {
         $result =  MessageParser::compareParameter(
             ['a' => MessageParser::PARAMETER_TYPE_DEFAULT],
-            []);
+            [],
+        );
 
         $this->assertNotTrue($result);
         $this->assertEquals(['a', -1], $result);
@@ -218,7 +221,8 @@ class MessageParserTest extends HumHubDbTestCase
     {
         $result =  MessageParser::compareParameter(
             ['a' => MessageParser::PARAMETER_TYPE_DEFAULT],
-            ['b' => MessageParser::PARAMETER_TYPE_DEFAULT]);
+            ['b' => MessageParser::PARAMETER_TYPE_DEFAULT],
+        );
 
         $this->assertNotTrue($result);
         $this->assertEquals(['a', -1], $result);
@@ -228,7 +232,8 @@ class MessageParserTest extends HumHubDbTestCase
     {
         $result =  MessageParser::compareParameter(
             [],
-            ['b' => MessageParser::PARAMETER_TYPE_DEFAULT]);
+            ['b' => MessageParser::PARAMETER_TYPE_DEFAULT],
+        );
 
         $this->assertNotTrue($result);
         $this->assertEquals(['b', 1], $result);
@@ -238,7 +243,8 @@ class MessageParserTest extends HumHubDbTestCase
     {
         $result =  MessageParser::compareParameter(
             ['b' => MessageParser::PARAMETER_TYPE_DEFAULT],
-            ['b' => MessageParser::PARAMETER_TYPE_DEFAULT, 'c' => MessageParser::PARAMETER_TYPE_DEFAULT]);
+            ['b' => MessageParser::PARAMETER_TYPE_DEFAULT, 'c' => MessageParser::PARAMETER_TYPE_DEFAULT],
+        );
 
         $this->assertNotTrue($result);
         $this->assertEquals(['c', 1], $result);

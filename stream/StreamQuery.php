@@ -8,8 +8,6 @@ use humhub\modules\translation\stream\filters\ModuleIdFilter;
 
 class StreamQuery extends ContentContainerStreamQuery
 {
-
-
     public $filterHandlers = [
         ModuleIdFilter::class,
         OriginatorStreamFilter::class,

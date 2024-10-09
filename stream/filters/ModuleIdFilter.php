@@ -6,22 +6,22 @@ use humhub\modules\stream\models\filters\StreamQueryFilter;
 
 class ModuleIdFilter extends StreamQueryFilter
 {
-    const ID = 'moduleId';
+    public const ID = 'moduleId';
 
-    const CATEGORY = 'moduleIds';
+    public const CATEGORY = 'moduleIds';
 
     public $moduleIds = [];
 
     public function rules()
     {
         return [
-            ['moduleIds', 'safe']
+            ['moduleIds', 'safe'],
         ];
     }
 
     public function apply()
     {
-        if(empty($this->moduleIds)) {
+        if (empty($this->moduleIds)) {
             return;
         }
 

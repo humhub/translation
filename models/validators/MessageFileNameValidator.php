@@ -6,18 +6,18 @@ use yii\validators\Validator;
 
 class MessageFileNameValidator extends Validator
 {
-    const FILE_FILTER = [
+    public const FILE_FILTER = [
         'Browser.php',
         'yii.php',
         'zii.php',
-        'ui.php'
+        'ui.php',
     ];
 
     public function validateAttribute($model, $attribute)
     {
         $fileName = $model->$attribute;
 
-        if(in_array($fileName, static::FILE_FILTER)) {
+        if (in_array($fileName, static::FILE_FILTER)) {
             $model->addError($attribute, 'Invalid file name');
         }
 
