@@ -15,7 +15,7 @@ use yii\helpers\HtmlPurifier;
 /**
  * Class Translation used for logging translations.
  *
- * @property integer $id
+ * @property int $id
  * @property string $language
  * @property string $module_id
  * @property string $file
@@ -67,7 +67,7 @@ class TranslationLog extends ContentActiveRecord implements TranslationFileIF
             'language' => $language,
             'module_id' => $messageFile->moduleId,
             'file' => $messageFile->getBaseName(),
-            'message' => $message
+            'message' => $message,
         ])->orderBy('id desc');
     }
 
@@ -127,17 +127,17 @@ class TranslationLog extends ContentActiveRecord implements TranslationFileIF
             'file' => Yii::t('TranslationModule.base', 'File'),
             'message' => Yii::t('TranslationModule.base', 'Message'),
             'translation_old' => Yii::t('TranslationModule.base', 'Old Translation'),
-            'translation' => Yii::t('TranslationModule.base', 'Translation')
+            'translation' => Yii::t('TranslationModule.base', 'Translation'),
         ];
     }
 
     public function validateTranslation()
     {
-        if($this->translation === $this->translation_old) {
+        if ($this->translation === $this->translation_old) {
             $this->addError('translation_old', Yii::t('TranslationModule.base', 'Translation did not change.'));
         }
 
-        if(empty($this->translation)) {
+        if (empty($this->translation)) {
             $this->addError('translation', Yii::t('TranslationModule.base', 'Your translation seems to be empty and therefore could not be saved.'));
             return;
         }
@@ -148,7 +148,7 @@ class TranslationLog extends ContentActiveRecord implements TranslationFileIF
 
     public function getBasePath()
     {
-        if(!$this->basePath) {
+        if (!$this->basePath) {
             $this->basePath = BasePath::getBasePath($this->module_id);
         }
 
@@ -160,7 +160,7 @@ class TranslationLog extends ContentActiveRecord implements TranslationFileIF
      */
     public function getMessageFile()
     {
-        if(!$this->messageFile) {
+        if (!$this->messageFile) {
             $this->messageFile = $this->getBasePath()->getMessageFile($this->file);
         }
 
@@ -178,11 +178,15 @@ class TranslationLog extends ContentActiveRecord implements TranslationFileIF
             if ($parameterCompare !== true) {
                 list($param, $error) = $parameterCompare;
                 if ($error === MessageParser::COMPARE_RESULT_MISSING) {
-                    $this->addError('translation',
-                        Yii::t('TranslationModule.base', 'The translation is missing a parameter "{match}"', ['match' => $param]));
+                    $this->addError(
+                        'translation',
+                        Yii::t('TranslationModule.base', 'The translation is missing a parameter "{match}"', ['match' => $param]),
+                    );
                 } else {
-                    $this->addError('translation',
-                        Yii::t('TranslationModule.base', 'The translation contains an invalid parameter "{match}"', ['match' => $param]));
+                    $this->addError(
+                        'translation',
+                        Yii::t('TranslationModule.base', 'The translation contains an invalid parameter "{match}"', ['match' => $param]),
+                    );
                 }
 
                 return;
@@ -193,13 +197,15 @@ class TranslationLog extends ContentActiveRecord implements TranslationFileIF
             $formatter->format($this->translation, MessageParser::getDummyData($actualParameters), $this->language);
             if ($formatter->getErrorMessage()) {
                 $this->addError('translation', Yii::t('TranslationModule.base', 'Invalid translation pattern detected, please see {link}', [
-                    'error' => $formatter->getErrorMessage(), 'link' => 'https://www.yiiframework.com/doc/guide/2.0/en/tutorial-i18n#message-formatting'
+                    'error' => $formatter->getErrorMessage(), 'link' => 'https://www.yiiframework.com/doc/guide/2.0/en/tutorial-i18n#message-formatting',
                 ]));
             }
         } catch (\Throwable $t) {
             Yii::error($t);
-            $this->addError('translation', Yii::t('TranslationModule.base',
-                'Error while parsing the message, please request support by a translation administrator'));
+            $this->addError('translation', Yii::t(
+                'TranslationModule.base',
+                'Error while parsing the message, please request support by a translation administrator',
+            ));
         }
     }
 
@@ -221,7 +227,7 @@ class TranslationLog extends ContentActiveRecord implements TranslationFileIF
 
     public function load($data, $formName = null)
     {
-        if(isset($data[$this->getTID()])) {
+        if (isset($data[$this->getTID()])) {
             $this->translation = trim($data[$this->getTID()]);
             return true;
         }

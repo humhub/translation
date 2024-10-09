@@ -1,8 +1,6 @@
 <?php
 
-
 namespace humhub\modules\translation\widgets;
-
 
 use humhub\modules\translation\models\BasePath;
 use humhub\modules\ui\form\widgets\BasePicker;
@@ -25,7 +23,7 @@ class ModulePicker extends BasePicker
      */
     protected function getItemText($item)
     {
-       return $item;
+        return $item;
     }
 
     protected function getItemKey($item)

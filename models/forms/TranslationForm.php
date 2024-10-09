@@ -106,7 +106,7 @@ class TranslationForm extends Model implements TranslationFileIF
 
     public function getMessageSettingString($withFile = true)
     {
-        return  ['settings' => '"'.Html::encode($this->moduleId) . ' / ' . Html::encode($this->language) . (($this->file && $withFile) ? ' / '. Html::encode($this->file) : '').'"'];
+        return  ['settings' => '"' . Html::encode($this->moduleId) . ' / ' . Html::encode($this->language) . (($this->file && $withFile) ? ' / ' . Html::encode($this->file) : '') . '"'];
     }
 
     public function validateFile()
@@ -131,7 +131,7 @@ class TranslationForm extends Model implements TranslationFileIF
         return [
             'moduleId' => Yii::t('TranslationModule.base', 'Module'),
             'language' => Yii::t('TranslationModule.base', 'Language'),
-            'file' => Yii::t('TranslationModule.base', 'File')
+            'file' => Yii::t('TranslationModule.base', 'File'),
         ];
     }
 
@@ -170,7 +170,7 @@ class TranslationForm extends Model implements TranslationFileIF
 
         $this->space = Languages::findSpaceByLanguage($this->language);
         if (!$this->space) {
-            $this->addError('space', Yii::t('TranslationModule.base', 'There is no language related space available for language {lang}', ['lang' =>$this->language]));
+            $this->addError('space', Yii::t('TranslationModule.base', 'There is no language related space available for language {lang}', ['lang' => $this->language]));
             return false;
         }
 
@@ -300,7 +300,7 @@ class TranslationForm extends Model implements TranslationFileIF
      */
     public function save()
     {
-        if(!$this->space || !$this->space->can(ManageTranslations::class)) {
+        if (!$this->space || !$this->space->can(ManageTranslations::class)) {
             return false;
         }
 
@@ -377,7 +377,7 @@ class TranslationForm extends Model implements TranslationFileIF
 
             $coverage =  TranslationCoverage::getModuleCoverage(BasePath::getBasePath($key), $this->language);
 
-            if($coverage === false) {
+            if ($coverage === false) {
                 $value .= ' (?)';
             } else {
                 $value .= ' (' . $coverage . '%)';
@@ -402,7 +402,8 @@ class TranslationForm extends Model implements TranslationFileIF
             $humhubPath = $this->replaceSeperator(Yii::getAlias('@humhub'));
 
             return strpos($basePath, $humhubPath) !== false;
-        } catch (\Exception $ex) {}
+        } catch (\Exception $ex) {
+        }
 
         return false;
     }

@@ -9,7 +9,6 @@ use Yii;
 
 class MessageValidationTest extends TranslationTest
 {
-
     public $initialTranslationSate = [
         'de' => [
             self::TEST_MESSAGE => '',
@@ -18,8 +17,8 @@ class MessageValidationTest extends TranslationTest
             'Balance: {0,number}' => '',
             'Maximum of {n,plural,=1{# space} other{# spaces}}' => '',
             'Maximum {parameter} of {n,plural,=1{# space} other{# spaces}}' => '',
-            '{count} {n,plural,=1{day} other{days}}' => ''
-        ]
+            '{count} {n,plural,=1{day} other{days}}' => '',
+        ],
     ];
 
     /**
@@ -35,7 +34,7 @@ class MessageValidationTest extends TranslationTest
             'moduleId' => 'translation',
             'language' => 'de',
             'file' => 'test',
-            $this->testMessageTID => 'Dies ist ein test'
+            $this->testMessageTID => 'Dies ist ein test',
         ]));
 
         $this->assertTrue($form->save());
@@ -55,12 +54,12 @@ class MessageValidationTest extends TranslationTest
             'moduleId' => 'translation',
             'language' => 'de',
             'file' => 'test',
-            $this->testMessageTID => 'Dies ist ein test!'
+            $this->testMessageTID => 'Dies ist ein test!',
         ]));
 
         $this->assertTrue($form->save());
 
-        $history = TranslationLog::findHistory($form->messageFile, 'de',static::TEST_MESSAGE)->all();
+        $history = TranslationLog::findHistory($form->messageFile, 'de', static::TEST_MESSAGE)->all();
         $this->assertCount(2, $history);
         $this->assertEquals('de', $history[0]->language);
         $this->assertEquals('test', $history[0]->file);
@@ -77,13 +76,13 @@ class MessageValidationTest extends TranslationTest
             'moduleId' => 'translation',
             'language' => 'de',
             'file' => 'test',
-            TranslationLog::tid('Test with {parameter}') => 'Test mit {parameter}'
+            TranslationLog::tid('Test with {parameter}') => 'Test mit {parameter}',
         ]));
 
         $this->assertTrue($form->save());
         $this->assertEmpty($form->errors);
         $this->assertEmpty($form->warnings);
-        $this->assertEquals($form->messageFile->getTranslation('de', 'Test with {parameter}'),  'Test mit {parameter}');
+        $this->assertEquals($form->messageFile->getTranslation('de', 'Test with {parameter}'), 'Test mit {parameter}');
     }
 
     public function testInvalidParameterName()
@@ -94,7 +93,7 @@ class MessageValidationTest extends TranslationTest
             'moduleId' => 'translation',
             'language' => 'de',
             'file' => 'test',
-            TranslationLog::tid('Test with {parameter}') => 'Test mit {xxx}'
+            TranslationLog::tid('Test with {parameter}') => 'Test mit {xxx}',
         ]));
 
         $this->assertTrue($form->save());
@@ -110,7 +109,7 @@ class MessageValidationTest extends TranslationTest
             'moduleId' => 'translation',
             'language' => 'de',
             'file' => 'test',
-            TranslationLog::tid('Test with {parameter}') => 'Test mit {parameter} {invalid}'
+            TranslationLog::tid('Test with {parameter}') => 'Test mit {parameter} {invalid}',
         ]));
 
         $this->assertTrue($form->save());
@@ -126,7 +125,7 @@ class MessageValidationTest extends TranslationTest
             'moduleId' => 'translation',
             'language' => 'de',
             'file' => 'test',
-            TranslationLog::tid('Maximum {parameter} of {n,plural,=1{# space} other{# spaces}}') => 'Maximal {parameter} {n,plural,=1{# Space} other{# Spaces}}'
+            TranslationLog::tid('Maximum {parameter} of {n,plural,=1{# space} other{# spaces}}') => 'Maximal {parameter} {n,plural,=1{# Space} other{# Spaces}}',
         ]));
 
         $this->assertTrue($form->save());
@@ -142,7 +141,7 @@ class MessageValidationTest extends TranslationTest
             'moduleId' => 'translation',
             'language' => 'de',
             'file' => 'test',
-            TranslationLog::tid('Maximum of {n,plural,=1{# space} other{# spaces}}') => 'Maximal {n,plural,=1{# Space} andere{# Spaces}}'
+            TranslationLog::tid('Maximum of {n,plural,=1{# space} other{# spaces}}') => 'Maximal {n,plural,=1{# Space} andere{# Spaces}}',
         ]));
 
         $this->assertTrue($form->save());
@@ -158,7 +157,7 @@ class MessageValidationTest extends TranslationTest
             'moduleId' => 'translation',
             'language' => 'de',
             'file' => 'test',
-            TranslationLog::tid('Maximum of {n,plural,=1{# space} other{# spaces}}') => 'Maximal {n,mehrzahl,=1{# Space} other{# Spaces}}'
+            TranslationLog::tid('Maximum of {n,plural,=1{# space} other{# spaces}}') => 'Maximal {n,mehrzahl,=1{# Space} other{# Spaces}}',
         ]));
 
         $this->assertTrue($form->save());
@@ -174,7 +173,7 @@ class MessageValidationTest extends TranslationTest
             'moduleId' => 'translation',
             'language' => 'de',
             'file' => 'test',
-            TranslationLog::tid('Maximum of {n,plural,=1{# space} other{# spaces}}') => 'Maximal {x,mehrzahl,=1{# Space} other{# Spaces}}'
+            TranslationLog::tid('Maximum of {n,plural,=1{# space} other{# spaces}}') => 'Maximal {x,mehrzahl,=1{# Space} other{# Spaces}}',
         ]));
 
         $this->assertTrue($form->save());
@@ -190,7 +189,7 @@ class MessageValidationTest extends TranslationTest
             'moduleId' => 'translation',
             'language' => 'de',
             'file' => 'test',
-            TranslationLog::tid('Test with {parameter}') => 'Test ohne parameter'
+            TranslationLog::tid('Test with {parameter}') => 'Test ohne parameter',
         ]));
 
         $this->assertTrue($form->save());
@@ -206,7 +205,7 @@ class MessageValidationTest extends TranslationTest
             'moduleId' => 'translation',
             'language' => 'de',
             'file' => 'test',
-            TranslationLog::tid('Maximum of {n,plural,=1{# space} other{# spaces}}') => 'Maximal how to do this?'
+            TranslationLog::tid('Maximum of {n,plural,=1{# space} other{# spaces}}') => 'Maximal how to do this?',
         ]));
 
         $this->assertTrue($form->save());

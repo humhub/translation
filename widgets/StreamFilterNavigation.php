@@ -1,8 +1,6 @@
 <?php
 
-
 namespace humhub\modules\translation\widgets;
-
 
 use humhub\modules\stream\widgets\WallStreamFilterNavigation;
 use humhub\modules\translation\stream\filters\ModuleIdFilter;
@@ -13,7 +11,7 @@ class StreamFilterNavigation extends WallStreamFilterNavigation
 {
     public $view = '@stream/widgets/views/wallStreamFilterNavigation';
 
-    const FILTER_BLOCK_MODULE = 'module';
+    public const FILTER_BLOCK_MODULE = 'module';
 
     public function initFilterBlocks()
     {
@@ -21,7 +19,7 @@ class StreamFilterNavigation extends WallStreamFilterNavigation
 
         $this->addFilterBlock(static::FILTER_BLOCK_MODULE, [
             'title' => Yii::t('TranslationModule.base', 'Module'),
-            'sortOrder' => 100
+            'sortOrder' => 100,
         ], static::PANEL_COLUMN_1);
     }
 
@@ -36,8 +34,8 @@ class StreamFilterNavigation extends WallStreamFilterNavigation
             'category' => ModuleIdFilter::CATEGORY,
             'pickerOptions' => [
                 'id' => 'stream-module-picker',
-                'name' => 'filter_module_id'
-            ]
+                'name' => 'filter_module_id',
+            ],
         ], static::FILTER_BLOCK_MODULE);
     }
 }

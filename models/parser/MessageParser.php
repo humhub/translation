@@ -1,19 +1,17 @@
 <?php
 
-
 namespace humhub\modules\translation\models\parser;
-
 
 class MessageParser
 {
-    const PARAMETER_TYPE_NUMBER = 0;
-    const PARAMETER_TYPE_DATE = 1;
-    const PARAMETER_TYPE_TIME = 2;
+    public const PARAMETER_TYPE_NUMBER = 0;
+    public const PARAMETER_TYPE_DATE = 1;
+    public const PARAMETER_TYPE_TIME = 2;
 
-    const PARAMETER_TYPE_DEFAULT = self::PARAMETER_TYPE_NUMBER;
+    public const PARAMETER_TYPE_DEFAULT = self::PARAMETER_TYPE_NUMBER;
 
-    const COMPARE_RESULT_MISSING = -1;
-    const COMPARE_RESULT_INVALID = 1;
+    public const COMPARE_RESULT_MISSING = -1;
+    public const COMPARE_RESULT_INVALID = 1;
 
 
 
@@ -62,7 +60,7 @@ class MessageParser
         foreach ($expressions as $expression) {
             preg_match_all('/([a-zA-Z0-9]+),([a-zA-Z]+)/m', $expression, $messageMatch, PREG_SET_ORDER);
 
-            if(!empty($messageMatch)) {
+            if (!empty($messageMatch)) {
                 $parameters[$messageMatch[0][1]] = static::parseParameterType($messageMatch[0][2]);
             } else {
                 $parameters[$expression] = static::PARAMETER_TYPE_DEFAULT;
@@ -98,14 +96,14 @@ class MessageParser
     {
         $diff = array_diff_assoc($required, $actual);
 
-        if(!empty($diff)) {
+        if (!empty($diff)) {
             reset($diff);
             return [key($diff), static::COMPARE_RESULT_MISSING];
         }
 
         $diff = array_diff_assoc($actual, $required);
 
-        if(!empty($diff)) {
+        if (!empty($diff)) {
             reset($diff);
             return [key($diff), static::COMPARE_RESULT_INVALID];
         }
@@ -113,7 +111,7 @@ class MessageParser
         return true;
     }
 
-    const PARAMETER_TYPE_MAPPING = [
+    public const PARAMETER_TYPE_MAPPING = [
         'number' => self::PARAMETER_TYPE_NUMBER,
         'date' => self::PARAMETER_TYPE_DATE,
         'time' => self::PARAMETER_TYPE_TIME,
@@ -125,8 +123,9 @@ class MessageParser
         'select' => self::PARAMETER_TYPE_NUMBER,
     ];
 
-    private static function parseParameterType($typeStr) {
-        if(isset(static::PARAMETER_TYPE_MAPPING[$typeStr])) {
+    private static function parseParameterType($typeStr)
+    {
+        if (isset(static::PARAMETER_TYPE_MAPPING[$typeStr])) {
             return static::PARAMETER_TYPE_MAPPING[$typeStr];
         }
 

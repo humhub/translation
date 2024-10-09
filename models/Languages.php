@@ -1,8 +1,6 @@
 <?php
 
-
 namespace humhub\modules\translation\models;
-
 
 use humhub\modules\space\models\Membership;
 use humhub\modules\space\models\Space;
@@ -31,7 +29,7 @@ class Languages extends BaseObject
      */
     private static $skipLanguages = [
         'en-US',
-        'en-GB'
+        'en-GB',
     ];
 
     /**
@@ -49,8 +47,8 @@ class Languages extends BaseObject
      */
     public static function getAllTranslatableLanguages()
     {
-        if(!static::$languages) {
-            static::$languages = array_filter(static::getAllAvailableLanguages(), function($lang) {
+        if (!static::$languages) {
+            static::$languages = array_filter(static::getAllAvailableLanguages(), function ($lang) {
                 return !in_array($lang, static::$skipLanguages, true);
             });
 
@@ -68,7 +66,7 @@ class Languages extends BaseObject
      */
     public static function getTranslatableUserLanguages()
     {
-        if(!static::$userLanguages) {
+        if (!static::$userLanguages) {
             static::$userLanguages = (Yii::$app->request->isConsoleRequest || Yii::$app->user->isAdmin())
                 ? static::getAllTranslatableLanguages()
                 : static::filterUserLanguages();
@@ -128,7 +126,7 @@ class Languages extends BaseObject
     {
         $spaceName = static::getSpaceNameByLangauge($language);
 
-        if(!$spaceName) {
+        if (!$spaceName) {
             return null;
         }
 
@@ -137,7 +135,7 @@ class Languages extends BaseObject
 
     public static function getLanguageBySpaceName($spaceName)
     {
-        if($spaceName instanceof Space) {
+        if ($spaceName instanceof Space) {
             $spaceName = $spaceName->name;
         }
 
@@ -150,7 +148,7 @@ class Languages extends BaseObject
             $language = strtolower($language);
         }
 
-        if(!static::isValidLanguage($language)) {
+        if (!static::isValidLanguage($language)) {
             return null;
         }
 
@@ -159,7 +157,7 @@ class Languages extends BaseObject
 
     public static function getSpaceNameByLangauge($language)
     {
-        if(!static::isValidLanguage($language)) {
+        if (!static::isValidLanguage($language)) {
             return null;
         }
 

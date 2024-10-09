@@ -12,9 +12,6 @@ return [
     'modules' => ['translation'],
     'fixtures' => [
         'default',
-        TranslationLogFixture::class
-    ]
+        TranslationLogFixture::class,
+    ],
 ];
-
-
-

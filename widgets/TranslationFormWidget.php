@@ -23,14 +23,14 @@ class TranslationFormWidget extends JsWidget
     {
         return $this->render('translationForm', [
             'options' => $this->getOptions(),
-            'model' => $this->model
+            'model' => $this->model,
         ]);
     }
 
     public function getData()
     {
         return [
-            'load-url' => Url::toReloadForm()
+            'load-url' => Url::toReloadForm(),
         ];
     }
 }

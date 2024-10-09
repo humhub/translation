@@ -1,6 +1,5 @@
 <?php
 
-
 namespace humhub\modules\translation\commands;
 
 use humhub\modules\translation\models\Archive;
@@ -30,8 +29,8 @@ class BuildArchive extends TranslationCommand
         foreach ($languages as $lang) {
             static::log("Processing $lang ...");
 
-            if(!Archive::validateBasePath($lang)) {
-                static::log( "Skipped (No message folder): ".Archive::getBasePath($lang));
+            if (!Archive::validateBasePath($lang)) {
+                static::log("Skipped (No message folder): " . Archive::getBasePath($lang));
             }
 
             $archive = Archive::load($lang);
@@ -40,7 +39,7 @@ class BuildArchive extends TranslationCommand
 
             foreach ($moduleIds as $moduleId) {
                 $basePath = BasePath::getBasePath($moduleId);
-                if($basePath->validateLanguagePath($lang)) {
+                if ($basePath->validateLanguagePath($lang)) {
                     foreach ($basePath->getMessageFiles($lang) as $messageFile) {
                         foreach ($messageFile->getMessages($lang) as $original => $translated) {
 
@@ -59,7 +58,7 @@ class BuildArchive extends TranslationCommand
             }
 
             // Save
-            if(Archive::update($lang, $archive)) {
+            if (Archive::update($lang, $archive)) {
                 static::log("Saved!");
             } else {
                 static::log("Could not save archive!");

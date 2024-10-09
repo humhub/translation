@@ -13,11 +13,11 @@ class MainAsset extends AssetBundle
     public $sourcePath = '@translation/resources';
     public $js = [
         'js/humhub.translation.js',
-        'js/jquery.showLoading.js'
+        'js/jquery.showLoading.js',
     ];
     public $css = [
         'css/translation.css',
-        'css/showLoading.css'
+        'css/showLoading.css',
     ];
 
     /**
@@ -28,8 +28,8 @@ class MainAsset extends AssetBundle
     {
         $view->registerJsConfig('translation', [
             'text' => [
-                'warn.unload' => Yii::t('TranslationModule.base', 'There are unsaved changes, do you really want to leave this page?')
-            ]
+                'warn.unload' => Yii::t('TranslationModule.base', 'There are unsaved changes, do you really want to leave this page?'),
+            ],
         ]);
         return parent::register($view);
     }

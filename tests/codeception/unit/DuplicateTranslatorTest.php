@@ -39,8 +39,8 @@ class DuplicateTranslatorTest extends TranslationTest
     {
         $this->setTrnaslationState([
             'de' => [
-                'Save' => 'Übernehmen'
-            ]
+                'Save' => 'Übernehmen',
+            ],
         ]);
 
         $this->assertEquals('Übernehmen', BasePath::getBasePath('translation')->getMessageFile('test')->getTranslation('de', 'Save'));

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace humhub\modules\translation\widgets;
 
 use humhub\modules\stream\widgets\StreamViewer;

@@ -21,7 +21,7 @@ class TranslateController extends \humhub\components\Controller
     protected function getAccessRules()
     {
         return [
-            [ControllerAccess::RULE_LOGGED_IN_ONLY]
+            [ControllerAccess::RULE_LOGGED_IN_ONLY],
         ];
     }
 
@@ -106,9 +106,9 @@ class TranslateController extends \humhub\components\Controller
         $model = new TranslationForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if(empty($model->warnings) && empty($model->errors)) {
+            if (empty($model->warnings) && empty($model->errors)) {
                 $this->view->saved();
-            } else if(!empty($model->errors)) {
+            } elseif (!empty($model->errors)) {
                 $this->view->error(Yii::t('TranslationModule.base', 'Some translations could not be saved.'));
             } else {
                 $this->view->warn(Yii::t('TranslationModule.base', 'Some translations may have been purified.'));
@@ -116,7 +116,7 @@ class TranslateController extends \humhub\components\Controller
         }
 
         // In case there is no related language space
-        if(!empty($model->getFirstError('space'))) {
+        if (!empty($model->getFirstError('space'))) {
             $this->view->error($model->getFirstError('space'));
         }
 
@@ -129,25 +129,25 @@ class TranslateController extends \humhub\components\Controller
     {
         $basePath = BasePath::getBasePath($moduleId);
 
-        if(!$basePath->validate() || ! $basePath->validateLanguagePath($language)) {
+        if (!$basePath->validate() || ! $basePath->validateLanguagePath($language)) {
             throw new HttpException(404);
         }
 
         $messageFile = $basePath->getMessageFile($file);
 
-        if(!$messageFile->validate() || ! $messageFile->validateLanguagePath($language)) {
+        if (!$messageFile->validate() || ! $messageFile->validateLanguagePath($language)) {
             throw new HttpException(404);
         }
 
         $dataProvider = new ActiveDataProvider([
-            'query' => TranslationLog::findHistory($messageFile, $language, $message)
+            'query' => TranslationLog::findHistory($messageFile, $language, $message),
         ]);
 
         return $this->render('history', [
             'messageFile' => $messageFile,
             'language' => $language,
             'message' => $message,
-            'dataProvider' => $dataProvider
+            'dataProvider' => $dataProvider,
         ]);
 
     }

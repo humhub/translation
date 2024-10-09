@@ -10,10 +10,10 @@ use Yii;
 
 class RenameTranslatorTest extends TranslationTest
 {
-    const OLD_CATEGORY = 'old';
-    const NEW_CATEGORY = 'new';
-    const EXISTING_CATEGORY = 'test';
-    
+    public const OLD_CATEGORY = 'old';
+    public const NEW_CATEGORY = 'new';
+    public const EXISTING_CATEGORY = 'test';
+
     public function _before()
     {
         parent::_before();
@@ -22,7 +22,7 @@ class RenameTranslatorTest extends TranslationTest
         // Create new test category
         $newCategory = $basePath->getMessageFile(static::OLD_CATEGORY);
         $newCategory->updateTranslations('de', [
-            'New message' => 'Neue Nachricht'
+            'New message' => 'Neue Nachricht',
         ], true);
     }
 
@@ -30,16 +30,16 @@ class RenameTranslatorTest extends TranslationTest
     {
         $basePath = BasePath::getBasePath('translation');
         $newCategory = $basePath->getMessageFile(static::OLD_CATEGORY);
-        if($newCategory->validateLanguagePath('de')) {
+        if ($newCategory->validateLanguagePath('de')) {
             unlink($newCategory->getPath('de'));
         }
 
         $newCategory2 = $basePath->getMessageFile(static::NEW_CATEGORY);
-        if($newCategory2->validateLanguagePath('de')) {
+        if ($newCategory2->validateLanguagePath('de')) {
             unlink($newCategory2->getPath('de'));
         }
     }
-    
+
     public function testRenameCreate()
     {
         $basePath = BasePath::getBasePath('translation');
@@ -63,7 +63,7 @@ class RenameTranslatorTest extends TranslationTest
 
         $newCategory2 = $basePath->getMessageFile(static::NEW_CATEGORY);
         $this->assertTrue($newCategory2->validateLanguagePath('de'));
-        
+
         $this->assertEquals('Neue Nachricht', $basePath->getMessageFile(static::NEW_CATEGORY)->getTranslation('de', 'New message'));
     }
 

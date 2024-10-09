@@ -22,7 +22,7 @@ class Events
             'label' => Yii::t('TranslationModule.base', 'Translations'),
             'url' => ['/translation/translate'],
             'sortOrder' => 700,
-            'isActive' => MenuLink::isActiveState('translation', 'translate')
+            'isActive' => MenuLink::isActiveState('translation', 'translate'),
         ]));
     }
 
@@ -30,7 +30,7 @@ class Events
     {
         $space = $event->sender->space;
 
-        if(!Languages::getLanguageBySpaceName($space)) {
+        if (!Languages::getLanguageBySpaceName($space)) {
             return;
         }
 
@@ -40,7 +40,7 @@ class Events
             'label' => Yii::t('TranslationModule.base', 'Translations'),
             'url' => Url::toStream($space),
             'sortOrder' => 700,
-            'isActive' => MenuLink::isActiveState('translation', 'stream')
+            'isActive' => MenuLink::isActiveState('translation', 'stream'),
         ]));
     }
 

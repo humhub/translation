@@ -9,7 +9,6 @@ use yii\console\Controller;
 
 class TranslationController extends Controller
 {
-
     /**
      * Automatically translates message duplicates.
      *
@@ -19,7 +18,7 @@ class TranslationController extends Controller
     public function actionHandleDuplicate()
     {
         foreach (Languages::getAllTranslatableLanguages() as $language) {
-           DuplicateTranslator::translateDuplicatesForLanguage($language);
+            DuplicateTranslator::translateDuplicatesForLanguage($language);
         }
     }
 

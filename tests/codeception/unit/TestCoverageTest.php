@@ -8,15 +8,14 @@ use translation\TranslationTest;
 
 class TestCoverageTest extends TranslationTest
 {
-
     public function testNoFileCoverage()
     {
         $this->setTrnaslationState(
             [
                 'de' => [
-                    'Test' => ''
-                ]
-            ]
+                    'Test' => '',
+                ],
+            ],
         );
         $basePath = BasePath::getBasePath('translation');
         $this->assertEquals(0, TranslationCoverage::getFileCoverage($basePath->getMessageFile('test'), 'de'));
@@ -31,8 +30,8 @@ class TestCoverageTest extends TranslationTest
                     'Test2' => 'Übersetzt2',
                     'Test3' => '',
                     'Test4' => '',
-                ]
-            ]
+                ],
+            ],
         );
         $basePath = BasePath::getBasePath('translation');
         $this->assertEquals(50, TranslationCoverage::getFileCoverage($basePath->getMessageFile('test'), 'de'));
@@ -45,8 +44,8 @@ class TestCoverageTest extends TranslationTest
                 'de' => [
                     'Test1' => 'Übersetzt1',
                     'Test2' => 'Übersetzt2',
-                ]
-            ]
+                ],
+            ],
         );
         $basePath = BasePath::getBasePath('translation');
         $this->assertEquals(100, TranslationCoverage::getFileCoverage($basePath->getMessageFile('test'), 'de'));
@@ -59,8 +58,8 @@ class TestCoverageTest extends TranslationTest
                 'de' => [
                     'Test1' => 'Übersetzt1',
                     'Test2' => 'Übersetzt2',
-                ]
-            ]
+                ],
+            ],
         );
         $basePath = BasePath::getBasePath('translation');
         $this->assertEquals(100, TranslationCoverage::getModuleCoverage($basePath, 'de'));
@@ -70,8 +69,8 @@ class TestCoverageTest extends TranslationTest
     {
         $this->setTrnaslationState(
             [
-                'de' => []
-            ]
+                'de' => [],
+            ],
         );
         $basePath = BasePath::getBasePath('translation');
         $this->assertFalse(TranslationCoverage::getFileCoverage($basePath->getMessageFile('test'), 'de'));
