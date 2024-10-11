@@ -9,7 +9,6 @@ use Yii;
 
 class ApiController extends Controller
 {
-
     /**
      * Inits the Translate Controller
      *

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace humhub\modules\translation\models;
-
 
 use Yii;
 use yii\base\Model;
@@ -16,7 +14,7 @@ use yii\base\Module;
  */
 abstract class TranslationPath extends Model
 {
-    const CORE_MODULE_ID = 'core';
+    public const CORE_MODULE_ID = 'core';
 
     /**
      * @var Module
@@ -35,7 +33,7 @@ abstract class TranslationPath extends Model
      * @param string|null $language
      * @return string
      */
-    public abstract function getPath($language = null);
+    abstract public function getPath($language = null);
 
 
     public function rules()

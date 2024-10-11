@@ -1,6 +1,5 @@
 <?php
 
-
 namespace humhub\modules\translation\commands;
 
 use humhub\modules\translation\models\BasePath;
@@ -24,9 +23,9 @@ use yii\helpers\Json;
  */
 class RenameTranslationCategory extends TranslationCommand
 {
-    const RESULT_INDEX_MESSAGE_COUNT = 0;
-    const RESULT_INDEX_TRANSLATED_MESSAGE_COUNT = 1;
-    const RESULT_INDEX_TRANSLATED_DUPLICATES = 2;
+    public const RESULT_INDEX_MESSAGE_COUNT = 0;
+    public const RESULT_INDEX_TRANSLATED_MESSAGE_COUNT = 1;
+    public const RESULT_INDEX_TRANSLATED_DUPLICATES = 2;
 
     /**
      * @param $language
@@ -36,8 +35,8 @@ class RenameTranslationCategory extends TranslationCommand
     {
         $basePath = BasePath::getBasePath($moduleId);
 
-        if($basePath->validate()) {
-            static::log('Could not rename category due to invalid basepath: '.$basePath->getPath());
+        if ($basePath->validate()) {
+            static::log('Could not rename category due to invalid basepath: ' . $basePath->getPath());
         }
 
         $languages = $language ? [$language] : Languages::getAllTranslatableLanguages();
@@ -51,7 +50,7 @@ class RenameTranslationCategory extends TranslationCommand
                 continue;
             }
 
-            static::log('Rename message file '.$oldFile->getPath($lang). ' to '.$newFile->getPath($lang));
+            static::log('Rename message file ' . $oldFile->getPath($lang) . ' to ' . $newFile->getPath($lang));
 
             $oldMessages = $oldFile->getMessages($lang);
             $created = false;

@@ -10,7 +10,7 @@ use humhub\modules\translation\models\TranslationLog;
 
 class Url extends \yii\helpers\Url
 {
-    const ROUTE_STREAM = '/translation/stream/stream';
+    public const ROUTE_STREAM = '/translation/stream/stream';
 
     public static function toTranslation(MessageFile $messageFile, $language)
     {
@@ -40,14 +40,14 @@ class Url extends \yii\helpers\Url
             'language' => $model->getMessageLanguage(),
             'moduleId' => $model->getMessageModuleId(),
             'file' => $model->getMessageBasename(),
-            'message' => $message
+            'message' => $message,
         ]);
     }
 
     public static function toLogDetail(TranslationLog $model)
     {
         return $model->content->container->createUrl('/translation/stream', [
-           'contentId' => $model->content->id
+            'contentId' => $model->content->id,
         ]);
     }
 

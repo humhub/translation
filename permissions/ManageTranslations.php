@@ -8,7 +8,6 @@ use Yii;
 
 class ManageTranslations extends BasePermission
 {
-
     /**
      * @inheritdoc
      */
@@ -21,7 +20,7 @@ class ManageTranslations extends BasePermission
         Space::USERGROUP_OWNER,
         Space::USERGROUP_ADMIN,
         Space::USERGROUP_MODERATOR,
-        Space::USERGROUP_MEMBER
+        Space::USERGROUP_MEMBER,
     ];
 
     /**
@@ -31,7 +30,7 @@ class ManageTranslations extends BasePermission
         Space::USERGROUP_OWNER,
         Space::USERGROUP_ADMIN,
         Space::USERGROUP_USER,
-        Space::USERGROUP_GUEST
+        Space::USERGROUP_GUEST,
     ];
 
     public function getTitle()

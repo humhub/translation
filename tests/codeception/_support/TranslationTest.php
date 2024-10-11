@@ -1,15 +1,12 @@
 <?php
 
-
 namespace translation;
-
 
 use humhub\modules\space\models\Space;
 use humhub\modules\translation\models\BasePath;
 use humhub\modules\translation\models\TranslationLog;
 use tests\codeception\_support\HumHubDbTestCase;
 use Yii;
-
 
 /**
  * Class TranslationTest
@@ -39,12 +36,12 @@ class TranslationTest extends HumHubDbTestCase
      */
     public $testMessageTID;
 
-    const TEST_MESSAGE = 'This is a test';
+    public const TEST_MESSAGE = 'This is a test';
 
     public $initialTranslationSate = [
         'de' => [
             self::TEST_MESSAGE => '',
-        ]
+        ],
     ];
 
     protected function messages()

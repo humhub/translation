@@ -1,6 +1,5 @@
 <?php
 
-
 namespace humhub\modules\translation\models;
 
 use humhub\modules\file\libs\FileHelper;

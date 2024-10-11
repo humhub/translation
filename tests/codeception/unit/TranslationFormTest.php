@@ -17,9 +17,9 @@ class TranslationFormTest extends TranslationTest
         $moduleIdSelection = $form->getModuleIdSelection();
 
         $this->assertTrue(array_key_exists('core', $moduleIdSelection));
-        $this->assertStringContainsString('HumHub - core (',  $moduleIdSelection['core']);
-        $this->assertStringContainsString('HumHub - activity (',  $moduleIdSelection['activity']);
-        $this->assertStringContainsString('Module - translation (',  $moduleIdSelection['translation']);
+        $this->assertStringContainsString('HumHub - core (', $moduleIdSelection['core']);
+        $this->assertStringContainsString('HumHub - activity (', $moduleIdSelection['activity']);
+        $this->assertStringContainsString('Module - translation (', $moduleIdSelection['translation']);
     }
 
     public function testLoadInitAsAdmin()
@@ -36,7 +36,7 @@ class TranslationFormTest extends TranslationTest
     {
         $form = new TranslationForm();
         $form->load([
-            'moduleId' => 'translation'
+            'moduleId' => 'translation',
         ]);
 
         $this->assertTrue($form->validate());
@@ -104,7 +104,7 @@ class TranslationFormTest extends TranslationTest
             'moduleId' => 'translation',
             'language' => 'de',
             'file' => 'test',
-            $this->testMessageTID => 'Dies isttt ein test'
+            $this->testMessageTID => 'Dies isttt ein test',
         ]);
 
         $this->assertTrue($form->save());
@@ -113,7 +113,7 @@ class TranslationFormTest extends TranslationTest
             'language' => 'de',
             'module_id' => 'translation',
             'file' => 'test',
-            'message' => $this->testMessage
+            'message' => $this->testMessage,
         ]));
 
         $result = $form->basePath->getMessageFile('test')->getMessages('de')[$this->testMessage];
@@ -124,7 +124,7 @@ class TranslationFormTest extends TranslationTest
             'moduleId' => 'translation',
             'language' => 'de',
             'file' => 'test',
-            $this->testMessageTID => 'Dies ist ein test'
+            $this->testMessageTID => 'Dies ist ein test',
         ]);
 
         $this->assertTrue($form->save());
@@ -133,7 +133,7 @@ class TranslationFormTest extends TranslationTest
             'language' => 'de',
             'module_id' => 'translation',
             'file' => 'test',
-            'message' => $this->testMessage
+            'message' => $this->testMessage,
         ])->orderBy('id DESC')->all();
 
         $this->assertCount(2, $logs);
@@ -154,7 +154,7 @@ class TranslationFormTest extends TranslationTest
             'moduleId' => 'translation',
             'language' => 'de',
             'file' => 'test',
-            $this->testMessageTID => 'Dies isttt ein test'
+            $this->testMessageTID => 'Dies isttt ein test',
         ]));
 
         $this->assertTrue($form->save());
@@ -172,7 +172,7 @@ class TranslationFormTest extends TranslationTest
             'moduleId' => 'translation',
             'language' => 'de',
             'file' => 'test',
-            $this->testMessageTID => 'Dies isttt ein test'
+            $this->testMessageTID => 'Dies isttt ein test',
         ]));
 
         $this->assertFalse($form->save());
@@ -194,7 +194,7 @@ class TranslationFormTest extends TranslationTest
             'moduleId' => 'translation',
             'language' => 'de',
             'file' => 'test',
-            $this->testMessageTID => 'Dies ist ein test'
+            $this->testMessageTID => 'Dies ist ein test',
         ]));
 
         $this->assertTrue($form->save());
@@ -204,7 +204,7 @@ class TranslationFormTest extends TranslationTest
             'moduleId' => 'translation',
             'language' => 'de',
             'file' => 'test',
-            $this->testMessageTID => ''
+            $this->testMessageTID => '',
         ]));
 
         $this->assertTrue($form->save());
@@ -225,7 +225,7 @@ class TranslationFormTest extends TranslationTest
                 'moduleId' => 'translation',
                 'language' => $language,
                 'file' => 'test',
-                $this->testMessageTID => $language.'_translated'
+                $this->testMessageTID => $language . '_translated',
             ]));
 
             $this->assertTrue($form->validate());
@@ -245,7 +245,7 @@ class TranslationFormTest extends TranslationTest
                 'moduleId' => 'translation',
                 'language' => $language,
                 'file' => 'test',
-                $this->testMessageTID => $language.'_translated'
+                $this->testMessageTID => $language . '_translated',
             ]);
 
             $this->assertFalse($form->validate());

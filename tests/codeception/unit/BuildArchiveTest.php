@@ -8,12 +8,12 @@ use translation\TranslationTest;
 
 class BuildArchiveTest extends TranslationTest
 {
-    const TEST_MESSAGE = 'Test building an archive file';
+    public const TEST_MESSAGE = 'Test building an archive file';
 
     public $initialTranslationSate = [
         'de' => [
             self::TEST_MESSAGE => 'Teste die Bildung eines Archivefiles',
-        ]
+        ],
     ];
 
     public function _before()
