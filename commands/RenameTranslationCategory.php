@@ -124,9 +124,9 @@ class RenameTranslationCategory extends TranslationCommand
             }
 
             if (file_put_contents($filePath, $newFileContent)) {
-                static::log('PHP file ' . $filePath . ' is updated with new category "' . $newCategory. '"');
+                static::log('PHP file ' . $filePath . ' is updated with new category "' . $newCategory . '"');
             } else {
-                static::log('CANNOT update PHP file ' . $filePath . ' with new category "' . $newCategory. '"');
+                static::log('CANNOT update PHP file ' . $filePath . ' with new category "' . $newCategory . '"');
             }
         }
     }
