@@ -16,6 +16,7 @@ Changelog
 - Fix #41: Allow to translate module from folder name different than module id
 - Enh #69: Display translation from parent language in placeholder
 - Enh #74: Use PHP CS Fixer
+- Enh #75: Improve command to rename category
 
 1.0.1 (Unreleased)
 ------------------

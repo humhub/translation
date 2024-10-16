@@ -129,7 +129,9 @@ class MessageFile extends TranslationPath
         }
 
         ksort($messages);
-        $array = str_replace("\r", '', var_export($messages, true));
+        $array = var_export($messages, true);
+        $array = preg_replace('/^array\s*\((.+)\)$/s', '[$1]', $array);
+        $array = str_replace("\r", '', $array);
         $content = <<<EOD
 <?php
 return $array;

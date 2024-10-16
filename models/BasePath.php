@@ -20,6 +20,9 @@ class BasePath extends TranslationPath
      */
     private $messageFiles = [];
 
+    private ?array $languages = null;
+    private ?array $modulePhpFiles = null;
+
     public function rules()
     {
         return array_merge([
@@ -80,10 +83,6 @@ class BasePath extends TranslationPath
                 : Yii::getAlias('@humhub/messages');
         }
 
-        if ($language && !static::validateLanguage($language)) {
-            return null;
-        }
-
         try {
             $module = $this->getModule();
         } catch (\Exception $e) {
@@ -142,6 +141,60 @@ class BasePath extends TranslationPath
         }
 
         return $result;
+    }
+
+    public function getAllLanguages(): array
+    {
+        if ($this->languages === null) {
+            $folders = FileHelper::findDirectories($this->getPath(), ['recursive' => false]);
+
+            $this->languages = [];
+            foreach ($folders as $folder) {
+                $this->languages[] = pathinfo($folder, PATHINFO_FILENAME);
+            }
+        }
+
+        return $this->languages;
+    }
+
+    /**
+     * @param string|null $exclude
+     * @return array
+     * @throws Exception
+     */
+    public function getAllCategories(?string $exclude = null): array
+    {
+        $files = FileHelper::findfiles($this->getPath(), ['only' => ['*.php'], 'recursive' => true]);
+
+        $categories = [];
+        foreach ($files as $category) {
+            $fileName = pathinfo($category, PATHINFO_FILENAME);
+            if ($fileName !== $exclude && !in_array($fileName, $categories)) {
+                $categories[] = $fileName;
+            }
+        }
+
+        return $categories;
+    }
+
+    public function getModulePhpFiles(): array
+    {
+        if ($this->modulePhpFiles === null) {
+            $this->modulePhpFiles = FileHelper::findfiles($this->getModule()->getBasePath(), [
+                'only' => ['*.php'],
+                'except' => ['/messages/', '/migrations/', '/node_modules/', '/tests/', '/vendor/'],
+                'recursive' => true,
+            ]);
+        }
+
+        return $this->modulePhpFiles;
+    }
+
+    public function getModuleCategory(string $category): string
+    {
+        $moduleId = str_replace(['_', '-'], ' ', $this->getModule()->id);
+        $moduleId = str_replace(' ', '', ucwords($moduleId));
+        return $moduleId . 'Module.' . $category;
     }
 
     /**
