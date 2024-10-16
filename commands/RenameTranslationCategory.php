@@ -33,6 +33,9 @@ class RenameTranslationCategory extends TranslationCommand
     {
         $basePath = BasePath::getBasePath($moduleId);
 
+        // Allow any language that was stored for the module in the folder "/messages"
+        $basePath->validateLanguage = false;
+
         if (!$basePath->validate()) {
             static::log('Could not rename category due to invalid basepath: ' . $basePath->getPath());
             return;

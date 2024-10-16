@@ -23,6 +23,8 @@ class BasePath extends TranslationPath
     private ?array $languages = null;
     private ?array $modulePhpFiles = null;
 
+    public bool $validateLanguage = true;
+
     public function rules()
     {
         return array_merge([
@@ -81,6 +83,10 @@ class BasePath extends TranslationPath
             return $language
                 ? Yii::getAlias('@humhub/messages/' . $language)
                 : Yii::getAlias('@humhub/messages');
+        }
+
+        if ($language && $this->validateLanguage && !static::validateLanguage($language)) {
+            return null;
         }
 
         try {
