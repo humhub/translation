@@ -124,7 +124,7 @@ class Languages extends BaseObject
      */
     public static function findSpaceByLanguage($language)
     {
-        $spaceName = static::getSpaceNameByLangauge($language);
+        $spaceName = static::getSpaceNameByLanguage($language);
 
         if (!$spaceName) {
             return null;
@@ -155,7 +155,7 @@ class Languages extends BaseObject
         return $language;
     }
 
-    public static function getSpaceNameByLangauge($language)
+    public static function getSpaceNameByLanguage($language)
     {
         if (!static::isValidLanguage($language)) {
             return null;

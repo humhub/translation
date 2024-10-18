@@ -1,5 +1,6 @@
 <?php
-return array (
+return [
+  '<strong>Translation</strong> Editor' => '<strong>Editor</strong> de tradução',
   '<strong>Translation</strong> History' => '<strong>Histórico</strong> de Traduções',
   '<strong>Translation</strong> history' => '<strong>Histórico</strong> de Traduções',
   'Active translation' => 'Tradução em efeito',
@@ -10,10 +11,14 @@ return array (
   'Edit translations' => 'Editar traduções',
   'Error while parsing the message, please request support by a translation administrator' => 'Erro a interpretar a mensagem, por favor pede ajuda à administração de tradução',
   'File' => 'Ficheiro',
+  'For more informations about translation syntax see' => 'Para mais informações sobre a sintaxe de tradução vê',
+  'If the value is empty, the message is considered as not translated.' => 'Se o valor estiver vazio, a mensagem é considerada como não traduzida.',
   'If you are responsible for this module, try running the following command:' => 'Se és responsável por este módulo, tenta correr o seguinte comando:',
   'Invalid translation pattern detected, please see {link}' => 'Padrão de tradução inválido, por favor consulta {link}',
   'Language' => 'Língua',
   'Message' => 'Mensagem',
+  'Message string can be used with plural forms format. Check i18n section of the documentation for details.' => 'O texto da tradução pode conter o formato de plurais. Consulta a secção i18n da documentação para mais detalhes.',
+  'Messages that no longer need translation will have their translations enclosed between a pair of "@@" marks.' => 'Mensagens que já não precisam de tradução terão as suas traduções rodeadas por um par de marcas "@@".',
   'Module' => 'Módulo',
   'New' => 'Novo',
   'No translation files found for given selection.' => 'Não foram encontrados ficheiros de tradução para a seleção.',
@@ -22,7 +27,9 @@ return array (
   'Old' => 'Anterior',
   'Old Translation' => 'Tradução Anterior',
   'Only show missing translations' => 'Mostrar apenas traduções em falta',
+  'Original (en-US)' => 'Original (en-US)',
   'Otherwise, please report this to the module owner or translation admin.' => 'Caso contrário, por favor contacta os responsáveis do módulo ou a administração de tradução.',
+  'Search' => 'Pesquisar',
   'Some translations could not be saved.' => 'Foi impossível guardar algumas traduções.',
   'Some translations may have been purified.' => 'Algumas traduções podem ter sido alteradas.',
   'The message file for {settings} not found!' => 'O ficheiro de mensagens para {settings} não foi encontrado!',
@@ -33,11 +40,13 @@ return array (
   'The translations for {settings} could not be loaded:' => 'Foi impossível carregar as traduções para {settings}:',
   'There are unsaved changes, do you really want to leave this page?' => 'Há alterações por guardar, tens a certeza que queres sair desta página?',
   'There is no language related space available for language {lang}' => 'Não há espaços associados à língua {lang}',
+  'Translated' => 'Traduzido',
   'Translation' => 'Tradução',
+  'Translation Editor' => 'Editor de tradução',
   'Translation did not change.' => 'A tradução não foi alterada.',
   'Translations' => 'Traduções',
   'View History' => 'Ver histórico',
   'View history' => 'Ver histórico',
   'Your input has been purified.' => 'A tua submissão foi alterada.',
   'Your translation seems to be empty and therefore could not be saved.' => 'A tua tradução parece estar vazia, e como tal não foi guardada.',
-);
+];
