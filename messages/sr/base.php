@@ -1,5 +1,6 @@
 <?php
-return array (
+return [
+  '<strong>Translation</strong> Editor' => '',
   '<strong>Translation</strong> History' => '',
   '<strong>Translation</strong> history' => '',
   'Active translation' => '',
@@ -10,10 +11,14 @@ return array (
   'Edit translations' => '',
   'Error while parsing the message, please request support by a translation administrator' => '',
   'File' => 'Datoteka',
+  'For more informations about translation syntax see' => '',
+  'If the value is empty, the message is considered as not translated.' => '',
   'If you are responsible for this module, try running the following command:' => '',
   'Invalid translation pattern detected, please see {link}' => '',
   'Language' => 'Jezik',
   'Message' => 'Poruka',
+  'Message string can be used with plural forms format. Check i18n section of the documentation for details.' => '',
+  'Messages that no longer need translation will have their translations enclosed between a pair of "@@" marks.' => '',
   'Module' => 'Modul',
   'New' => 'Novi',
   'No translation files found for given selection.' => '',
@@ -22,7 +27,10 @@ return array (
   'Old' => '',
   'Old Translation' => '',
   'Only show missing translations' => '',
+  'Original (en-US)' => '',
   'Otherwise, please report this to the module owner or translation admin.' => '',
+  'Save' => 'Sačuvaj',
+  'Search' => 'Pretraži',
   'Some translations could not be saved.' => '',
   'Some translations may have been purified.' => '',
   'The message file for {settings} not found!' => '',
@@ -33,11 +41,13 @@ return array (
   'The translations for {settings} could not be loaded:' => '',
   'There are unsaved changes, do you really want to leave this page?' => 'Postoje nesacuvane promene, želite li zaista napustiti ovu stranicu?',
   'There is no language related space available for language {lang}' => '',
+  'Translated' => '',
   'Translation' => '',
+  'Translation Editor' => 'Urednik prevoda',
   'Translation did not change.' => '',
   'Translations' => 'Prevodi',
   'View History' => '',
   'View history' => '',
   'Your input has been purified.' => '',
   'Your translation seems to be empty and therefore could not be saved.' => '',
-);
+];

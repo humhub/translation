@@ -1,5 +1,6 @@
 <?php
-return array (
+return [
+  '<strong>Translation</strong> Editor' => '<strong>Fordítás</strong> szerkesztő',
   '<strong>Translation</strong> History' => '<strong>Fordítási</strong> előzmények',
   '<strong>Translation</strong> history' => '<strong>Fordítási</strong> előzmények',
   'Active translation' => 'Aktív fordítás',
@@ -10,10 +11,14 @@ return array (
   'Edit translations' => 'Fordítások szerkesztése',
   'Error while parsing the message, please request support by a translation administrator' => 'Hiba történt az üzenet elemzése során. Kérjen támogatást egy fordítási rendszergazdától',
   'File' => 'Fájl',
+  'For more informations about translation syntax see' => 'A fordítási szintaxissal kapcsolatos további információkért lásd:',
+  'If the value is empty, the message is considered as not translated.' => 'Ha az érték üres, az üzenet nem fordítottnak tekintendő.',
   'If you are responsible for this module, try running the following command:' => 'Ha Ön felelős a modulért, próbálja meg futtatni a következő parancsot:',
   'Invalid translation pattern detected, please see {link}' => 'A program érvénytelen fordítási mintát észlelt, ld. {link}',
   'Language' => 'Nyelv',
   'Message' => 'Üzenet',
+  'Message string can be used with plural forms format. Check i18n section of the documentation for details.' => 'Az üzenet karaktersorozata többes formában használható. A részletekért nézze meg a dokumentáció i18n szakaszát.',
+  'Messages that no longer need translation will have their translations enclosed between a pair of "@@" marks.' => 'Azoknak az üzeneteknek, amelyeknek már nincs szükségük fordításra, a fordításukat egy "@@" jel közé kell beilleszteni.',
   'Module' => 'Modul',
   'New' => 'Új',
   'No translation files found for given selection.' => 'Nem található fordítási fájl az adott kiválasztáshoz.',
@@ -22,7 +27,10 @@ return array (
   'Old' => 'Régi',
   'Old Translation' => 'Régi Fordítás',
   'Only show missing translations' => 'Csak a hiányzó fordításokat jelenítse meg',
+  'Original (en-US)' => 'Eredeti (en-US)',
   'Otherwise, please report this to the module owner or translation admin.' => 'Ellenkező esetben kérjük, jelezze ezt a modul tulajdonosának vagy a fordítási rendszergazdának.',
+  'Save' => 'Mentés',
+  'Search' => 'Keresés',
   'Some translations could not be saved.' => 'Néhány fordítást nem sikerült menteni.',
   'Some translations may have been purified.' => 'Lehet, hogy egyes fordításokat megtisztítottak.',
   'The message file for {settings} not found!' => '{settings} üzenetfájlja nem található!',
@@ -33,11 +41,13 @@ return array (
   'The translations for {settings} could not be loaded:' => '{settings} fordításai nem tölthetők be:',
   'There are unsaved changes, do you really want to leave this page?' => 'Vannak nem mentett változtatások, valóban el akarja hagyni ezt az oldalt?',
   'There is no language related space available for language {lang}' => 'Nincs elérhető nyelvvel kapcsolatos hely a nyelv számára: {lang}',
+  'Translated' => 'Lefordítva',
   'Translation' => 'Fordítás',
+  'Translation Editor' => 'Fordítás szerkesztő',
   'Translation did not change.' => 'A fordítás nem változott.',
   'Translations' => 'Fordítások',
   'View History' => 'Előzmények Megtekintése',
   'View history' => 'Előzmények megtekintése',
   'Your input has been purified.' => 'A szöveget megtisztítottuk.',
   'Your translation seems to be empty and therefore could not be saved.' => 'Úgy tűnik, fordítása üres, ezért nem került mentésre.',
-);
+];

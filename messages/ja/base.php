@@ -1,5 +1,6 @@
 <?php
-return array (
+return [
+  '<strong>Translation</strong> Editor' => '<strong>翻訳</strong> 編集',
   '<strong>Translation</strong> History' => '<strong>翻訳</strong> 履歴',
   '<strong>Translation</strong> history' => '<strong>翻訳</strong> 履歴',
   'Active translation' => 'アクティブな翻訳',
@@ -10,10 +11,14 @@ return array (
   'Edit translations' => '翻訳を編集する',
   'Error while parsing the message, please request support by a translation administrator' => 'メッセージの解析中にエラーが発生しました。翻訳管理者によるサポートをリクエストしてください',
   'File' => 'ファイル',
+  'For more informations about translation syntax see' => '変換構文の詳細については、次を参照してください。',
+  'If the value is empty, the message is considered as not translated.' => '値が空の場合、メッセージは翻訳されていないと見なされます。',
   'If you are responsible for this module, try running the following command:' => 'このモジュールを担当している場合は、次のコマンドを実行してみてください：',
   'Invalid translation pattern detected, please see {link}' => '無効な翻訳パターンが検出されました。{link} を参照してください',
   'Language' => '言語',
   'Message' => 'メッセージ',
+  'Message string can be used with plural forms format. Check i18n section of the documentation for details.' => 'メッセージ文字列は複数形で使用できます。詳細については、ドキュメントの i18n セクションを確認してください。',
+  'Messages that no longer need translation will have their translations enclosed between a pair of "@@" marks.' => '翻訳が不要になったメッセージは、翻訳が "@@" マークのペアで囲まれます。',
   'Module' => 'モジュール',
   'New' => '新規',
   'No translation files found for given selection.' => '指定された選択の翻訳ファイルが見つかりません。',
@@ -22,7 +27,10 @@ return array (
   'Old' => '古い',
   'Old Translation' => '古い翻訳',
   'Only show missing translations' => '不足している翻訳のみを表示',
+  'Original (en-US)' => 'オリジナル (en-US)',
   'Otherwise, please report this to the module owner or translation admin.' => 'それ以外の場合はモジュールの所有者または翻訳管理者に報告してください。',
+  'Save' => '保存',
+  'Search' => '検索',
   'Some translations could not be saved.' => '一部の翻訳を保存できませんでした。',
   'Some translations may have been purified.' => '一部の翻訳は精製されている可能性があります。',
   'The message file for {settings} not found!' => '{settings} のメッセージファイルが見つかりません！',
@@ -33,11 +41,13 @@ return array (
   'The translations for {settings} could not be loaded:' => '{settings}：の翻訳を読み込めませんでした',
   'There are unsaved changes, do you really want to leave this page?' => '保存されていない変更があります。このページから移動しますか？',
   'There is no language related space available for language {lang}' => '言語 {lang} に使用できる言語関連のスペースがありません',
+  'Translated' => '翻訳済み',
   'Translation' => '翻訳',
+  'Translation Editor' => '翻訳エディタ',
   'Translation did not change.' => '翻訳は変更されませんでした。',
   'Translations' => '翻訳',
   'View History' => '履歴を見る',
   'View history' => '履歴を見る',
   'Your input has been purified.' => 'あなたの入力は変更されました。',
   'Your translation seems to be empty and therefore could not be saved.' => '翻訳が空である為、保存できませんでした。',
-);
+];

@@ -56,13 +56,13 @@ $hasParentLanguage = $model->getParentLanguage() !== null;
                 </div>
             </div>
             <ul>
-                <li><?= Yii::t('TranslationModule.views_translate_index', 'If the value is empty, the message is considered as not translated.') ?></li>
-                <li><?= Yii::t('TranslationModule.views_translate_index', 'Messages that no longer need translation will have their translations enclosed between a pair of "@@" marks.') ?></li>
+                <li><?= Yii::t('TranslationModule.base', 'If the value is empty, the message is considered as not translated.') ?></li>
+                <li><?= Yii::t('TranslationModule.base', 'Messages that no longer need translation will have their translations enclosed between a pair of "@@" marks.') ?></li>
                 <li>
-                    <?= Yii::t('TranslationModule.views_translate_index', 'Message string can be used with plural forms format. Check i18n section of the documentation for details.') ?>
+                    <?= Yii::t('TranslationModule.base', 'Message string can be used with plural forms format. Check i18n section of the documentation for details.') ?>
                     <strong><a href="https://www.yiiframework.com/doc/guide/2.0/en/tutorial-i18n#plural" target="_blank">(Plural pattern)</a></strong>
                 </li>
-                <li> <?= Yii::t('TranslationModule.views_translate_index', 'For more informations about translation syntax see') ?>
+                <li> <?= Yii::t('TranslationModule.base', 'For more informations about translation syntax see') ?>
                     <strong><a href="http://www.yiiframework.com/doc-2.0/guide-tutorial-i18n.html" target="_blank">Yii Framework Guide I18n</a></strong>.
                 </li>
             </ul>
@@ -88,7 +88,7 @@ $hasParentLanguage = $model->getParentLanguage() !== null;
                 <p style="float:left">
                     <?= Html::textInput('search', null, [
                         'class' => 'form-control form-search',
-                        'placeholder' => Yii::t('TranslationModule.views_translate_index', 'Search'),
+                        'placeholder' => Yii::t('TranslationModule.base', 'Search'),
                         'data-action-keydown' => 'search']) ?>
                 </p>
 
@@ -100,8 +100,8 @@ $hasParentLanguage = $model->getParentLanguage() !== null;
 
                 <div id="words">
                     <div>
-                        <div class="elem"><?= Yii::t('TranslationModule.views_translate_index', 'Original (en-US)') ?></div>
-                        <div class="elem"><?= Yii::t('TranslationModule.views_translate_index', 'Translated') ?> (<?= Html::encode($model->language) ?>)</div>
+                        <div class="elem"><?= Yii::t('TranslationModule.base', 'Original (en-US)') ?></div>
+                        <div class="elem"><?= Yii::t('TranslationModule.base', 'Translated') ?> (<?= Html::encode($model->language) ?>)</div>
                     </div>
 
                     <?php foreach ($model->messages as $original => $translated) : ?>

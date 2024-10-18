@@ -1,5 +1,6 @@
 <?php
-return array (
+return [
+  '<strong>Translation</strong> Editor' => '<strong>การแปล</strong> บรรณาธิการ',
   '<strong>Translation</strong> History' => '<strong>การแปล</strong> ประวัติ',
   '<strong>Translation</strong> history' => '<strong>การแปล</strong> ประวัติศาสตร์',
   'Active translation' => 'การแปลที่ใช้งานอยู่',
@@ -10,10 +11,14 @@ return array (
   'Edit translations' => 'แก้ไขคำแปล',
   'Error while parsing the message, please request support by a translation administrator' => 'เกิดข้อผิดพลาดขณะแยกวิเคราะห์ข้อความ โปรดขอรับการสนับสนุนจากผู้ดูแลการแปล',
   'File' => 'ไฟล์',
+  'For more informations about translation syntax see' => 'สำหรับข้อมูลเพิ่มเติมเกี่ยวกับรูปแบบการแปล โปรดดูที่',
+  'If the value is empty, the message is considered as not translated.' => 'หากค่าว่างเปล่า จะถือว่าข้อความไม่ได้แปล',
   'If you are responsible for this module, try running the following command:' => 'หากคุณรับผิดชอบโมดูลนี้ ให้ลองเรียกใช้คำสั่งต่อไปนี้:',
   'Invalid translation pattern detected, please see {link}' => 'ตรวจพบรูปแบบการแปลที่ไม่ถูกต้อง โปรดดู {link}',
   'Language' => 'ภาษา',
   'Message' => 'ข้อความ',
+  'Message string can be used with plural forms format. Check i18n section of the documentation for details.' => 'สตริงข้อความใช้กับรูปแบบพหูพจน์ได้ ตรวจสอบส่วน i18n ของเอกสารประกอบสำหรับรายละเอียด',
+  'Messages that no longer need translation will have their translations enclosed between a pair of "@@" marks.' => 'ข้อความที่ไม่ต้องการการแปลอีกต่อไปจะมีคำแปลอยู่ระหว่างเครื่องหมาย "@@"',
   'Module' => 'โมดูล',
   'New' => 'ใหม่',
   'No translation files found for given selection.' => 'ไม่พบไฟล์การแปลสำหรับการเลือกที่กำหนด',
@@ -22,7 +27,10 @@ return array (
   'Old' => 'เก่า',
   'Old Translation' => 'การแปลเก่า',
   'Only show missing translations' => 'แสดงเฉพาะคำแปลที่ขาดหายไป',
+  'Original (en-US)' => 'ต้นฉบับ (en-US)',
   'Otherwise, please report this to the module owner or translation admin.' => 'มิฉะนั้น โปรดรายงานสิ่งนี้ไปยังเจ้าของโมดูลหรือผู้ดูแลการแปล',
+  'Save' => 'บันทึก',
+  'Search' => 'ค้นหา',
   'Some translations could not be saved.' => 'ไม่สามารถบันทึกคำแปลบางรายการได้',
   'Some translations may have been purified.' => 'การแปลบางส่วนอาจถูกทำให้บริสุทธิ์',
   'The message file for {settings} not found!' => 'ไม่พบไฟล์ข้อความสำหรับ {settings}!',
@@ -33,11 +41,13 @@ return array (
   'The translations for {settings} could not be loaded:' => 'ไม่สามารถโหลดคำแปลสำหรับ {settings} ได้:',
   'There are unsaved changes, do you really want to leave this page?' => 'มีการเปลี่ยนแปลงที่ยังไม่ได้บันทึก คุณต้องการออกจากหน้านี้จริงหรือ',
   'There is no language related space available for language {lang}' => 'ไม่มีพื้นที่ที่เกี่ยวข้องกับภาษาสำหรับภาษา {lang}',
+  'Translated' => 'แปลแล้ว',
   'Translation' => 'การแปล',
+  'Translation Editor' => 'บรรณาธิการแปล',
   'Translation did not change.' => 'การแปลไม่เปลี่ยนแปลง',
   'Translations' => 'แปลภาษา',
   'View History' => 'ดูประวัติ',
   'View history' => 'ดูประวัติ',
   'Your input has been purified.' => 'ข้อมูลของคุณได้รับการชำระให้บริสุทธิ์แล้ว',
   'Your translation seems to be empty and therefore could not be saved.' => 'การแปลของคุณดูเหมือนจะว่างเปล่า ดังนั้นจึงไม่สามารถบันทึกได้',
-);
+];

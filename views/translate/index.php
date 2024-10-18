@@ -19,7 +19,7 @@ $bundle = MainAsset::register($this);
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <?= Icon::get('align-left') ?>  <?= Yii::t('TranslationModule.views_translate_index', '<strong>Translation</strong> Editor') ?>
+                    <?= Icon::get('align-left') ?>  <?= Yii::t('TranslationModule.base', '<strong>Translation</strong> Editor') ?>
                     <?= Button::defaultType(Yii::t('TranslationModule.base', 'Only show missing translations'))->id('toggle-empty-filter')
                         ->action('toggleEmptyTranslationFilter', null, '#translation-editor-translations')->loader(false)->xs()->icon('fa-toggle-off')->right() ?>
                 </div>
