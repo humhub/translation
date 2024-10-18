@@ -17,6 +17,7 @@ Changelog
 - Enh #69: Display translation from parent language in placeholder
 - Enh #74: Use PHP CS Fixer
 - Enh #75: Improve command to rename category
+- Enh #77: Reduce translation message categories
 
 1.0.1 (Unreleased)
 ------------------

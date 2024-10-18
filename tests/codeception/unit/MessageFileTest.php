@@ -21,9 +21,5 @@ class MessageFileTest extends TranslationTest
         $this->assertEqualAlias($files[1]->getPath('de'), '@translation/messages/de/test.php');
 
         $this->assertNull($files[0]->getPath('../'));
-
-        $this->assertEquals('views_translate_index.php', $files[2]->getFileName());
-        $this->assertEquals('views_translate_index', $files[2]->getBaseName());
-        $this->assertEqualAlias($files[2]->getPath('de'), '@translation/messages/de/views_translate_index.php');
     }
 }

@@ -219,7 +219,7 @@ class TranslationFormTest extends TranslationTest
         $space = Space::findOne(['id' => 1]);
 
         foreach (Languages::getAllTranslatableLanguages() as $language) {
-            $this->assertNotFalse($space->updateAttributes(['name' => Languages::getSpaceNameByLangauge($language)]));
+            $this->assertNotFalse($space->updateAttributes(['name' => Languages::getSpaceNameByLanguage($language)]));
             $form = new TranslationForm();
             $this->assertTrue($form->load([
                 'moduleId' => 'translation',
@@ -239,7 +239,7 @@ class TranslationFormTest extends TranslationTest
         $space = Space::findOne(['id' => 1]);
 
         foreach (['en-US', 'en-GB'] as $language) {
-            $this->assertNotFalse($space->updateAttributes(['name' => Languages::getSpaceNameByLangauge($language)]));
+            $this->assertNotFalse($space->updateAttributes(['name' => Languages::getSpaceNameByLanguage($language)]));
             $form = new TranslationForm();
             $form->load([
                 'moduleId' => 'translation',

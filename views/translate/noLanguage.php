@@ -4,7 +4,7 @@
 
 
             <div class="panel panel-default">
-                <div class="panel-heading"><?php echo Yii::t('TranslationModule.views_translate_index', 'Translation Editor'); ?></div>
+                <div class="panel-heading"><?php echo Yii::t('TranslationModule.base', 'Translation Editor'); ?></div>
                 <div class="panel-body">
 
                     <p><strong>You're no member of any translation space.</strong></p>
