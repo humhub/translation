@@ -45,9 +45,9 @@ humhub.module('translation', function(module, require, $) {
             $("#words").find('.item').each(function(indx, el){
                 var $row = $(this);
                 if (inputValue  && !new RegExp(escapeRegExp(inputValue), 'i').test($row.text())){
-                    $row.hide();
+                    $row.addClass('d-none');
                 } else {
-                    $row.show();
+                    $row.removeClass('d-none');
                 }
             });
         },10)
@@ -80,11 +80,11 @@ humhub.module('translation', function(module, require, $) {
         this.$.find('.translation.translated').each(function() {
             var $row =  $(this).closest('.item');
             if(stateHideTranslated) {
-                $row.hide();
+                $row.addClass('d-none');
                 $('#toggle-empty-filter').find('i').removeClass('fa-toggle-off').addClass('fa-toggle-on');
 
             } else {
-                $row.show();
+                $row.removeClass('d-none');
                 $('#toggle-empty-filter').find('i').removeClass('fa-toggle-on').addClass('fa-toggle-off');
             }
         });

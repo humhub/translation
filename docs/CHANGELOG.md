@@ -1,8 +1,9 @@
 Changelog
 =========
 
-1.0.2 (Unreleased)
-------------------
+1.1.0 (unreleased)
+-------------------------
+- Enh: Allow translation of non-enabled modules
 - Enh: Allow automatic translation with Google cloud translation API
 - Enh: Provide specific error message in case message path could not be found instead of 404
 - Fix #36: Fix empty translation text on activities
@@ -18,11 +19,7 @@ Changelog
 - Enh #74: Use PHP CS Fixer
 - Enh #75: Improve command to rename category
 - Enh #77: Reduce translation message categories
-
-1.0.1 (Unreleased)
-------------------
-- Enh: Allow translation of non-enabled modules
-
+- Enh: Migration to Bootstrap 5 for HumHub 1.18
 
 1.0.0 (June 10, 2020)
 -----------------------

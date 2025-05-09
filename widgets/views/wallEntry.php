@@ -2,9 +2,9 @@
 /* @var $this View */
 /* @var $translationLog TranslationLog */
 
-use humhub\modules\ui\icon\widgets\Icon;
-use humhub\libs\Html;
+use humhub\helpers\Html;
 use humhub\modules\translation\models\TranslationLog;
+use humhub\modules\ui\icon\widgets\Icon;
 use yii\widgets\DetailView;
 
 ?>
@@ -16,27 +16,27 @@ use yii\widgets\DetailView;
             'moduleId',
             [
                 'attribute' => 'message',
-                'value' => '"'.$translationLog->message.'"',
+                'value' => '"' . $translationLog->message . '"',
                 'contentOptions' => [
-                    'class' => 'translation_message'
-                ]
+                    'class' => 'translation_message',
+                ],
             ],
             [
                 'attribute' => 'translation_old',
                 'label' => Yii::t('TranslationModule.base', 'Old'),
                 'format' => 'raw',
-                'value' => Icon::get('minus-circle').' "'.Html::encode($translationLog->translation_old).'"',
+                'value' => Icon::get('minus-circle') . ' "' . Html::encode($translationLog->translation_old) . '"',
                 'contentOptions' => [
-                    'class' => 'translation_old'
-                ]
+                    'class' => 'translation_old',
+                ],
             ],
             [
                 'attribute' => 'translation',
                 'label' => Yii::t('TranslationModule.base', 'New'),
                 'format' => 'raw',
-                'value' => Icon::get('plus-circle').' "'.Html::encode($translationLog->translation).'"',
+                'value' => Icon::get('plus-circle') . ' "' . Html::encode($translationLog->translation) . '"',
                 'contentOptions' => [
-                    'class' => 'translation_new'
+                    'class' => 'translation_new',
                 ]
             ],
         ]
