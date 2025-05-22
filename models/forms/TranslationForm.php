@@ -2,18 +2,18 @@
 
 namespace humhub\modules\translation\models\forms;
 
-use humhub\libs\Html;
+use humhub\helpers\Html;
 use humhub\modules\space\models\Space;
-use humhub\modules\translation\Module;
-use humhub\modules\translation\permissions\ManageTranslations;
-use humhub\modules\translation\models\TranslationCoverage;
-use humhub\modules\translation\models\TranslationFileIF;
-use Yii;
-use yii\base\Model;
 use humhub\modules\translation\models\BasePath;
 use humhub\modules\translation\models\Languages;
 use humhub\modules\translation\models\MessageFile;
+use humhub\modules\translation\models\TranslationCoverage;
+use humhub\modules\translation\models\TranslationFileIF;
 use humhub\modules\translation\models\TranslationLog;
+use humhub\modules\translation\Module;
+use humhub\modules\translation\permissions\ManageTranslations;
+use Yii;
+use yii\base\Model;
 
 class TranslationForm extends Model implements TranslationFileIF
 {
@@ -345,11 +345,11 @@ class TranslationForm extends Model implements TranslationFileIF
     {
         $tid = TranslationLog::tid($message);
         if (isset($this->errors[$tid])) {
-            return 'has-error';
+            return 'is-invalid';
         }
 
         if (isset($this->warnings[$tid])) {
-            return 'has-warning';
+            return 'is-invalid';
         }
 
         return '';

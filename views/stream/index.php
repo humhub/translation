@@ -1,14 +1,14 @@
 <?php
 
-use humhub\libs\Html;
+use humhub\helpers\Html;
 use humhub\modules\content\helpers\ContentContainerHelper;
 use humhub\modules\translation\assets\MainAsset;
 use humhub\modules\translation\helpers\Url;
 use humhub\modules\translation\widgets\TranslationLogStreamViewer;
 use humhub\modules\ui\icon\widgets\Icon;
-use humhub\widgets\Button;
+use humhub\widgets\bootstrap\Button;
 
-/* @var $this \humhub\modules\ui\view\components\View */
+/* @var $this \humhub\components\View */
 
 MainAsset::register($this);
 

@@ -8,7 +8,7 @@ use humhub\modules\content\widgets\WallEntry as BaseWallEntry;
 use humhub\modules\translation\helpers\Url;
 use humhub\modules\translation\models\TranslationLog;
 use humhub\modules\ui\menu\MenuLink;
-use humhub\widgets\Link;
+use humhub\widgets\bootstrap\Link;
 use Yii;
 
 class WallEntry extends BaseWallEntry

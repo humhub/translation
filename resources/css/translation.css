@@ -38,10 +38,10 @@
     height: 100%;
 }
 #words textarea::-webkit-input-placeholder {
-    color: var(--success) !important;
+    color: var(--bs-success) !important;
 }
 #words textarea::-moz-placeholder { /* Firefox 19+ */
-    color: var(--success) !important;
+    color: var(--bs-success) !important;
 }
 
 .translation-confirm-approved {
