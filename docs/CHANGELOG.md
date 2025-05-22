@@ -19,7 +19,7 @@ Changelog
 - Enh #74: Use PHP CS Fixer
 - Enh #75: Improve command to rename category
 - Enh #77: Reduce translation message categories
-- Enh: Migration to Bootstrap 5 for HumHub 1.18
+- Enh #82: Migration to Bootstrap 5 for HumHub 1.18
 
 1.0.0 (June 10, 2020)
 -----------------------
