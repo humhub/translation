@@ -91,8 +91,7 @@ MainAsset::register($this);
                                 'value' => function(TranslationLog $model) {
                                     return Button::light()->icon('comments-o')
                                         ->link(Url::toLogDetail($model))
-                                        ->title(Yii::t('TranslationModule.base', 'Discussion'))
-                                        ->cssClass('tt')
+                                        ->tooltip(Yii::t('TranslationModule.base', 'Discussion'))
                                         ->sm();
                                 }
                             ]
