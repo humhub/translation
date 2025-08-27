@@ -1,21 +1,20 @@
 <?php
-/* @var $this \humhub\modules\ui\view\components\View */
+/* @var $this \humhub\components\View */
 /* @var $dataProvider \yii\data\ActiveDataProvider */
 /* @var $messageFile \humhub\modules\translation\models\MessageFile  */
 /* @var $message string */
 /* @var $language string */
 
-use humhub\modules\comment\widgets\CommentLink;
 use humhub\modules\translation\assets\MainAsset;
 use humhub\modules\translation\helpers\Url;
 use humhub\modules\translation\models\TranslationLog;
+use humhub\modules\ui\icon\widgets\Icon;
 use humhub\modules\user\grid\DisplayNameColumn;
 use humhub\modules\user\grid\ImageColumn;
-use humhub\widgets\Button;
+use humhub\widgets\bootstrap\Button;
 use humhub\widgets\GridView;
 use yii\grid\DataColumn;
 use yii\widgets\DetailView;
-use humhub\modules\ui\icon\widgets\Icon;
 
 MainAsset::register($this);
 
@@ -23,13 +22,13 @@ MainAsset::register($this);
 
 <div id="translation-history" class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading"><?= Icon::get('align-left') ?> <?= Yii::t('TranslationModule.base', '<strong>Translation</strong> History') ?></div>
 
                 <div class="panel-body" data-ui-widget="translation.Form">
                     <div class="clearfix">
-                     <?= Button::back(Url::toTranslation($messageFile, $language), Yii::t('TranslationModule.base', 'Back to editor'))->sm() ?>
+                        <?= Button::back(Url::toTranslation($messageFile, $language), Yii::t('TranslationModule.base', 'Back to editor'))->sm() ?>
                     </div>
 
                     <br>
@@ -90,10 +89,9 @@ MainAsset::register($this);
                                 'label' => '',
                                 //'options' => ['style' => 'width:75%;'],
                                 'value' => function(TranslationLog $model) {
-                                    return Button::defaultType()->icon('comments-o')
+                                    return Button::light()->icon('comments-o')
                                         ->link(Url::toLogDetail($model))
-                                        ->title(Yii::t('TranslationModule.base', 'Discussion'))
-                                        ->cssClass('tt')
+                                        ->tooltip(Yii::t('TranslationModule.base', 'Discussion'))
                                         ->sm();
                                 }
                             ]

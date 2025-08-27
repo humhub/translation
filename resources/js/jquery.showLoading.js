@@ -1,24 +1,24 @@
 ﻿/*
  * jQuery showLoading plugin v1.0
- * 
+ *
  * Copyright (c) 2009 Jim Keller
  * Context - http://www.contextllc.com
- * 
+ *
  * Dual licensed under the MIT and GPL licenses.
  *
  */
 
 	jQuery.fn.showLoading = function(options) {
-		
+
 		var indicatorID;
        		var settings = {
        			'addClass': '',
-	       		'beforeShow': '', 
+	       		'beforeShow': '',
        			'afterShow': '',
-       			'hPos': 'center', 
+       			'hPos': 'center',
 	       		'vPos': 'center',
-       			'indicatorZIndex' : 5001, 
-       			'overlayZIndex': 5000, 
+       			'indicatorZIndex' : 5001,
+       			'overlayZIndex': 5000,
 	       		'parent': '',
        			'marginTop': 0,
        			'marginLeft': 0,
@@ -27,7 +27,7 @@
 	       	};
 
 		jQuery.extend(settings, options);
-       	
+
        		var loadingDiv = jQuery('<div></div>');
 		var overlayDiv = jQuery('<div></div>');
 
@@ -40,55 +40,55 @@
 		else {
 			indicatorID = jQuery(this).attr('id');
 		}
-			
+
 		jQuery(loadingDiv).attr('id', 'loading-indicator-' + indicatorID );
 		jQuery(loadingDiv).addClass('loading-indicator');
-		
+
 		if ( settings.addClass ){
 			jQuery(loadingDiv).addClass(settings.addClass);
 		}
 
 
-		
+
 		//
 		// Create the overlay
 		//
 		jQuery(overlayDiv).css('display', 'none');
-		
+
 		// Append to body, otherwise position() doesn't work on Webkit-based browsers
 		jQuery(document.body).append(overlayDiv);
-		
+
 		//
 		// Set overlay classes
 		//
 		jQuery(overlayDiv).attr('id', 'loading-indicator-' + indicatorID + '-overlay');
-		
+
 		jQuery(overlayDiv).addClass('loading-indicator-overlay');
-		
+
 		if ( settings.addClass ){
 			jQuery(overlayDiv).addClass(settings.addClass + '-overlay');
 		}
-		
+
 		//
 		// Set overlay position
 		//
-		
+
 		var overlay_width;
 		var overlay_height;
-		
+
 		var border_top_width = jQuery(this).css('border-top-width');
 		var border_left_width = jQuery(this).css('border-left-width');
-		
+
 		//
-		// IE will return values like 'medium' as the default border, 
+		// IE will return values like 'medium' as the default border,
 		// but we need a number
 		//
 		border_top_width = isNaN(parseInt(border_top_width)) ? 0 : border_top_width;
 		border_left_width = isNaN(parseInt(border_left_width)) ? 0 : border_left_width;
-		
+
 		var overlay_left_pos = jQuery(this).offset().left + parseInt(border_left_width);
 		var overlay_top_pos = jQuery(this).offset().top + parseInt(border_top_width);
-		
+
 		if ( settings.overlayWidth !== null ) {
 			overlay_width = settings.overlayWidth;
 		}
@@ -114,7 +114,7 @@
 		jQuery(overlayDiv).css('z-index', settings.overlayZIndex);
 
 		//
-		// Set any custom overlay CSS		
+		// Set any custom overlay CSS
 		//
        		if ( settings.overlayCSS ) {
        			jQuery(overlayDiv).css ( settings.overlayCSS );
@@ -127,7 +127,7 @@
 		//
 		jQuery(loadingDiv).css('display', 'none');
 		jQuery(document.body).append(loadingDiv);
-		
+
 		jQuery(loadingDiv).css('position', 'absolute');
 		jQuery(loadingDiv).css('z-index', settings.indicatorZIndex);
 
@@ -136,18 +136,18 @@
 		//
 
 		var indicatorTop = overlay_top_pos;
-		
+
 		if ( settings.marginTop ) {
 			indicatorTop += parseInt(settings.marginTop);
 		}
-		
+
 		var indicatorLeft = overlay_left_pos;
-		
+
 		if ( settings.marginLeft ) {
 			indicatorLeft += parseInt(settings.marginTop);
 		}
-		
-		
+
+
 		//
 		// set horizontal position
 		//
@@ -162,7 +162,7 @@
 		}
 		else {
 			jQuery(loadingDiv).css('left', (indicatorLeft + parseInt(settings.hPos)).toString() + 'px');
-		}		
+		}
 
 		//
 		// set vertical position
@@ -178,11 +178,11 @@
 		}
 		else {
 			jQuery(loadingDiv).css('top', (indicatorTop + parseInt(settings.vPos)).toString() + 'px' );
-		}		
+		}
 
 
-		 
-		
+
+
 		//
 		// Set any custom css for loading indicator
 		//
@@ -190,33 +190,33 @@
        			jQuery(loadingDiv).css ( settings.css );
        		}
 
-		
+
 		//
 		// Set up callback options
 		//
-		var callback_options = 
+		var callback_options =
 			{
 				'overlay': overlayDiv,
 				'indicator': loadingDiv,
 				'element': this
 			};
-	
+
 		//
 		// beforeShow callback
 		//
 		if ( typeof(settings.beforeShow) == 'function' ) {
 			settings.beforeShow( callback_options );
 		}
-		
+
 		//
 		// Show the overlay
 		//
-		jQuery(overlayDiv).show();
-		
+		jQuery(overlayDiv).removeClass('d-none');
+
 		//
 		// Show the loading indicator
 		//
-		jQuery(loadingDiv).show();
+		jQuery(loadingDiv).removeClass('d-none');
 
 		//
 		// afterShow callback
@@ -230,10 +230,10 @@
 
 
 	jQuery.fn.hideLoading = function(options) {
-		
-		
+
+
        		var settings = {};
-	
+
        		jQuery.extend(settings, options);
 
 		if ( settings.indicatorID ) {
@@ -242,9 +242,9 @@
 		else {
 			indicatorID = jQuery(this).attr('id');
 		}
-       	
+
    		jQuery(document.body).find('#loading-indicator-' + indicatorID ).remove();
 		jQuery(document.body).find('#loading-indicator-' + indicatorID + '-overlay' ).remove();
-		
+
 		return this;
      	};

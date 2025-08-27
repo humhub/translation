@@ -1,12 +1,12 @@
 <?php
 
 use humhub\components\View;
-use humhub\libs\Html;
+use humhub\helpers\Html;
 use humhub\modules\translation\helpers\Url;
 use humhub\modules\translation\models\forms\TranslationForm;
 use humhub\modules\translation\models\TranslationLog;
-use humhub\modules\ui\form\widgets\ActiveForm;
-use humhub\widgets\Button;
+use humhub\widgets\bootstrap\Button;
+use humhub\widgets\form\ActiveForm;
 use yii\web\NotFoundHttpException;
 
 /* @var $this View */
@@ -37,18 +37,18 @@ $hasParentLanguage = $model->getParentLanguage() !== null;
     <?php ActiveForm::begin(['id' => 'translation-editor-form', 'action' => Url::toSave($model),  'acknowledge' => true ]) ?>
         <div class="translation-editor-filter clearfix">
             <div class="row">
-                <div class="form-group col-md-4">
+                <div class="mb-3 col-lg-4">
                     <label for=""><?= $model->getAttributeLabel('moduleId') ?></label>
                     <?= Html::dropDownList('moduleId', $model->moduleId, $model->getModuleIdSelection(),
                         ['class' => 'form-control', 'data-ui-select2' => '1', 'data-prevent-statechange' => 1, 'data-action-change' => 'selectOptions']) ?>
                 </div>
-                <div class="form-group col-md-2">
+                <div class="mb-3 col-lg-2">
                     <label for=""><?= $model->getAttributeLabel('language') ?></label>
                     <?= Html::dropDownList('language', $model->language, $model->getLanguageSelection(), ['class' => 'form-control', 'data-ui-select2' => '1',
                         'data-prevent-statechange' => 1,
                         'data-action-change' => 'selectOptions']) ?>
                 </div>
-                <div class="form-group col-md-6">
+                <div class="mb-3 col-lg-6">
                     <label for=""><?= $model->getAttributeLabel('file') ?></label>
                     <?= Html::dropDownList('file', $model->file, $model->getFilesSelection(), ['class' => 'form-control', 'data-ui-select2' => '1',
                         'data-prevent-statechange' => 1,
@@ -85,18 +85,20 @@ $hasParentLanguage = $model->getParentLanguage() !== null;
 
             <?php else: ?>
 
-                <p style="float:left">
-                    <?= Html::textInput('search', null, [
-                        'class' => 'form-control form-search',
-                        'placeholder' => Yii::t('TranslationModule.base', 'Search'),
-                        'data-action-keydown' => 'search']) ?>
-                </p>
+                <div class="clearfix">
+                    <p class="float-start">
+                        <?= Html::textInput('search', null, [
+                            'class' => 'form-control form-search',
+                            'placeholder' => Yii::t('TranslationModule.base', 'Search'),
+                            'data-action-keydown' => 'search']) ?>
+                    </p>
+                </div>
 
                 <p class="clearfix" style="margin-bottom:0">
                     <?= Button::save()->submit()->right() ?>
                 </p>
 
-                <hr style="margin-top:0">
+                <hr class="mt-0">
 
                 <div id="words">
                     <div>
@@ -109,7 +111,7 @@ $hasParentLanguage = $model->getParentLanguage() !== null;
                             <div class="elem">
                                 <div class="pre"><?= Html::encode($original) ?></div>
                                 <div>
-                                    <?= Button::defaultType('<span>' . Yii::t('TranslationModule.base', 'Adopt original language') . '</span>')
+                                    <?= Button::light('<span>' . Yii::t('TranslationModule.base', 'Adopt original language') . '</span>')
                                         ->icon('arrow-right')
                                         ->action('copyOriginal')
                                         ->tooltip(Yii::t('TranslationModule.base', 'Adopt original language'))
@@ -124,11 +126,11 @@ $hasParentLanguage = $model->getParentLanguage() !== null;
                                     ]) ?>
 
                                     <?php if(!empty($model->getHelpBlockMessage($original))) : ?>
-                                        <p class="help-block"><?= Html::encode($model->getHelpBlockMessage($original)) ?></p>
+                                        <p class="form-text"><?= Html::encode($model->getHelpBlockMessage($original)) ?></p>
                                     <?php endif; ?>
                                 </div>
                                 <div>
-                                <?= Button::defaultType('<span>' . Yii::t('TranslationModule.base', 'View history') . '</span>')
+                                <?= Button::light('<span>' . Yii::t('TranslationModule.base', 'View history') . '</span>')
                                     ->link(Url::toHistory($model, $original))
                                     ->icon('history')
                                     ->tooltip(Yii::t('TranslationModule.base', 'View translation history'))

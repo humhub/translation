@@ -4,7 +4,7 @@ namespace humhub\modules\translation\assets;
 
 use Yii;
 use humhub\components\assets\AssetBundle;
-use humhub\modules\ui\view\components\View;
+use humhub\components\View;
 
 class MainAsset extends AssetBundle
 {
