@@ -1,5 +1,4 @@
 <?php
-
 return [
-    'Save' => '',
+  'Save' => 'Shrani',
 ];
