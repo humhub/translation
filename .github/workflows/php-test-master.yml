@@ -1,4 +1,4 @@
-name: PHP Codeception Tests - next
+name: PHP Codeception Tests - master
 
 on:
   push:
@@ -8,6 +8,6 @@ on:
 
 jobs:
   tests:
-    uses: humhub/actions/.github/workflows/module-tests-next.yml@main
+    uses: humhub/actions/.github/workflows/module-tests-master.yml@main
     with:
       module-id: translation
