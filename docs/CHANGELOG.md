@@ -20,6 +20,7 @@ Changelog
 - Enh #75: Improve command to rename category
 - Enh #77: Reduce translation message categories
 - Enh #82: Migration to Bootstrap 5 for HumHub 1.18
+- Enh #83: Improved Module Test GitHub Actions
 
 1.0.0 (June 10, 2020)
 -----------------------
