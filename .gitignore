@@ -2,5 +2,6 @@
 nbproject
 .idea/*
 .gitmodules
+/vendor/
 /composer.lock
 
