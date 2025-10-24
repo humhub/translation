@@ -35,7 +35,7 @@ class MessageFile extends TranslationPath
             [['file', 'basePath'], 'required'],
             [['file'], 'string'],
             ['file', MessageFileNameValidator::class],
-            ['basePath', function () {
+            ['basePath', function (): void {
                 if (!$this->basePath->validate()) {
                     $this->addError('basePath', 'Invalid basepath');
                 }
@@ -106,7 +106,7 @@ class MessageFile extends TranslationPath
         $messages = dirname($languageDir);
         $moduleId = dirname($messages);
 
-        $expectedModuleId = $this->isCoreModulePath() ? 'humhub' : basename($this->getModule()->getBasePath());
+        $expectedModuleId = $this->isCoreModulePath() ? 'humhub' : basename((string) $this->getModule()->getBasePath());
 
         if (!($this->validateParent($languageDir, $language) || $this->validateParent($languageDir, static::toLegacyLanguageCode($language)))
             || !$this->validateParent($messages, 'messages')
@@ -119,7 +119,7 @@ class MessageFile extends TranslationPath
 
     private function validateParent($path, $expected)
     {
-        return basename($path) === $expected;
+        return basename((string) $path) === $expected;
     }
 
     public function updateTranslations($language, $messages, $create = false)

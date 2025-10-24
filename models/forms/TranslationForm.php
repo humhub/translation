@@ -362,17 +362,13 @@ class TranslationForm extends Model implements TranslationFileIF
             return $this->errors[$tid];
         }
 
-        if (isset($this->warnings[$tid])) {
-            return $this->warnings[$tid];
-        }
-
-        return null;
+        return $this->warnings[$tid] ?? null;
     }
 
     public function getModuleIdSelection()
     {
         $moduleIds = BasePath::getModuleIds();
-        array_walk($moduleIds, function (&$value, $key) {
+        array_walk($moduleIds, function (&$value, $key): void {
             $value = $this->isCoreModule($key) ? 'HumHub - ' . $value : $value = 'Module - ' . $value;
 
             $coverage =  TranslationCoverage::getModuleCoverage(BasePath::getBasePath($key), $this->language);
@@ -401,8 +397,8 @@ class TranslationForm extends Model implements TranslationFileIF
             $basePath = $this->replaceSeperator($module->getBasePath());
             $humhubPath = $this->replaceSeperator(Yii::getAlias('@humhub'));
 
-            return strpos($basePath, $humhubPath) !== false;
-        } catch (\Exception $ex) {
+            return str_contains((string) $basePath, (string) $humhubPath);
+        } catch (\Exception) {
         }
 
         return false;

@@ -58,7 +58,7 @@ class BasePath extends TranslationPath
      */
     public function getMessageFile($file)
     {
-        $file = basename($file, '.php') . '.php';
+        $file = basename((string) $file, '.php') . '.php';
 
         if (!isset($this->messageFiles[$file])) {
             $this->messageFiles[$file] = new MessageFile(['basePath' => $this, 'file' => $file]);
@@ -91,7 +91,7 @@ class BasePath extends TranslationPath
 
         try {
             $module = $this->getModule();
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return null;
         }
 

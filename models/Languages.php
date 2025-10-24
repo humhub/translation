@@ -48,9 +48,7 @@ class Languages extends BaseObject
     public static function getAllTranslatableLanguages()
     {
         if (!static::$languages) {
-            static::$languages = array_filter(static::getAllAvailableLanguages(), function ($lang) {
-                return !in_array($lang, static::$skipLanguages, true);
-            });
+            static::$languages = array_filter(static::getAllAvailableLanguages(), fn($lang) => !in_array($lang, static::$skipLanguages, true));
 
             sort(static::$languages);
         }
@@ -111,8 +109,8 @@ class Languages extends BaseObject
      */
     private static function getLanguageBySpace(Space $space)
     {
-        if (strpos($space->name, '-') !== false) {
-            list($lang, $ter) = explode('-', $space->name, 2);
+        if (str_contains($space->name, '-')) {
+            [$lang, $ter] = explode('-', $space->name, 2);
             return strtolower($lang) . '-' . strtoupper($ter);
         }
         return strtolower($space->name);
@@ -130,7 +128,7 @@ class Languages extends BaseObject
             return null;
         }
 
-        return Space::findOne(['name' => strtoupper($spaceName)]);
+        return Space::findOne(['name' => strtoupper((string) $spaceName)]);
     }
 
     public static function getLanguageBySpaceName($spaceName)
@@ -141,11 +139,11 @@ class Languages extends BaseObject
 
         $language = $spaceName;
 
-        if (strpos($language, '-') !== false) {
-            list($lang, $ter) = explode('-', $spaceName, 2);
+        if (str_contains((string) $language, '-')) {
+            [$lang, $ter] = explode('-', (string) $spaceName, 2);
             $language = strtolower($lang) . '-' . strtoupper($ter);
         } else {
-            $language = strtolower($language);
+            $language = strtolower((string) $language);
         }
 
         if (!static::isValidLanguage($language)) {
@@ -161,11 +159,11 @@ class Languages extends BaseObject
             return null;
         }
 
-        if (strpos($language, '-') !== false) {
-            list($lang, $ter) = explode('-', $language, 2);
+        if (str_contains((string) $language, '-')) {
+            [$lang, $ter] = explode('-', (string) $language, 2);
             $spaceName = strtoupper($lang) . '-' . strtoupper($ter);
         } else {
-            $spaceName = strtoupper($language);
+            $spaceName = strtoupper((string) $language);
         }
 
         return $spaceName;

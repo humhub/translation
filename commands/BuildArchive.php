@@ -68,8 +68,8 @@ class BuildArchive extends TranslationCommand
 
     private static function cutUnusedMarking($translated)
     {
-        if (substr($translated, 0, 2) === '@@' && substr($translated, -2, 2) === '@@') {
-            $translated = preg_replace('/^@@/', '', $translated);
+        if (str_starts_with((string) $translated, '@@') && str_ends_with((string) $translated, '@@')) {
+            $translated = preg_replace('/^@@/', '', (string) $translated);
             $translated = preg_replace('/@@$/', '', $translated);
         }
 
