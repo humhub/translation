@@ -21,7 +21,7 @@ class MessageParser
         $level = 0;
         $expressions = [];
         $expression = '';
-        foreach (str_split($message) as $char) {
+        foreach (str_split((string) $message) as $char) {
             if (!$stateExpression && $char !== '{') {
                 continue;
             }
@@ -82,14 +82,10 @@ class MessageParser
 
     private static function getDummyDataByType($type)
     {
-        switch ($type) {
-            case static::PARAMETER_TYPE_TIME:
-            case static::PARAMETER_TYPE_DATE:
-                return time();
-            default:
-                return 5;
-
-        }
+        return match ($type) {
+            static::PARAMETER_TYPE_TIME, static::PARAMETER_TYPE_DATE => time(),
+            default => 5,
+        };
     }
 
     public static function compareParameter($required, $actual)
@@ -97,15 +93,13 @@ class MessageParser
         $diff = array_diff_assoc($required, $actual);
 
         if (!empty($diff)) {
-            reset($diff);
-            return [key($diff), static::COMPARE_RESULT_MISSING];
+            return [array_key_first($diff), static::COMPARE_RESULT_MISSING];
         }
 
         $diff = array_diff_assoc($actual, $required);
 
         if (!empty($diff)) {
-            reset($diff);
-            return [key($diff), static::COMPARE_RESULT_INVALID];
+            return [array_key_first($diff), static::COMPARE_RESULT_INVALID];
         }
 
         return true;
@@ -125,11 +119,7 @@ class MessageParser
 
     private static function parseParameterType($typeStr)
     {
-        if (isset(static::PARAMETER_TYPE_MAPPING[$typeStr])) {
-            return static::PARAMETER_TYPE_MAPPING[$typeStr];
-        }
-
-        return static::PARAMETER_TYPE_DEFAULT;
+        return static::PARAMETER_TYPE_MAPPING[$typeStr] ?? static::PARAMETER_TYPE_DEFAULT;
     }
 
 }

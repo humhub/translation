@@ -58,7 +58,7 @@ class BasePath extends TranslationPath
      */
     public function getMessageFile($file)
     {
-        $file = basename($file, '.php') . '.php';
+        $file = basename((string) $file, '.php') . '.php';
 
         if (!isset($this->messageFiles[$file])) {
             $this->messageFiles[$file] = new MessageFile(['basePath' => $this, 'file' => $file]);
@@ -91,7 +91,7 @@ class BasePath extends TranslationPath
 
         try {
             $module = $this->getModule();
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return null;
         }
 
@@ -140,7 +140,7 @@ class BasePath extends TranslationPath
 
         $result = [];
         foreach ($files as $file) {
-            $messageFile = $this->getMessageFile(basename($file, '.php') . '.php');
+            $messageFile = $this->getMessageFile(basename((string) $file, '.php') . '.php');
             if ($messageFile->validate() && $messageFile->validateLanguagePath($language)) {
                 $result[] = $messageFile;
             }
@@ -156,7 +156,7 @@ class BasePath extends TranslationPath
 
             $this->languages = [];
             foreach ($folders as $folder) {
-                $this->languages[] = pathinfo($folder, PATHINFO_FILENAME);
+                $this->languages[] = pathinfo((string) $folder, PATHINFO_FILENAME);
             }
         }
 
@@ -174,7 +174,7 @@ class BasePath extends TranslationPath
 
         $categories = [];
         foreach ($files as $category) {
-            $fileName = pathinfo($category, PATHINFO_FILENAME);
+            $fileName = pathinfo((string) $category, PATHINFO_FILENAME);
             if ($fileName !== $exclude && !in_array($fileName, $categories)) {
                 $categories[] = $fileName;
             }
