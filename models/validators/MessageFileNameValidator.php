@@ -21,7 +21,7 @@ class MessageFileNameValidator extends Validator
             $model->addError($attribute, 'Invalid file name');
         }
 
-        if (!preg_match('/\.php$/', $fileName)) {
+        if (!preg_match('/\.php$/', (string) $fileName)) {
             $model->addError($attribute, 'Invalid file name');
         }
     }

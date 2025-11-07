@@ -176,7 +176,7 @@ class TranslationLog extends ContentActiveRecord implements TranslationFileIF
             $parameterCompare = MessageParser::compareParameter($requiredParameters, $actualParameters);
 
             if ($parameterCompare !== true) {
-                list($param, $error) = $parameterCompare;
+                [$param, $error] = $parameterCompare;
                 if ($error === MessageParser::COMPARE_RESULT_MISSING) {
                     $this->addError(
                         'translation',
@@ -237,7 +237,7 @@ class TranslationLog extends ContentActiveRecord implements TranslationFileIF
 
     public static function tid($message)
     {
-        return 'tid_' . md5($message);
+        return 'tid_' . md5((string) $message);
     }
 
     public function getUrl()

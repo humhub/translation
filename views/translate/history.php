@@ -79,21 +79,17 @@ MainAsset::register($this);
                                 'class' => DataColumn::class,
                                 'label' => Yii::t('TranslationModule.base', 'Date'),
                                 //'options' => ['style' => 'width:75%;'],
-                                'value' => function(TranslationLog $model) {
-                                    return Yii::$app->formatter->asDatetime($model->content->created_at, 'short');
-                                }
+                                'value' => fn(TranslationLog $model) => Yii::$app->formatter->asDatetime($model->content->created_at, 'short')
                             ],
                             [
                                 'class' => DataColumn::class,
                                 'format' => 'raw',
                                 'label' => '',
                                 //'options' => ['style' => 'width:75%;'],
-                                'value' => function(TranslationLog $model) {
-                                    return Button::light()->icon('comments-o')
-                                        ->link(Url::toLogDetail($model))
-                                        ->tooltip(Yii::t('TranslationModule.base', 'Discussion'))
-                                        ->sm();
-                                }
+                                'value' => fn(TranslationLog $model) => Button::light()->icon('comments-o')
+                                    ->link(Url::toLogDetail($model))
+                                    ->tooltip(Yii::t('TranslationModule.base', 'Discussion'))
+                                    ->sm()
                             ]
                         ]
                     ]) ?>
