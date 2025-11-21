@@ -358,11 +358,8 @@ class TranslationForm extends Model implements TranslationFileIF
     public function getHelpBlockMessage($message)
     {
         $tid = TranslationLog::tid($message);
-        if (isset($this->errors[$tid])) {
-            return $this->errors[$tid];
-        }
 
-        return $this->warnings[$tid] ?? null;
+        return $this->errors[$tid] ?? $this->warnings[$tid] ?? null;
     }
 
     public function getModuleIdSelection()

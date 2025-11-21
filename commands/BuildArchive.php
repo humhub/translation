@@ -70,7 +70,7 @@ class BuildArchive extends TranslationCommand
     {
         if (str_starts_with((string) $translated, '@@') && str_ends_with((string) $translated, '@@')) {
             $translated = preg_replace('/^@@/', '', (string) $translated);
-            $translated = preg_replace('/@@$/', '', $translated);
+            $translated = preg_replace('/@@$/', '', (string) $translated);
         }
 
         return $translated;
