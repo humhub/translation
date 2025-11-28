@@ -216,7 +216,7 @@ class TranslationForm extends Model implements TranslationFileIF
     protected function autoTranslateEmptyValues(int $queryStart = 1)
     {
         // Get target language code
-        $targetLanguageCode = strtr($this->language, static::HUMHUB_LANGUAGE_CODE_TO_GOOGLE_TRANSLATE);
+        $targetLanguageCode = strtr((string)$this->language, static::HUMHUB_LANGUAGE_CODE_TO_GOOGLE_TRANSLATE);
 
         // Check if code is supported by Google translate
         if (!in_array($targetLanguageCode, static::GOOGLE_TRANSLATE_SUPPORTED_LANGUAGES)) {
@@ -294,13 +294,19 @@ class TranslationForm extends Model implements TranslationFileIF
         }
     }
 
+    public function canManage(): bool
+    {
+        return $this->space instanceof Space
+            && $this->space->can(ManageTranslations::class);
+    }
+
     /**
      * @return bool
      * @throws \yii\base\Exception
      */
     public function save()
     {
-        if (!$this->space || !$this->space->can(ManageTranslations::class)) {
+        if (!$this->canManage()) {
             return false;
         }
 

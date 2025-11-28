@@ -15,21 +15,22 @@ use yii\web\NotFoundHttpException;
 
 $errors = null;
 
-if($model->hasErrors()) {
+if ($model->hasErrors()) {
     $errors = Html::errorSummary($model, [
-        'header' => '<strong>'.Yii::t('TranslationModule.base', 'The translations for {settings} could not be loaded:', $model->getMessageSettingString()).'</strong>',
+        'header' => '<strong>' . Yii::t('TranslationModule.base', 'The translations for {settings} could not be loaded:', $model->getMessageSettingString()) . '</strong>',
     ]);
 
     // Fallback to default selection
     $model = new TranslationForm();
     $model->load([]);
 
-    if(!$model->validate()) {
+    if (!$model->validate()) {
         throw new NotFoundHttpException();
     }
 }
 
 $hasParentLanguage = $model->getParentLanguage() !== null;
+$canManage = $model->canManage();
 ?>
 
 <?= Html::beginTag('div', $options) ?>
@@ -72,7 +73,7 @@ $hasParentLanguage = $model->getParentLanguage() !== null;
 
         <div class="panel-body">
 
-            <?php if(!empty($errors)) : ?>
+            <?php if (!empty($errors)) : ?>
 
                 <div class="alert alert-danger">
                     <?= $errors ?>
@@ -95,7 +96,7 @@ $hasParentLanguage = $model->getParentLanguage() !== null;
                 </div>
 
                 <p class="clearfix" style="margin-bottom:0">
-                    <?= Button::save()->submit()->right() ?>
+                    <?= $canManage ? Button::save()->submit()->right() : '' ?>
                 </p>
 
                 <hr class="mt-0">
@@ -111,21 +112,27 @@ $hasParentLanguage = $model->getParentLanguage() !== null;
                             <div class="elem">
                                 <div class="pre"><?= Html::encode($original) ?></div>
                                 <div>
-                                    <?= Button::light('<span>' . Yii::t('TranslationModule.base', 'Adopt original language') . '</span>')
+                                    <?= $canManage
+                                        ? Button::light('<span>' . Yii::t('TranslationModule.base', 'Adopt original language') . '</span>')
                                         ->icon('arrow-right')
                                         ->action('copyOriginal')
                                         ->tooltip(Yii::t('TranslationModule.base', 'Adopt original language'))
-                                        ->loader(false) ?>
+                                        ->loader(false)
+                                        : '' ?>
                                 </div>
                             </div>
                             <div class="elem <?= $model->getTranslationFieldClass($original) ?>">
                                 <div>
-                                    <?= Html::textArea(TranslationLog::tid($original), $translated, [
-                                        'class' => 'form-control translation ' . (empty($translated) ? 'empty' : 'translated'),
-                                        'placeholder' => $model->parentMessages[$original] ?? '',
-                                    ]) ?>
+                                    <?php if ($canManage) : ?>
+                                        <?= Html::textArea(TranslationLog::tid($original), $translated, [
+                                            'class' => 'form-control translation ' . (empty($translated) ? 'empty' : 'translated'),
+                                            'placeholder' => $model->parentMessages[$original] ?? '',
+                                        ]) ?>
+                                    <?php else : ?>
+                                        <div class="pre"><?= Html::encode($translated) ?></div>
+                                    <?php endif; ?>
 
-                                    <?php if(!empty($model->getHelpBlockMessage($original))) : ?>
+                                    <?php if (!empty($model->getHelpBlockMessage($original))) : ?>
                                         <p class="form-text"><?= Html::encode($model->getHelpBlockMessage($original)) ?></p>
                                     <?php endif; ?>
                                 </div>
@@ -136,13 +143,14 @@ $hasParentLanguage = $model->getParentLanguage() !== null;
                                     ->tooltip(Yii::t('TranslationModule.base', 'View translation history'))
                                     ->loader(false) ?>
 
-                                <?= $hasParentLanguage ?
-                                    Button::success('<span>' . Yii::t('TranslationModule.base', 'Confirm translation') . '</span>')
+                                <?= $hasParentLanguage && $canManage
+                                    ? Button::success('<span>' . Yii::t('TranslationModule.base', 'Confirm translation') . '</span>')
                                     ->icon('check')
                                     ->action('copyParent')
                                     ->tooltip(Yii::t('TranslationModule.base', 'Confirm translation'))
                                     ->cssClass($translated === '' ? '' : 'translation-confirm-approved')
-                                    ->loader(false) : '' ?>
+                                    ->loader(false)
+                                    : '' ?>
                                 </div>
                             </div>
                         </div>
@@ -152,7 +160,7 @@ $hasParentLanguage = $model->getParentLanguage() !== null;
                 <hr>
 
                 <p class="clearfix">
-                    <?= Button::save()->submit()->right() ?>
+                    <?= $canManage ? Button::save()->submit()->right() : '' ?>
                 </p>
             <?php endif; ?>
         </div>

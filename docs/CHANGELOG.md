@@ -22,6 +22,7 @@ Changelog
 - Enh #82: Migration to Bootstrap 5 for HumHub 1.18
 - Enh #83: Improved Module Test GitHub Actions
 - Enh #84: Implemented `module-coding-standards`
+- Fix #88: Hide the save button when user has no permission to manage translations
 
 1.0.0 (June 10, 2020)
 -----------------------
