@@ -11,8 +11,8 @@ return [
     'class' => Module::class,
     'namespace' => 'humhub\modules\translation',
     'events' => [
-        ['class' => TopMenu::class, 'event' => TopMenu::EVENT_INIT, 'callback' => [Events::class, 'onTopMenuInit']],
-        ['class' => Menu::class, 'event' => Menu::EVENT_INIT, 'callback' => [Events::class, 'onSpaceMenuInit']],
-        ['class' => Application::class, 'event' => Application::EVENT_ON_INIT, 'callback' => [Events::class, 'onConsoleApplicationInit']],
+        ['class' => TopMenu::class, 'event' => TopMenu::EVENT_INIT, 'callback' => Events::onTopMenuInit(...)],
+        ['class' => Menu::class, 'event' => Menu::EVENT_INIT, 'callback' => Events::onSpaceMenuInit(...)],
+        ['class' => Application::class, 'event' => Application::EVENT_ON_INIT, 'callback' => Events::onConsoleApplicationInit(...)],
     ],
 ];
