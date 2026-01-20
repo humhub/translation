@@ -163,14 +163,14 @@ class TranslationForm extends Model implements TranslationFileIF
 
         $this->autoTranslateEmptyValues();
 
-        // In case the form used any default value instead of loaded value we skip translation loading
-        if ($dirty || !$result) {
-            return false;
-        }
-
         $this->space = Languages::findSpaceByLanguage($this->language);
         if (!$this->space) {
             $this->addError('space', Yii::t('TranslationModule.base', 'There is no language related space available for language {lang}', ['lang' => $this->language]));
+            return false;
+        }
+
+        // In case the form used any default value instead of loaded value we skip translation loading
+        if ($dirty || !$result) {
             return false;
         }
 
