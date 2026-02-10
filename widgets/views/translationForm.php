@@ -38,22 +38,29 @@ $canManage = $model->canManage();
     <?php ActiveForm::begin(['id' => 'translation-editor-form', 'action' => Url::toSave($model),  'acknowledge' => true ]) ?>
         <div class="translation-editor-filter clearfix">
             <div class="row">
-                <div class="mb-3 col-lg-4">
-                    <label for=""><?= $model->getAttributeLabel('moduleId') ?></label>
-                    <?= Html::dropDownList('moduleId', $model->moduleId, $model->getModuleIdSelection(),
-                        ['class' => 'form-control', 'data-ui-select2' => '1', 'data-prevent-statechange' => 1, 'data-action-change' => 'selectOptions']) ?>
-                </div>
                 <div class="mb-3 col-lg-2">
                     <label for=""><?= $model->getAttributeLabel('language') ?></label>
-                    <?= Html::dropDownList('language', $model->language, $model->getLanguageSelection(), ['class' => 'form-control', 'data-ui-select2' => '1',
+                    <?= Html::dropDownList('language', $model->language, $model->getLanguageSelection(), [
+                        'class' => 'form-control',
                         'data-prevent-statechange' => 1,
-                        'data-action-change' => 'selectOptions']) ?>
+                        'data-action-change' => 'selectOptions',
+                    ]) ?>
+                </div>
+                <div class="mb-3 col-lg-4">
+                    <label for=""><?= $model->getAttributeLabel('moduleId') ?></label>
+                    <?= Html::dropDownList('moduleId', $model->moduleId, $model->getModuleIdSelection(), [
+                        'class' => 'form-control',
+                        'data-prevent-statechange' => 1,
+                        'data-action-change' => 'selectOptions',
+                    ]) ?>
                 </div>
                 <div class="mb-3 col-lg-6">
                     <label for=""><?= $model->getAttributeLabel('file') ?></label>
-                    <?= Html::dropDownList('file', $model->file, $model->getFilesSelection(), ['class' => 'form-control', 'data-ui-select2' => '1',
+                    <?= Html::dropDownList('file', $model->file, $model->getFilesSelection(), [
+                        'class' => 'form-control',
                         'data-prevent-statechange' => 1,
-                        'data-action-change' => 'selectOptions']) ?>
+                        'data-action-change' => 'selectOptions',
+                    ]) ?>
                 </div>
             </div>
             <ul>
