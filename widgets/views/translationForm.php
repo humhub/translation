@@ -121,6 +121,7 @@ $canManage = $model->canManage();
                                 <div>
                                     <?= $canManage
                                         ? Button::light('<span>' . Yii::t('TranslationModule.base', 'Adopt original language') . '</span>')
+                                        ->encodeLabel(false)
                                         ->icon('arrow-right')
                                         ->action('copyOriginal')
                                         ->tooltip(Yii::t('TranslationModule.base', 'Adopt original language'))
@@ -145,6 +146,7 @@ $canManage = $model->canManage();
                                 </div>
                                 <div>
                                 <?= Button::light('<span>' . Yii::t('TranslationModule.base', 'View history') . '</span>')
+                                    ->encodeLabel(false)
                                     ->link(Url::toHistory($model, $original))
                                     ->icon('history')
                                     ->tooltip(Yii::t('TranslationModule.base', 'View translation history'))
@@ -152,12 +154,13 @@ $canManage = $model->canManage();
 
                                 <?= $hasParentLanguage && $canManage
                                     ? Button::success('<span>' . Yii::t('TranslationModule.base', 'Confirm translation') . '</span>')
-                                    ->icon('check')
-                                    ->action('copyParent')
-                                    ->tooltip(Yii::t('TranslationModule.base', 'Confirm translation'))
-                                    ->cssClass($translated === '' ? '' : 'translation-confirm-approved')
-                                    ->loader(false)
-                                    : '' ?>
+                                        ->encodeLabel(false)
+                                        ->icon('check')
+                                        ->action('copyParent')
+                                        ->tooltip(Yii::t('TranslationModule.base', 'Confirm translation'))
+                                        ->cssClass($translated === '' ? '' : 'translation-confirm-approved')
+                                        ->loader(false)
+                                        : '' ?>
                                 </div>
                             </div>
                         </div>
