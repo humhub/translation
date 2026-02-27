@@ -24,6 +24,7 @@ Changelog
 - Enh #84: Implemented `module-coding-standards`
 - Fix #88: Hide the save button when user has no permission to manage translations
 - Fix #92: Labels encoding (see [migration guide](https://github.com/humhub/humhub/blob/master/MIGRATE-DEV.md#version-1181))
+- Fix #93: Remove deprecations
 
 1.0.0 (June 10, 2020)
 -----------------------

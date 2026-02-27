@@ -2,10 +2,13 @@
 
 namespace humhub\modules\translation;
 
+use humhub\helpers\ControllerHelper;
+use humhub\modules\space\widgets\Menu as SpaceMenu;
 use humhub\modules\translation\helpers\Url;
 use humhub\modules\translation\models\Languages;
 use humhub\modules\ui\menu\MenuLink;
 use humhub\modules\translation\commands\TranslationController;
+use humhub\widgets\TopMenu;
 use Yii;
 
 class Events
@@ -16,13 +19,16 @@ class Events
             return;
         }
 
-        $event->sender->addEntry(new MenuLink([
+        /* @var TopMenu $menu */
+        $menu = $event->sender;
+
+        $menu->addEntry(new MenuLink([
             'id' => 'translation-main',
             'icon' => 'align-left',
             'label' => Yii::t('TranslationModule.base', 'Translations'),
             'url' => ['/translation/translate'],
             'sortOrder' => 700,
-            'isActive' => MenuLink::isActiveState('translation', 'translate'),
+            'isActive' => ControllerHelper::isActivePath('translation', 'translate'),
         ]));
     }
 
@@ -34,13 +40,16 @@ class Events
             return;
         }
 
-        $event->sender->addEntry(new MenuLink([
+        /* @var SpaceMenu $menu */
+        $menu = $event->sender;
+
+        $menu->addEntry(new MenuLink([
             'id' => 'translation-space',
             'icon' => 'align-left',
             'label' => Yii::t('TranslationModule.base', 'Translations'),
             'url' => Url::toStream($space),
             'sortOrder' => 700,
-            'isActive' => MenuLink::isActiveState('translation', 'stream'),
+            'isActive' => ControllerHelper::isActivePath('translation', 'stream'),
         ]));
     }
 
