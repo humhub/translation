@@ -45,7 +45,6 @@ return [
     'There are unsaved changes, do you really want to leave this page?' => '',
     'There is no language related space available for language {lang}' => '',
     'Translated' => '',
-    'Translation Editor' => '',
     'Translation did not change.' => '',
     'Translations' => '',
     'View History' => '',

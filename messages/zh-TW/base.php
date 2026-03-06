@@ -24,7 +24,6 @@ return [
     'Search' => '搜尋',
     'Translated' => '已翻譯字串',
     'Translation' => '翻譯',
-    'Translation Editor' => '翻譯編輯器',
     'Translations' => '翻譯',
     'View History' => '顯示翻譯歷程',
     'View history' => '顯示翻譯歷程',

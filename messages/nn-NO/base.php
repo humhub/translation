@@ -45,7 +45,6 @@ return [
     'There is no language related space available for language {lang}' => '',
     'Translated' => '',
     'Translation' => '',
-    'Translation Editor' => '',
     'Translation did not change.' => '',
     'Translations' => '',
     'View History' => '',

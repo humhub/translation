@@ -8,7 +8,6 @@ return [
     'Module' => 'ماژول',
     'New' => 'جدید',
     'Search' => 'جستجو',
-    'Translation Editor' => 'ویرایش ترجمه',
     'Translations' => 'ترجمه‌ها',
     '<strong>Translation</strong> Editor' => '',
     '<strong>Translation</strong> History' => '',

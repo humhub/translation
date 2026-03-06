@@ -43,7 +43,6 @@ return [
     'There is no language related space available for language {lang}' => 'Nincs elérhető nyelvvel kapcsolatos hely a nyelv számára: {lang}',
     'Translated' => 'Lefordítva',
     'Translation' => 'Fordítás',
-    'Translation Editor' => 'Fordítás szerkesztő',
     'Translation did not change.' => 'A fordítás nem változott.',
     'Translations' => 'Fordítások',
     'View History' => 'Előzmények Megtekintése',

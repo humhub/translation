@@ -11,7 +11,6 @@ return [
     'New' => 'Novi',
     'Search' => 'Pretraži',
     'There are unsaved changes, do you really want to leave this page?' => 'Postoje nespremljene promjene, želite li zaista napustiti ovu stranicu?',
-    'Translation Editor' => 'Urednik prijevoda',
     'Translations' => 'Prijevodi',
     '<strong>Translation</strong> Editor' => '',
     '<strong>Translation</strong> History' => '',

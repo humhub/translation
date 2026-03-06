@@ -9,7 +9,6 @@ return [
     'New' => 'Новое',
     'Search' => 'Поиск',
     'There are unsaved changes, do you really want to leave this page?' => 'Есть несохраненные изменения, Вы действительно хотите покинуть эту страницу?',
-    'Translation Editor' => 'Редактор перевода',
     'Translations' => 'Переводчик',
     '<strong>Translation</strong> Editor' => '',
     '<strong>Translation</strong> History' => '',

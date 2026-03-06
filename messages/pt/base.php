@@ -43,7 +43,6 @@ return [
     'There is no language related space available for language {lang}' => 'Não há espaços associados à língua {lang}',
     'Translated' => 'Traduzido',
     'Translation' => 'Tradução',
-    'Translation Editor' => 'Editor de tradução',
     'Translation did not change.' => 'A tradução não foi alterada.',
     'Translations' => 'Traduções',
     'View History' => 'Ver histórico',

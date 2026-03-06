@@ -9,7 +9,6 @@ return [
     'New' => 'Ny',
     'Search' => 'Sök',
     'There are unsaved changes, do you really want to leave this page?' => 'Det finns ändringar som inte har sparats. Vill du verkligen lämna den här sidan?',
-    'Translation Editor' => 'Översättnings Redigerare',
     'Translations' => 'Översättningar',
     '<strong>Translation</strong> Editor' => '',
     '<strong>Translation</strong> History' => '',

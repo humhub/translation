@@ -6,7 +6,6 @@ return [
     'Message' => 'Missatge',
     'New' => 'Nou',
     'Search' => 'Cerca',
-    'Translation Editor' => 'Editor de traducció',
     'Translations' => 'Traduccions',
     '<strong>Translation</strong> Editor' => '',
     '<strong>Translation</strong> History' => '',

@@ -43,7 +43,6 @@ return [
     'There is no language related space available for language {lang}' => 'ไม่มีพื้นที่ที่เกี่ยวข้องกับภาษาสำหรับภาษา {lang}',
     'Translated' => 'แปลแล้ว',
     'Translation' => 'การแปล',
-    'Translation Editor' => 'บรรณาธิการแปล',
     'Translation did not change.' => 'การแปลไม่เปลี่ยนแปลง',
     'Translations' => 'แปลภาษา',
     'View History' => 'ดูประวัติ',

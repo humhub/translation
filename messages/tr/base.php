@@ -12,7 +12,6 @@ return [
     'Old Translation' => 'Eski Çeviriler',
     'Search' => 'Arama',
     'Translation' => 'Çeviri',
-    'Translation Editor' => 'Çeviri Editörü',
     'Translations' => 'Çeviriler',
     'Your translation seems to be empty and therefore could not be saved.' => 'Çeviriniz boş görünüyor ve bu nedenle kaydedilemedi.',
     '<strong>Translation</strong> Editor' => '',

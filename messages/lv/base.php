@@ -6,7 +6,6 @@ return [
     'Message' => 'Ziņa',
     'New' => 'Jauns',
     'Search' => 'Meklēt',
-    'Translation Editor' => 'Tulkojumu redaktors',
     'Translations' => 'Tulkojumi',
     '<strong>Translation</strong> Editor' => '',
     '<strong>Translation</strong> History' => '',

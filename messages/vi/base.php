@@ -8,7 +8,6 @@ return [
     'Module' => 'Module',
     'New' => 'Mới',
     'Search' => 'Tìm kiếm',
-    'Translation Editor' => 'Trình soạn thảo dịch',
     'Translations' => 'Dịch',
     '<strong>Translation</strong> Editor' => '',
     '<strong>Translation</strong> History' => '',

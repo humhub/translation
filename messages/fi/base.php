@@ -8,7 +8,6 @@ return [
     'Module' => 'Laajennus',
     'New' => 'Uusi',
     'Search' => 'Hae',
-    'Translation Editor' => 'Käännös Muokkain',
     'Translations' => 'Käännökset',
     '<strong>Translation</strong> Editor' => '',
     '<strong>Translation</strong> History' => '',

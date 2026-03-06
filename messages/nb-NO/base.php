@@ -9,7 +9,6 @@ return [
     'Module' => 'Modul',
     'New' => 'Ny',
     'Search' => 'Søk',
-    'Translation Editor' => 'Oversettelseseditor',
     'Translations' => 'Oversettelser',
     'Your translation seems to be empty and therefore could not be saved.' => 'Oversettelsen din ser ut til og være tom og er derfor ikke lagret',
     '<strong>Translation</strong> Editor' => '',

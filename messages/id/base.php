@@ -5,7 +5,6 @@ return [
     'Message' => 'Pesan',
     'New' => 'Baru',
     'Search' => 'Cari',
-    'Translation Editor' => 'Editor Terjemahan',
     'Translations' => 'Terjemahan',
     '<strong>Translation</strong> Editor' => '',
     '<strong>Translation</strong> History' => '',

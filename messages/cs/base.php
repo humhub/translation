@@ -9,7 +9,6 @@ return [
     'New' => 'Novinky',
     'Search' => 'Hledat',
     'Translation' => 'Překlad',
-    'Translation Editor' => 'Překladač',
     'Translations' => 'Překladač',
     '<strong>Translation</strong> Editor' => '',
     '<strong>Translation</strong> History' => '',

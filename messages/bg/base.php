@@ -43,7 +43,6 @@ return [
     'There is no language related space available for language {lang}' => 'Няма налично място, свързано с езика, за език {lang}',
     'Translated' => 'Превод',
     'Translation' => 'Превод',
-    'Translation Editor' => 'Редактор за превод',
     'Translation did not change.' => 'Преводът не се промени.',
     'Translations' => 'Преводи',
     'View History' => 'Разгледай Историята',

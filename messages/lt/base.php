@@ -8,7 +8,6 @@ return [
     'Module' => 'Modulis',
     'New' => 'Naujas',
     'Search' => 'Ieškoti',
-    'Translation Editor' => 'Vertimų įrankis',
     'Translations' => 'Vertimai',
     '<strong>Translation</strong> Editor' => '',
     '<strong>Translation</strong> History' => '',

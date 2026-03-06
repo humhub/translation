@@ -11,7 +11,6 @@ return [
     'Search' => 'بحث',
     'There are unsaved changes, do you really want to leave this page?' => 'هناك تغييرات غير محفوظة ، هل تريد حقًا مغادرة هذه الصفحة؟',
     'Translation' => 'الترجمة',
-    'Translation Editor' => 'محرر الترجمات',
     'Translations' => 'الترجمات',
     '<strong>Translation</strong> Editor' => '',
     '<strong>Translation</strong> History' => '',
