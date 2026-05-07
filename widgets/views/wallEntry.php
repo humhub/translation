@@ -1,19 +1,17 @@
 <?php
-/* @var $this View */
-/* @var $translationLog TranslationLog */
 
 use humhub\helpers\Html;
 use humhub\modules\translation\models\TranslationLog;
 use humhub\modules\ui\icon\widgets\Icon;
 use yii\widgets\DetailView;
 
+/* @var $translationLog TranslationLog */
 ?>
-
 <div class="clearfix translation-wallentry-content">
     <?= DetailView::widget([
         'model' => $translationLog,
         'attributes' => [
-            'moduleId',
+            'module_id',
             [
                 'attribute' => 'message',
                 'value' => '"' . $translationLog->message . '"',
@@ -37,9 +35,8 @@ use yii\widgets\DetailView;
                 'value' => Icon::get('plus-circle') . ' "' . Html::encode($translationLog->translation) . '"',
                 'contentOptions' => [
                     'class' => 'translation_new',
-                ]
+                ],
             ],
-        ]
-    ])?>
-
+        ],
+    ]) ?>
 </div>
