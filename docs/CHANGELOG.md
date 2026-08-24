@@ -26,6 +26,7 @@ Changelog
 - Fix #92: Labels encoding (see [migration guide](https://github.com/humhub/humhub/blob/master/MIGRATE-DEV.md#version-1181))
 - Fix #93: Remove deprecations
 - Fix #95: Fix translation history wall entry
+- Fix #97: Remove deprecated function `curl_close()`
 
 1.0.0 (June 10, 2020)
 -----------------------

@@ -265,7 +265,6 @@ class TranslationForm extends Model implements TranslationFileIF
         $response = curl_exec($handle);
         $responseDecoded = json_decode($response, true);
         $responseCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-        curl_close($handle);
 
         // Get translations
         if (!isset($responseDecoded['data']['translations'])) {
