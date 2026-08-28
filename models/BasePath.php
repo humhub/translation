@@ -45,9 +45,7 @@ class BasePath extends TranslationPath
      */
     public static function getBasePath($moduleId)
     {
-        if (!isset(static::$basePaths[$moduleId])) {
-            static::$basePaths[$moduleId] = new static(['moduleId' => $moduleId]);
-        }
+        static::$basePaths[$moduleId] ??= new static(['moduleId' => $moduleId]);
 
         return static::$basePaths[$moduleId];
     }
@@ -60,9 +58,7 @@ class BasePath extends TranslationPath
     {
         $file = basename((string) $file, '.php') . '.php';
 
-        if (!isset($this->messageFiles[$file])) {
-            $this->messageFiles[$file] = new MessageFile(['basePath' => $this, 'file' => $file]);
-        }
+        $this->messageFiles[$file] ??= new MessageFile(['basePath' => $this, 'file' => $file]);
 
         return $this->messageFiles[$file];
     }
@@ -185,13 +181,11 @@ class BasePath extends TranslationPath
 
     public function getModulePhpFiles(): array
     {
-        if ($this->modulePhpFiles === null) {
-            $this->modulePhpFiles = FileHelper::findfiles($this->getModule()->getBasePath(), [
-                'only' => ['*.php'],
-                'except' => ['/messages/', '/migrations/', '/node_modules/', '/tests/', '/vendor/'],
-                'recursive' => true,
-            ]);
-        }
+        $this->modulePhpFiles ??= FileHelper::findfiles($this->getModule()->getBasePath(), [
+            'only' => ['*.php'],
+            'except' => ['/messages/', '/migrations/', '/node_modules/', '/tests/', '/vendor/'],
+            'recursive' => true,
+        ]);
 
         return $this->modulePhpFiles;
     }

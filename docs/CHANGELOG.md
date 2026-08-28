@@ -27,6 +27,7 @@ Changelog
 - Fix #93: Remove deprecations
 - Fix #95: Fix translation history wall entry
 - Fix #97: Remove deprecated function `curl_close()`
+- Enh: Automated code refactoring for HumHub 1.18.1 using Rector
 
 1.0.0 (June 10, 2020)
 -----------------------
