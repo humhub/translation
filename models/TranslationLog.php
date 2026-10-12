@@ -225,7 +225,7 @@ class TranslationLog extends ContentActiveRecord implements TranslationFileIF
 
     public function load($data, $formName = null)
     {
-        if (isset($data[$this->getTID()])) {
+        if (isset($data[$this->getTID()]) && is_string($data[$this->getTID()])) {
             $this->translation = trim($data[$this->getTID()]);
             return true;
         }

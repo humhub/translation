@@ -53,4 +53,12 @@ class MessagePurifierTest extends HumHubDbTestCase
         $this->assertEquals('& &amp; &nbsp;', TranslationPurifier::process('& &amp; &nbsp;'));
     }
 
+
+    public function testEntityEncodedScriptUrlIsRemoved()
+    {
+        $this->assertEquals('<a>x</a>', TranslationPurifier::process('<a href="java&#115;cript:alert(1)">x</a>'));
+        $this->assertEquals('<a>x</a>', TranslationPurifier::process('<a href="&#x6A;avascript:alert(1)">x</a>'));
+        $this->assertEquals('<img alt="x">', TranslationPurifier::process('<img src="java&#115;cript:alert(1)" alt="x">'));
+        $this->assertEquals('<a href="/a?b=1&c=2">x</a>', TranslationPurifier::process('<a href="/a?b=1&amp;c=2">x</a>'));
+    }
 }

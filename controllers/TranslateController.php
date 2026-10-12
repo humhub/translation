@@ -125,7 +125,7 @@ class TranslateController extends \humhub\components\Controller
         ]);
     }
 
-    public function actionHistory($language, $moduleId, $file, $message)
+    public function actionHistory(string $language, string $moduleId, string $file, string $message)
     {
         $basePath = BasePath::getBasePath($moduleId);
 

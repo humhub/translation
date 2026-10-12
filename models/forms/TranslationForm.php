@@ -144,6 +144,13 @@ class TranslationForm extends Model implements TranslationFileIF
     {
         $result = parent::load($data, $formName);
 
+        // Ignore non-string input (e.g. `language[]=x`), which would otherwise cause a TypeError
+        foreach (['language', 'moduleId', 'file'] as $attribute) {
+            if (!is_scalar($this->$attribute)) {
+                $this->$attribute = $attribute === 'moduleId' ? BasePath::CORE_MODULE_ID : null;
+            }
+        }
+
         $dirty = !$this->language;
 
         $this->language = $this->language ?: Languages::getDefaultLanguage();
@@ -268,7 +275,7 @@ class TranslationForm extends Model implements TranslationFileIF
 
         // Get translations
         if (!isset($responseDecoded['data']['translations'])) {
-            Yii::error('Translation module - autoTranslateEmptyValues error code ' . $responseCode . ' for URL ' . $url);
+            Yii::error('Translation module - autoTranslateEmptyValues error code ' . $responseCode . ' for URL ' . str_replace(urlencode((string)$module->googleApiKey), '***', $url));
             return;
         }
         $translations = $responseDecoded['data']['translations'];
