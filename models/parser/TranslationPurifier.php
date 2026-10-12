@@ -40,6 +40,14 @@ class TranslationPurifier extends HtmlPurifier
      */
     public static function process($content, $config = null)
     {
+        // Decode entities in URL attributes before purifying, otherwise e.g. `java&#115;cript:` would pass
+        // the scheme check (the `&` is hidden by the holder below) and be restored to a real `javascript:` URL
+        $content = preg_replace_callback(
+            '/(\b(?:href|src)\s*=\s*)(["\'])(.*?)\2/is',
+            static fn($m) => $m[1] . $m[2] . str_replace($m[2], '', html_entity_decode($m[3], ENT_QUOTES | ENT_HTML5, 'UTF-8')) . $m[2],
+            (string)$content,
+        );
+
         // Keep the char `&` without converting to `&amp;`
         $ampHolder = '_AMP_HOLDER_' . time();
         $content = str_replace('&', $ampHolder, $content);

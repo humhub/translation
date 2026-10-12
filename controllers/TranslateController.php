@@ -70,11 +70,6 @@ class TranslateController extends \humhub\components\Controller
      */
     public function beforeAction($action)
     {
-
-        if (function_exists('opcache_reset')) {
-            opcache_reset();
-        }
-
         if (empty(Languages::isLanguageAvailable())) {
             throw new HttpException(404, 'No language available!');
         }
@@ -125,7 +120,7 @@ class TranslateController extends \humhub\components\Controller
         ]);
     }
 
-    public function actionHistory($language, $moduleId, $file, $message)
+    public function actionHistory(string $language, string $moduleId, string $file, string $message)
     {
         $basePath = BasePath::getBasePath($moduleId);
 
