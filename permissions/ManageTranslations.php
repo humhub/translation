@@ -40,6 +40,6 @@ class ManageTranslations extends BasePermission
 
     public function getDescription()
     {
-        return Yii::t('GalleryModule.base', 'Allows the user to directly manage translations.');
+        return Yii::t('TranslationModule.base', 'Allows the user to directly manage translations.');
     }
 }

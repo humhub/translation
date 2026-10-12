@@ -138,7 +138,14 @@ return $array;
 
 EOD;
 
-        file_put_contents($this->getPath($language, false), $content);
+        $path = $this->getPath($language, false);
+        file_put_contents($path, $content);
+
+        // Only invalidate the written file instead of resetting the whole opcache
+        if (function_exists('opcache_invalidate')) {
+            opcache_invalidate($path, true);
+        }
+
         return true;
     }
 }
