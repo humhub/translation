@@ -9,6 +9,7 @@ return [
     '<strong>Translation</strong> history' => '',
     'Active translation' => '',
     'Adopt original language' => '',
+    'Allows the user to directly manage translations.' => '',
     'Back to editor' => '',
     'Confirm translation' => '',
     'Confirm translations.' => '',

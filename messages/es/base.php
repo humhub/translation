@@ -50,6 +50,7 @@ return [
     'Your input has been purified.' => 'Tu entrada ha sido purificada.',
     'Your translation seems to be empty and therefore could not be saved.' => 'Su traducción parece estar vacía y, por lo tanto, no se pudo guardar.',
     'Adopt original language' => '',
+    'Allows the user to directly manage translations.' => '',
     'Confirm translation' => '',
     'View translation history' => '',
 ];

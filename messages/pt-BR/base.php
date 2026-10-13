@@ -52,4 +52,5 @@ return [
     'View translation history' => 'Ver histórico de tradução',
     'Your input has been purified.' => 'Sua entrada foi alterada.',
     'Your translation seems to be empty and therefore could not be saved.' => 'Sua tradução parece estar vazia e, portanto, não pôde ser salva.',
+    'Allows the user to directly manage translations.' => '',
 ];

@@ -50,6 +50,7 @@ return [
     'Your input has been purified.' => 'Вашият въведенот текст беше подобрен.',
     'Your translation seems to be empty and therefore could not be saved.' => 'Изглежда, че вашият превод е празен и поради това не може да бъде запазен.',
     'Adopt original language' => '',
+    'Allows the user to directly manage translations.' => '',
     'Confirm translation' => '',
     'View translation history' => '',
 ];

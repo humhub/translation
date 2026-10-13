@@ -50,6 +50,7 @@ return [
     'Your input has been purified.' => 'ข้อมูลของคุณได้รับการชำระให้บริสุทธิ์แล้ว',
     'Your translation seems to be empty and therefore could not be saved.' => 'การแปลของคุณดูเหมือนจะว่างเปล่า ดังนั้นจึงไม่สามารถบันทึกได้',
     'Adopt original language' => '',
+    'Allows the user to directly manage translations.' => '',
     'Confirm translation' => '',
     'View translation history' => '',
 ];

@@ -50,6 +50,7 @@ return [
     'Your input has been purified.' => 'A szöveget megtisztítottuk.',
     'Your translation seems to be empty and therefore could not be saved.' => 'Úgy tűnik, fordítása üres, ezért nem került mentésre.',
     'Adopt original language' => '',
+    'Allows the user to directly manage translations.' => '',
     'Confirm translation' => '',
     'View translation history' => '',
 ];

@@ -52,4 +52,5 @@ return [
     'View translation history' => '翻訳履歴を表示',
     'Your input has been purified.' => 'あなたの入力は変更されました。',
     'Your translation seems to be empty and therefore could not be saved.' => '翻訳が空である為、保存できませんでした。',
+    'Allows the user to directly manage translations.' => '',
 ];

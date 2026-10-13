@@ -52,4 +52,5 @@ return [
     'View translation history' => 'Bekijk vertaalgeschiedenis',
     'Your input has been purified.' => 'Uw vertaling is gezuiverd.',
     'Your translation seems to be empty and therefore could not be saved.' => 'Uw vertaling lijkt leeg te zijn en kan daarom niet worden opgeslagen.',
+    'Allows the user to directly manage translations.' => '',
 ];

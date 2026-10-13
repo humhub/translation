@@ -29,6 +29,7 @@ return [
     'View history' => '顯示翻譯歷程',
     'Your translation seems to be empty and therefore could not be saved.' => '看起來您輸入了空白的翻譯字串，所以不會被儲存。',
     'Adopt original language' => '',
+    'Allows the user to directly manage translations.' => '',
     'Confirm translation' => '',
     'Error while parsing the message, please request support by a translation administrator' => '',
     'If you are responsible for this module, try running the following command:' => '',
