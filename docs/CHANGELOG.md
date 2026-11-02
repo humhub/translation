@@ -29,6 +29,7 @@ Changelog
 - Fix #97: Remove deprecated function `curl_close()`
 - Enh: Automated code refactoring for HumHub 1.18.1 using Rector
 - Fix #99: Stored XSS via entity-encoded URLs in translations; TypeError on array request params; mask API key in log; Invalidate only written message files instead of whole opcache; Add Google API timeouts; Fix permission description category
+- Fix: Allow whitespace after comma in ICU parameters (e.g. `{count, plural, ...}`) when validating translations
 
 1.0.0 (June 10, 2020)
 -----------------------

@@ -58,7 +58,7 @@ class MessageParser
         $parameters = [];
 
         foreach ($expressions as $expression) {
-            preg_match_all('/([a-zA-Z0-9]+),([a-zA-Z]+)/m', $expression, $messageMatch, PREG_SET_ORDER);
+            preg_match_all('/([a-zA-Z0-9_]+)\s*,\s*([a-zA-Z]+)/m', $expression, $messageMatch, PREG_SET_ORDER);
 
             if (!empty($messageMatch)) {
                 $parameters[$messageMatch[0][1]] = static::parseParameterType($messageMatch[0][2]);
