@@ -2,7 +2,7 @@
 
 use humhub\helpers\Html;
 use humhub\modules\translation\models\TranslationLog;
-use humhub\modules\ui\icon\widgets\Icon;
+use humhub\widgets\Icon;
 use yii\widgets\DetailView;
 
 /* @var $translationLog TranslationLog */
@@ -23,7 +23,7 @@ use yii\widgets\DetailView;
                 'attribute' => 'translation_old',
                 'label' => Yii::t('TranslationModule.base', 'Old'),
                 'format' => 'raw',
-                'value' => Icon::get('minus-circle') . ' "' . Html::encode($translationLog->translation_old) . '"',
+                'value' => Icon::get('circle-minus') . ' "' . Html::encode($translationLog->translation_old) . '"',
                 'contentOptions' => [
                     'class' => 'translation_old',
                 ],
@@ -32,7 +32,7 @@ use yii\widgets\DetailView;
                 'attribute' => 'translation',
                 'label' => Yii::t('TranslationModule.base', 'New'),
                 'format' => 'raw',
-                'value' => Icon::get('plus-circle') . ' "' . Html::encode($translationLog->translation) . '"',
+                'value' => Icon::get('circle-plus') . ' "' . Html::encode($translationLog->translation) . '"',
                 'contentOptions' => [
                     'class' => 'translation_new',
                 ],

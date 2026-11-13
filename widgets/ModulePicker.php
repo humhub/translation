@@ -3,7 +3,7 @@
 namespace humhub\modules\translation\widgets;
 
 use humhub\modules\translation\models\BasePath;
-use humhub\modules\ui\form\widgets\BasePicker;
+use humhub\widgets\form\BasePicker;
 
 class ModulePicker extends BasePicker
 {

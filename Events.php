@@ -4,10 +4,10 @@ namespace humhub\modules\translation;
 
 use humhub\helpers\ControllerHelper;
 use humhub\modules\space\widgets\Menu as SpaceMenu;
+use humhub\modules\translation\commands\TranslationController;
 use humhub\modules\translation\helpers\Url;
 use humhub\modules\translation\models\Languages;
-use humhub\modules\ui\menu\MenuLink;
-use humhub\modules\translation\commands\TranslationController;
+use humhub\widgets\menu\MenuLink;
 use humhub\widgets\TopMenu;
 use Yii;
 

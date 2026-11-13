@@ -8,8 +8,8 @@ use humhub\modules\content\widgets\PermaLink;
 use humhub\modules\content\widgets\stream\WallStreamModuleEntryWidget;
 use humhub\modules\translation\helpers\Url;
 use humhub\modules\translation\models\TranslationLog;
-use humhub\modules\ui\menu\MenuLink;
 use humhub\widgets\bootstrap\Link;
+use humhub\widgets\menu\MenuLink;
 use Yii;
 
 class WallEntry extends WallStreamModuleEntryWidget

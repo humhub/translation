@@ -133,7 +133,7 @@
     #words .elem .btn i {
         margin-right: 4px;
     }
-    #words .elem .btn i.fa-arrow-right {
+    #words .elem .btn i.ti-arrow-right {
         transform: rotate(90deg);
     }
     #words .elem .btn span {

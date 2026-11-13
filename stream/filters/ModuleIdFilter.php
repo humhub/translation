@@ -2,7 +2,7 @@
 
 namespace humhub\modules\translation\stream\filters;
 
-use humhub\modules\stream\models\filters\StreamQueryFilter;
+use humhub\modules\content\models\stream\filters\StreamQueryFilter;
 
 class ModuleIdFilter extends StreamQueryFilter
 {

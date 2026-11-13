@@ -5,8 +5,8 @@ use humhub\modules\content\helpers\ContentContainerHelper;
 use humhub\modules\translation\assets\MainAsset;
 use humhub\modules\translation\helpers\Url;
 use humhub\modules\translation\widgets\TranslationLogStreamViewer;
-use humhub\modules\ui\icon\widgets\Icon;
 use humhub\widgets\bootstrap\Button;
+use humhub\widgets\Icon;
 
 /* @var $this \humhub\components\View */
 

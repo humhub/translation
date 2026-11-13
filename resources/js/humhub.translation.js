@@ -81,11 +81,11 @@ humhub.module('translation', function(module, require, $) {
             var $row =  $(this).closest('.item');
             if(stateHideTranslated) {
                 $row.addClass('d-none');
-                $('#toggle-empty-filter').find('i').removeClass('fa-toggle-off').addClass('fa-toggle-on');
+                $('#toggle-empty-filter').find('i').removeClass('ti-toggle-left').addClass('ti-toggle-right');
 
             } else {
                 $row.removeClass('d-none');
-                $('#toggle-empty-filter').find('i').removeClass('fa-toggle-on').addClass('fa-toggle-off');
+                $('#toggle-empty-filter').find('i').removeClass('ti-toggle-right').addClass('ti-toggle-left');
             }
         });
     };

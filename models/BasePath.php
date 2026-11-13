@@ -132,7 +132,7 @@ class BasePath extends TranslationPath
          * if this is not the case this is rather an error
          */
         $files = FileHelper::findFiles($this->getPath($language), ['only' => ['*.php'], 'recursive' => false]);
-        sort($files);
+        sort($files, SORT_STRING | SORT_FLAG_CASE);
 
         $result = [];
         foreach ($files as $file) {

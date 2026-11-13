@@ -2,7 +2,7 @@
 
 namespace humhub\modules\translation\widgets;
 
-use humhub\modules\stream\widgets\StreamViewer;
+use humhub\modules\content\widgets\stream\StreamViewer;
 use humhub\modules\translation\helpers\Url;
 use humhub\modules\translation\stream\filters\ModuleIdFilter;
 

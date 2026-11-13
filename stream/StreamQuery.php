@@ -2,8 +2,8 @@
 
 namespace humhub\modules\translation\stream;
 
-use humhub\modules\stream\models\ContentContainerStreamQuery;
-use humhub\modules\stream\models\filters\OriginatorStreamFilter;
+use humhub\modules\content\models\stream\ContentContainerStreamQuery;
+use humhub\modules\content\models\stream\filters\OriginatorStreamFilter;
 use humhub\modules\translation\stream\filters\ModuleIdFilter;
 
 class StreamQuery extends ContentContainerStreamQuery

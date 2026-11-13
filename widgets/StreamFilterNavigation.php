@@ -2,14 +2,14 @@
 
 namespace humhub\modules\translation\widgets;
 
-use humhub\modules\stream\widgets\WallStreamFilterNavigation;
+use humhub\modules\content\widgets\stream\WallStreamFilterNavigation;
 use humhub\modules\translation\stream\filters\ModuleIdFilter;
-use humhub\modules\ui\filter\widgets\PickerFilterInput;
+use humhub\widgets\filter\PickerFilterInput;
 use Yii;
 
 class StreamFilterNavigation extends WallStreamFilterNavigation
 {
-    public $view = '@stream/widgets/views/wallStreamFilterNavigation';
+    public $view = '@content/widgets/stream/views/wallStreamFilterNavigation';
 
     public const FILTER_BLOCK_MODULE = 'module';
 

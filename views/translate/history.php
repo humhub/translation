@@ -8,11 +8,11 @@
 use humhub\modules\translation\assets\MainAsset;
 use humhub\modules\translation\helpers\Url;
 use humhub\modules\translation\models\TranslationLog;
-use humhub\modules\ui\icon\widgets\Icon;
 use humhub\modules\user\grid\DisplayNameColumn;
 use humhub\modules\user\grid\ImageColumn;
 use humhub\widgets\bootstrap\Button;
 use humhub\widgets\GridView;
+use humhub\widgets\Icon;
 use yii\grid\DataColumn;
 use yii\widgets\DetailView;
 
@@ -86,7 +86,7 @@ MainAsset::register($this);
                                 'format' => 'raw',
                                 'label' => '',
                                 //'options' => ['style' => 'width:75%;'],
-                                'value' => fn(TranslationLog $model) => Button::light()->icon('comments-o')
+                                'value' => fn(TranslationLog $model) => Button::light()->icon('messages')
                                     ->link(Url::toLogDetail($model))
                                     ->tooltip(Yii::t('TranslationModule.base', 'Discussion'))
                                     ->sm()

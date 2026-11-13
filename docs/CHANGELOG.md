@@ -1,9 +1,15 @@
 Changelog
 =========
 
-1.1.0 (unreleased)
+1.2.0 (unreleased)
 -------------------------
 - Enh: The placeholder of the words field in the readable shade of the success colour (humhub/humhub#8715)
+- Enh: Core classes of the removed `stream` module and of the `ui` module instead of the deprecated ones (menu, icon, picker, filter)
+- Enh: Tabler icons instead of Font Awesome in PHP, JS and CSS
+- Fix: Sort the message files case-insensitively, `base` is the default file of the core again, not the stray `Category`
+
+1.1.0 (unreleased)
+-------------------------
 - Enh: Allow translation of non-enabled modules
 - Enh: Allow automatic translation with Google cloud translation API
 - Enh: Provide specific error message in case message path could not be found instead of 404
