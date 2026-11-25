@@ -15,11 +15,13 @@ $bundle = MainAsset::register($this);
 <div id="translation-editor" class="container">
     <div class="row">
         <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <?= Icon::get('align-left') ?>  <?= Yii::t('TranslationModule.base', '<strong>Translation</strong> Editor') ?>
-                    <?= Button::light(Yii::t('TranslationModule.base', 'Only show missing translations'))->id('toggle-empty-filter')
-                        ->action('toggleEmptyTranslationFilter', null, '#translation-editor-translations')->loader(false)->sm()->icon('toggle-left')->right() ?>
+            <div class="card content-card">
+                <div class="card-header">
+                    <div class="card-title"><?= Icon::get('align-left') ?>  <?= Yii::t('TranslationModule.base', '<strong>Translation</strong> Editor') ?></div>
+                    <div class="card-header-actions">
+                        <?= Button::light(Yii::t('TranslationModule.base', 'Only show missing translations'))->id('toggle-empty-filter')
+                            ->action('toggleEmptyTranslationFilter', null, '#translation-editor-translations')->loader(false)->sm()->icon('toggle-left') ?>
+                    </div>
                 </div>
                 <?= TranslationFormWidget::widget([
                     'model' => $model,

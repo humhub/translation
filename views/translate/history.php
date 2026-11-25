@@ -23,10 +23,10 @@ MainAsset::register($this);
 <div id="translation-history" class="container">
     <div class="row">
         <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading"><?= Icon::get('align-left') ?> <?= Yii::t('TranslationModule.base', '<strong>Translation</strong> History') ?></div>
+            <div class="card content-card">
+                <div class="card-header"><div class="card-title"><?= Icon::get('align-left') ?> <?= Yii::t('TranslationModule.base', '<strong>Translation</strong> History') ?></div></div>
 
-                <div class="panel-body" data-ui-widget="translation.Form">
+                <div class="card-body" data-ui-widget="translation.Form">
                     <div class="clearfix">
                         <?= Button::back(Url::toTranslation($messageFile, $language), Yii::t('TranslationModule.base', 'Back to editor'))->sm() ?>
                     </div>

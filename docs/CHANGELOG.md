@@ -3,6 +3,7 @@ Changelog
 
 1.2.0 (unreleased)
 -------------------------
+- Enh: Cards instead of Bootstrap 3 panels, sizes in rem and the text styles of the core 1.20 (humhub/humhub#8777)
 - Enh: The placeholder of the words field in the readable shade of the success colour (humhub/humhub#8715)
 - Enh: Core classes of the removed `stream` module and of the `ui` module instead of the deprecated ones (menu, icon, picker, filter)
 - Enh: Tabler icons instead of Font Awesome in PHP, JS and CSS

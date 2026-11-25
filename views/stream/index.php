@@ -14,11 +14,13 @@ MainAsset::register($this);
 
 ?>
 
-<div class="panel">
-    <div class="panel-heading">
-        <?= Icon::get('history') ?> <?= Yii::t('TranslationModule.base', '<strong>Translation</strong> history') ?>
-        <?= Button::primary(Yii::t('TranslationModule.base', 'Edit translations'))
-            ->link(Url::toEditSpaceTranslation(ContentContainerHelper::getCurrent()))->right()->sm()->icon('pencil') ?>
+<div class="card content-card">
+    <div class="card-header">
+        <div class="card-title"><?= Icon::get('history') ?> <?= Yii::t('TranslationModule.base', '<strong>Translation</strong> history') ?></div>
+        <div class="card-header-actions">
+            <?= Button::primary(Yii::t('TranslationModule.base', 'Edit translations'))
+                ->link(Url::toEditSpaceTranslation(ContentContainerHelper::getCurrent()))->sm()->icon('pencil') ?>
+        </div>
     </div>
 </div>
 

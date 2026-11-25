@@ -78,7 +78,7 @@ $canManage = $model->canManage();
 
         </div>
 
-        <div class="panel-body">
+        <div class="card-body">
 
             <?php if (!empty($errors)) : ?>
 
