@@ -32,7 +32,7 @@
 #words .elem .btn {
     float: left;
     margin-left: .5rem;
-    padding: .5rem 1rem;
+    padding: .5rem .75rem;
 }
 #words textarea {
     height: 100%;
